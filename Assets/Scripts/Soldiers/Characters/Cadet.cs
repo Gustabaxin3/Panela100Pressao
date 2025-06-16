@@ -11,7 +11,5 @@ public class Cadet : ISoldierState
     public override void OnExit()
     {
         base.OnExit();
-
-        Debug.Log("Sargeant state exited.");
     }
 }

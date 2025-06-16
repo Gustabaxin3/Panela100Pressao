@@ -12,7 +12,5 @@ public class Sublieutenant : ISoldierState
     public override void OnExit()
     {
         base.OnExit();
-
-        Debug.Log("Sublieutenant state exited.");
     }
 }

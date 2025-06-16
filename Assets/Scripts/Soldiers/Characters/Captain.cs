@@ -1,18 +1,22 @@
 using UnityEngine;
 public class Captain : ISoldierState
 {
-    [SerializeField] private bool IsActive = false;
+    [SerializeField] private bool _IsActive = false;
 
-    public float jumpStrength = 2;
-    public event System.Action Jumped;
+    [SerializeField] private float _jumpStrength = 2;
+    [SerializeField] private event System.Action Jumped;
 
-    [SerializeField, Tooltip("Prevents jumping when the transform is in mid-air.")]
-    GroundCheck groundCheck;
+    [SerializeField] private GroundCheck _groundCheck;
+
+    protected override void Start() {
+        base.Start();
+        _groundCheck = GetComponentInChildren<GroundCheck>();
+    }
     public override void OnEnter(SoldierManager soldierManager) {
         base.OnEnter(soldierManager);
         Debug.Log("Captain state entered.");
 
-        IsActive = true;
+        _IsActive = true;
     }
     public override void OnUpdate()
     {
@@ -20,17 +24,12 @@ public class Captain : ISoldierState
     public override void OnExit()
     {
         base.OnExit();
-        Debug.Log("Captain state exited.");
 
-        IsActive = false;
+        _IsActive = false;
     }
-    void Reset() {
-        groundCheck = GetComponentInChildren<GroundCheck>();
-    }
-
     public override void LateUpdate() {
-        if (Input.GetButtonDown("Jump") && (!groundCheck || groundCheck.isGrounded) && IsActive) {
-            _rigidBody.AddForce(Vector3.up * 100 * jumpStrength);
+        if (Input.GetButtonDown("Jump") && (!_groundCheck || _groundCheck.isGrounded) && _IsActive) {
+            _rigidBody.AddForce(Vector3.up * 100 * _jumpStrength);
             Jumped?.Invoke();
         }
     }

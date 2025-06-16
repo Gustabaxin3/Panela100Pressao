@@ -23,7 +23,6 @@ public abstract class ISoldierState : MonoBehaviour {
 
         _soldierMovement.SetMovementEnabled(true);
     }
-
     public virtual void FixedUpdate() { }
     public virtual void OnUpdate() { }
     public virtual void LateUpdate() { }
