@@ -12,13 +12,18 @@ public class Movimento : MonoBehaviour
     [Range(0f, 15f)]
     public float runSpeed = 9;
     public KeyCode runningKey = KeyCode.LeftShift;
-    public float rotationSpeed = 10f;
-    private Rigidbody rb;
     public List<System.Func<float>> speedOverrides = new List<System.Func<float>>();
 
+    private Rigidbody rb;
     private Transform myCamera;
 
+    [Header("Rotação")]
+    public bool rodaJunto = false;
+    public float rotationSpeed = 10f;
+
     [HideInInspector] public Vector3 movimento;
+    [HideInInspector] public Vector3 ondeOlha;
+
     [HideInInspector] public Vector2 inputMove;
 
     [HideInInspector] public bool segurouPata;
@@ -58,5 +63,27 @@ public class Movimento : MonoBehaviour
         Vector3 targetVelocity = movimento * targetMovingSpeed;
 
         rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
+
+        if (rodaJunto)
+        {
+            ondeOlha = myCamera.forward;
+            Olha();
+        }
+        else
+        {
+            ondeOlha = movimento;
+            if (movimento != Vector3.zero)
+            {
+                Olha();
+            }
+        }
+
+    }
+
+    void Olha()
+    {
+        Quaternion targetRotation = Quaternion.LookRotation(ondeOlha);
+        targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 }
