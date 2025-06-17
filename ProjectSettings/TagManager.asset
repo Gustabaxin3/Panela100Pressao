@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Zipline
+  - Captain
+  - Sublieutenant
+  - Sargeant
+  - Cadet
   layers:
   - Default
   - TransparentFX
@@ -14,11 +18,11 @@ TagManager:
   - UI
   - Ground
   - Colide
+  - Captain
   - Sublieutenant
+  - Sargeant
+  - Cadet
   - Zipline
-  - 
-  - 
-  - 
   - 
   - 
   - 

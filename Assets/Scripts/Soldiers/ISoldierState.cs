@@ -1,6 +1,5 @@
 using UnityEngine;
 using Unity.Cinemachine;
-using Unity.VisualScripting;
 
 public abstract class ISoldierState : MonoBehaviour {
     protected SoldierManager _soldierManager;
