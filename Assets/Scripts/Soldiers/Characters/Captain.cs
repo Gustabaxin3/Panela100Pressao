@@ -1,7 +1,7 @@
 using UnityEngine;
 public class Captain : ISoldierState
 {
-    [SerializeField] private bool _IsActive = false;
+    [SerializeField] private bool _isActive = false;
 
     [SerializeField] private float _jumpStrength = 2;
     [SerializeField] private event System.Action Jumped;
@@ -16,21 +16,18 @@ public class Captain : ISoldierState
         base.OnEnter(soldierManager);
         Debug.Log("Captain state entered.");
 
-        _IsActive = true;
+        _isActive = true;
     }
-    public override void OnUpdate()
-    {
+    public override void LateUpdate() {
+        if (Input.GetButtonDown("Jump") && (!_groundCheck || _groundCheck.isGrounded) && _isActive) {
+            _rigidBody.AddForce(_jumpStrength * 100 * Vector3.up);
+            Jumped?.Invoke();
+        }
     }
     public override void OnExit()
     {
         base.OnExit();
 
-        _IsActive = false;
-    }
-    public override void LateUpdate() {
-        if (Input.GetButtonDown("Jump") && (!_groundCheck || _groundCheck.isGrounded) && _IsActive) {
-            _rigidBody.AddForce(Vector3.up * 100 * _jumpStrength);
-            Jumped?.Invoke();
-        }
+        _isActive = false;
     }
 }
