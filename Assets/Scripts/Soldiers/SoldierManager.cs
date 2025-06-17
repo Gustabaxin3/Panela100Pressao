@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -23,6 +24,8 @@ public class SoldierManager : MonoBehaviour {
     public Cadet cadet;
     [SerializeField] private LayerMask _cadetLayerMask;
     [SerializeField] private bool _isCadetUnlocked = false;
+
+    [SerializeField] private Animator _animator;
 
     private void Start() {
         ChangeState(captain);
@@ -57,10 +60,29 @@ public class SoldierManager : MonoBehaviour {
             case bool _ when Input.GetKeyDown(KeyCode.Alpha4): ChangeCharacter(_isCadetUnlocked, cadet); break;
         }
     }
-    private void ChangeCharacter(bool soldierLocked, ISoldierState soldierState) {
-        if (soldierLocked) {
-            ChangeState(soldierState);
+    private void ChangeCharacter(bool soldierUnlocked, ISoldierState soldierState) {
+        if (soldierUnlocked && _currentSoldier != soldierState) {
+            StartCoroutine(StartAnimation(soldierState));
         }
+    }
+    private IEnumerator StartAnimation(ISoldierState soldierState) {
+        _currentSoldier.GetComponent<SoldierMovement>().SetMovementEnabled(false);
+
+        _animator.SetBool("Start", true);
+        yield return new WaitForSeconds(1.5f);
+
+        _animator.SetBool("Start", false);
+
+        ChangeState(soldierState);
+        yield return null;
+
+        _animator.SetBool("End", true);
+        yield return new WaitForSeconds(1f);
+
+
+
+        soldierState.GetComponent<SoldierMovement>().SetMovementEnabled(true);
+        _animator.SetBool("End", false);
     }
     private void UnlockSoldier(ISoldierState soldierState) {
         switch (soldierState) {
