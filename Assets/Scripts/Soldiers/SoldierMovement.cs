@@ -14,6 +14,7 @@ public class SoldierMovement : MonoBehaviour {
 
     [Range(0f, 15f)]
     public float RunSpeed = 9f;
+
     public bool IsRunning { get; private set; }
 
     public KeyCode RunningKey = KeyCode.LeftShift;
@@ -24,6 +25,8 @@ public class SoldierMovement : MonoBehaviour {
 
     [Header("Rotation")]
     public bool RotateWithCamera = false;
+
+    [Range(0f, 20f)]
     public float RotationSpeed = 10f;
 
     [HideInInspector] public Vector3 MoveDirection;
@@ -35,6 +38,8 @@ public class SoldierMovement : MonoBehaviour {
 
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
+
+        _rigidbody.freezeRotation = true;
     }
 
     private void Start() {
@@ -47,20 +52,21 @@ public class SoldierMovement : MonoBehaviour {
     }
 
     private void HandleInput() {
-        if (IsActive) {
-            InputMove.x = Input.GetAxis("Horizontal");
-            InputMove.y = Input.GetAxis("Vertical");
-            IsRunning = CanRun && Input.GetKey(RunningKey);
+        if (!IsActive) return;
 
-            HandleMovement();
-            HandleRotation();
-        }
+        InputMove.x = Input.GetAxis("Horizontal");
+        InputMove.y = Input.GetAxis("Vertical");
+        IsRunning = CanRun && Input.GetKey(RunningKey);
+
+        HandleMovement();
+        HandleRotation();
     }
 
     private void HandleMovement() {
         float targetSpeed = IsRunning ? RunSpeed : WalkSpeed;
+
         if (SpeedOverrides.Count > 0) {
-            targetSpeed = SpeedOverrides[SpeedOverrides.Count - 1]();
+            targetSpeed = SpeedOverrides[^1](); 
         }
 
         Vector3 cameraForward = _cameraTransform.forward;
@@ -80,18 +86,20 @@ public class SoldierMovement : MonoBehaviour {
     private void HandleRotation() {
         if (RotateWithCamera) {
             LookDirection = _cameraTransform.forward;
-            RotateTowards(LookDirection);
         } else if (MoveDirection != Vector3.zero) {
             LookDirection = MoveDirection;
-            RotateTowards(LookDirection);
+        } else {
+            return;
         }
+
+        RotateTowards(LookDirection);
     }
 
     private void RotateTowards(Vector3 direction) {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+        targetRotation = Quaternion.Euler(0f, targetRotation.eulerAngles.y, 0f);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, RotationSpeed * Time.deltaTime);
     }
+
     public void SetMovementEnabled(bool enabled) => IsActive = enabled;
-    
 }
