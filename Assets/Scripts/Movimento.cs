@@ -26,8 +26,6 @@ public class Movimento : MonoBehaviour
 
     [HideInInspector] public Vector2 inputMove;
 
-    [HideInInspector] public bool segurouPata;
-
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
