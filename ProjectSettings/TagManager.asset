@@ -9,6 +9,7 @@ TagManager:
   - Sublieutenant
   - Sargeant
   - Cadet
+  - Rope
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Sargeant
   - Cadet
   - Zipline
-  - 
+  - Rope
   - 
   - 
   - 

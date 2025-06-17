@@ -4,8 +4,6 @@ public class Sargeant : ISoldierState {
     [SerializeField] private float checkOffSet = 1f;
     [SerializeField] private float checkRadius = 2f;
 
-    [SerializeField] private GameObject _originalParent;
-
     public override void OnUpdate() {
         if (Input.GetKeyDown(KeyCode.E)) {
             RaycastHit[] hits = Physics.SphereCastAll(transform.position + new Vector3(0, checkOffSet, 0), checkRadius, Vector3.up);
@@ -17,5 +15,5 @@ public class Sargeant : ISoldierState {
             }
         }
     }
-    public Transform ResetParentToOriginal() => this.gameObject.transform.parent = _originalParent.transform;
+    public Transform ResetParentToOriginal() => this.gameObject.transform.parent = _soldierManager._originalParent;
 }

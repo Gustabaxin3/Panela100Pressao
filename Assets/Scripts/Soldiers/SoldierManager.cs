@@ -27,6 +27,8 @@ public class SoldierManager : MonoBehaviour {
 
     [SerializeField] private Animator _animator;
 
+    [field: SerializeField] public Transform _originalParent { get; private set; }
+
     private void Start() {
         ChangeState(captain);
         SoldierUnlockEvents.OnSoldierUnlocked += UnlockSoldier;

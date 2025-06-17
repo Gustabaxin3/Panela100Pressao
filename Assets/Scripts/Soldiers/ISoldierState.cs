@@ -8,6 +8,7 @@ public abstract class ISoldierState : MonoBehaviour {
     protected Rigidbody _rigidBody;
     protected Transform _transform;
     protected CinemachineCamera _cinemachineCamera;
+
     protected virtual void Awake() {
         _cinemachineCamera = GetComponentInChildren<CinemachineCamera>();
         _soldierMovement = GetComponent<SoldierMovement>();
