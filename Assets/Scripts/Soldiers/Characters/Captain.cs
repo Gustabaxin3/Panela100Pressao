@@ -1,4 +1,5 @@
 using AUDIO;
+using System;
 using UnityEngine;
 public class Captain : ISoldierState
 {
@@ -21,10 +22,22 @@ public class Captain : ISoldierState
     }
     public override void LateUpdate() {
         if (Input.GetButtonDown("Jump") && (!_groundCheck || _groundCheck.isGrounded) && _isActive) {
-            AudioEvents.OnPlayerJump?.Invoke();
+            PlayPlayerJumpSound();
             _rigidBody.AddForce(_jumpStrength * 100 * Vector3.up);
             Jumped?.Invoke();
         }
+    }
+    private void PlayPlayerJumpSound() {
+        string[] jumpSounds = {
+            "Audio/Pulo/SoldadoPulo01",
+            "Audio/Pulo/SoldadoPulo02",
+            "Audio/Pulo/SoldadoPulo03",
+            "Audio/Pulo/SoldadoPulo04"
+        };
+
+        int index = UnityEngine.Random.Range(0, jumpSounds.Length);
+
+        AudioManager.Instance.PlaySoundEffect(jumpSounds[index]);
     }
     public override void OnExit()
     {

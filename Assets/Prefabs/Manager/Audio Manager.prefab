@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3335254517104272725}
-  - component: {fileID: 6199040695736634150}
   - component: {fileID: 6817934263852487516}
   m_Layer: 0
   m_Name: Audio Manager
@@ -33,18 +32,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6199040695736634150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6593089248016261580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed0613671c326b24cb0da11537b98da5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6817934263852487516
 MonoBehaviour:
   m_ObjectHideFlags: 0

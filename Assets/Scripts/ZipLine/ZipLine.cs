@@ -73,7 +73,6 @@ public class Zipline : MonoBehaviour {
         player.GetComponent<SoldierMovement>().SetMovementEnabled(false);
         player.transform.parent = _localZip.transform;
         _isZipLineActive = true;
-        AudioEvents.OnPlayerInsideZipline?.Invoke();
     }
 
     private void ResetZipLine() {
