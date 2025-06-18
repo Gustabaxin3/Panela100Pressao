@@ -47,7 +47,7 @@ public class SoldierMovement : MonoBehaviour {
         _cameraTransform = Camera.main.transform;
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         HandleInput();
     }
 
