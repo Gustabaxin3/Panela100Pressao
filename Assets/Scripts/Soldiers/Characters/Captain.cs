@@ -22,7 +22,8 @@ public class Captain : ISoldierState
     }
     public override void LateUpdate() {
         if (Input.GetButtonDown("Jump") && (!_groundCheck || _groundCheck.isGrounded) && _isActive) {
-            PlayPlayerJumpSound();
+            //PlayPlayerJumpSound();
+            SoundManager.PlaySound(SoundType.SOLD_PULO);
             _rigidBody.AddForce(_jumpStrength * 100 * Vector3.up);
             Jumped?.Invoke();
         }
