@@ -88,7 +88,7 @@ public class Zipline : MonoBehaviour {
         player.GetComponent<SoldierMovement>().SetMovementEnabled(true);
 
         // Restaura o parent original do jogador
-        player.transform.parent = player.GetComponent<Sargeant>().ResetParentToOriginal();
+        player.transform.parent = player.GetComponent<Sargeant>().ResetToOriginal();
 
         // Destroi o objeto zip e reseta o estado
         Destroy(_localZip);
