@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3674310071949366738}
   - component: {fileID: 6763975953914781932}
   - component: {fileID: 6796684666610856620}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 7993398157383582170}
   - component: {fileID: 903783881076919456}
   - component: {fileID: 6748883351969415512}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Transition Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ Canvas:
   m_GameObject: {fileID: 6377844052504900633}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 0.6
   m_PixelPerfect: 0
@@ -148,7 +148,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1789183383
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &7993398157383582170

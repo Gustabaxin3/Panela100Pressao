@@ -81,8 +81,6 @@ public class SoldierManager : MonoBehaviour {
         _animator.SetBool("End", true);
         yield return new WaitForSeconds(1f);
 
-
-
         soldierState.GetComponent<SoldierMovement>().SetMovementEnabled(true);
         _animator.SetBool("End", false);
     }
