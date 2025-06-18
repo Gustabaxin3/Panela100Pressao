@@ -63,7 +63,10 @@ public class Zipline : MonoBehaviour {
         _localZip = GameObject.CreatePrimitive(PrimitiveType.Cube);
         _localZip.GetComponent<Renderer>().enabled = false;
         _localZip.transform.position = player.transform.position;
-        _localZip.transform.localScale = new Vector3(_zipScale, _zipScale, _zipScale);
+
+        // Aumenta o tamanho do objeto invisível
+        float enlargedScale = _zipScale * 3f;
+        _localZip.transform.localScale = new Vector3(enlargedScale, enlargedScale, enlargedScale);
         _localZip.AddComponent<Rigidbody>().useGravity = false;
         _localZip.GetComponent<Collider>().isTrigger = true;
 
