@@ -17,6 +17,7 @@ public class Sargeant : ISoldierState {
 
             foreach(RaycastHit hit in hits) {
                 if (hit.collider.tag == "Zipline") {
+                    this.transform.position = hit.collider.transform.position;
                     hit.collider.GetComponent<Zipline>().StartZipLine(this.gameObject);
                     _defaultPose.SetActive(false);
                     _zipLinePose.SetActive(true);
