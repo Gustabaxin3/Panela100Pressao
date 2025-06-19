@@ -1,4 +1,5 @@
 using AUDIO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Sublieutenant : ISoldierState {
@@ -14,6 +15,8 @@ public class Sublieutenant : ISoldierState {
         "Audio/Empurra/SoldadoEmpurra04"
     };
     private int numSorteado = -1;
+    private int lastNumSorteado = -1;
+    private AudioSource empurraSource = null;
 
     public override void OnEnter(SoldierManager soldierManager) {
         base.OnEnter(soldierManager);
@@ -27,14 +30,15 @@ public class Sublieutenant : ISoldierState {
                 currentPushable = null;
 
                 //para de tocar o SFX Empurra
-                if (numSorteado >= 0)
+                if (empurraSource != null)
                 {
-                    string soundPath = soundsEmpurra[numSorteado];
-                    string soundName = System.IO.Path.GetFileNameWithoutExtension(soundPath);
+                    empurraSource.Stop();
+                    GameObject.Destroy(empurraSource.gameObject);
+                    empurraSource = null;
                     
-                    AudioManager.Instance.StopSoundEffect(soundName);
                 }
                 numSorteado = -1;
+                lastNumSorteado = -1;
                 return;
             }
 
@@ -47,12 +51,43 @@ public class Sublieutenant : ISoldierState {
                     // implementação de áudio - SFX Empurra 
                                         
                     numSorteado = UnityEngine.Random.Range(0, soundsEmpurra.Length);
-                    AudioManager.Instance.PlaySoundEffect(soundsEmpurra[numSorteado], loop: true, position: transform.position, spatialBlend: 0); ;
-                    
+                    lastNumSorteado = numSorteado;
+                    empurraSource = AudioManager.Instance.PlaySoundEffect(
+                        soundsEmpurra[numSorteado],
+                        loop: false,
+                        position: transform.position,
+                        spatialBlend: 0
+                        );
+
                     break;
                 }
             }
         }
+
+        //loop manual e randomização - força o próximo som randomizado a não ser o último tocado
+
+        if (empurraSource != null && !empurraSource.isPlaying && currentPushable != null && currentPushable.IsBeingPushed)
+        {
+            int novoSorteio;
+            do
+            {
+                novoSorteio = UnityEngine.Random.Range(0, soundsEmpurra.Length);
+            } while (novoSorteio == lastNumSorteado && soundsEmpurra.Length > 1);
+
+            numSorteado = novoSorteio;
+            lastNumSorteado = numSorteado;
+
+            GameObject.Destroy(empurraSource.gameObject);
+
+            empurraSource = AudioManager.Instance.PlaySoundEffect(
+                        soundsEmpurra[numSorteado],
+                        loop: false,
+                        position: transform.position,
+                        spatialBlend: 0
+                        );
+
+        }
+
     }
 
     public override void OnExit() {
@@ -60,6 +95,15 @@ public class Sublieutenant : ISoldierState {
             currentPushable.StopPush();
             currentPushable = null;
         }
+
+        if (empurraSource != null)
+        {
+            empurraSource.Stop();
+            GameObject.Destroy(empurraSource.gameObject);
+            empurraSource = null;
+        }
+        numSorteado = -1;
+        lastNumSorteado = -1;
         base.OnExit();
     }
 }
