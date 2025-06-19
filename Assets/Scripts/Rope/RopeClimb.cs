@@ -10,17 +10,10 @@ public class RopeClimb : MonoBehaviour {
     private Transform ropeSegment;
     private SoldierMovement soldierMovement;
 
-    [SerializeField] private TextMeshProUGUI _ropeText;
-    [SerializeField] private CanvasGroup _ropeTextCanvasGroup;
-    [SerializeField] private float fadeDuration = 0.3f;
-
-    private Coroutine fadeCoroutine;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
         soldierMovement = GetComponent<SoldierMovement>();
-        _ropeText.text = "espaço para sair da corda";
-        _ropeTextCanvasGroup.alpha = 0f;
     }
 
     public void EnterRope(Transform segment) {
@@ -31,7 +24,7 @@ public class RopeClimb : MonoBehaviour {
 
         soldierMovement.SetMovementEnabled(false);
 
-        ShowRopeText();
+        InteractionHintUI.Instance.ShowHint("Pressione Espaço para sair da corda");
     }
 
     public void ExitRope() {
@@ -41,7 +34,7 @@ public class RopeClimb : MonoBehaviour {
 
         soldierMovement.SetMovementEnabled(true);
 
-        HideRopeText();
+        InteractionHintUI.Instance.HideHint();
     }
 
     private void Update() {
@@ -64,23 +57,5 @@ public class RopeClimb : MonoBehaviour {
         if (!isClimbing && rb.useGravity == false) {
             rb.useGravity = true;
         }
-    }
-
-    private void ShowRopeText() {
-        fadeCoroutine = StartCoroutine(FadeCanvasGroup(_ropeTextCanvasGroup, _ropeTextCanvasGroup.alpha, 1f, fadeDuration));
-    }
-
-    private void HideRopeText() {
-        fadeCoroutine = StartCoroutine(FadeCanvasGroup(_ropeTextCanvasGroup, _ropeTextCanvasGroup.alpha, 0f, fadeDuration));
-    }
-
-    private IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float from, float to, float duration) {
-        float elapsed = 0f;
-        while (elapsed < duration) {
-            elapsed += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Lerp(from, to, elapsed / duration);
-            yield return null;
-        }
-        canvasGroup.alpha = to;
     }
 }

@@ -77,6 +77,8 @@ public class Zipline : MonoBehaviour {
         player.GetComponent<SoldierMovement>().SetMovementEnabled(false); 
         player.transform.parent = _localZip.transform;
 
+        InteractionHintUI.Instance.HideHint();
+
         Vector3 direction = (_targetZipLine._zipTransform.position - _zipTransform.position).normalized;
         direction.y = 0f; 
         if (direction != Vector3.zero) {
@@ -102,5 +104,16 @@ public class Zipline : MonoBehaviour {
         Destroy(_localZip);
         _localZip = null;
         _isZipLineActive = false;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Sargeant")) {
+            InteractionHintUI.Instance.ShowHint("Pressione E para usar a tirolesa");
+        }
+    }
+    private void OnTriggerExit(Collider other) {
+        if (other.CompareTag("Sargeant")) {
+            InteractionHintUI.Instance.HideHint();
+        }
     }
 }
