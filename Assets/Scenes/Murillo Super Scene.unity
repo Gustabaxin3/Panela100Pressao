@@ -1704,6 +1704,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1388351852}
+    - target: {fileID: 445759947453939759, guid: 86d1467eb24514143b5f54833f33c1cf,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2609338366119527972, guid: 86d1467eb24514143b5f54833f33c1cf,
         type: 3}
       propertyPath: m_Pivot.x
@@ -7106,7 +7111,7 @@ Transform:
   m_GameObject: {fileID: 1388351851}
   serializedVersion: 2
   m_LocalRotation: {x: 0.14528103, y: 0.11917329, z: -0.017630462, w: 0.98202866}
-  m_LocalPosition: {x: -4.62, y: 8.702893, z: -17.495039}
+  m_LocalPosition: {x: -2.14, y: 8.70289, z: -5.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
