@@ -31,7 +31,8 @@ public class Captain : ISoldierState {
         if (Input.GetButtonUp("Jump") && _rigidBody.linearVelocity.y > 0f) {
             _rigidBody.linearVelocity = new Vector3(_rigidBody.linearVelocity.x, _rigidBody.linearVelocity.y * 0.5f, _rigidBody.linearVelocity.z);
             
-            string[] sounds =
+            // implementação de áudio
+            string[] soundsPulo =
             {
                 "Audio/Pulo/SoldadoPulo01",
                 "Audio/Pulo/SoldadoPulo02",
@@ -39,17 +40,8 @@ public class Captain : ISoldierState {
                 "Audio/Pulo/SoldadoPulo04"
             };
 
-            int numSorteado = UnityEngine.Random.Range(0, sounds.Length);
-            AudioManager.Instance.PlaySoundEffect(sounds[numSorteado], position: transform.position, spatialBlend: 1);
-
-            /*
-            AudioManager.Instance.PlaySoundEffect(
-                sounds[numSorteado],
-                position: _transform.position,
-                spatialBlend: 1
-
-                );
-            */
+            int numSorteado = UnityEngine.Random.Range(0, soundsPulo.Length);
+            AudioManager.Instance.PlaySoundEffect(soundsPulo[numSorteado], position: transform.position, spatialBlend: 0);
         }
     }
 
