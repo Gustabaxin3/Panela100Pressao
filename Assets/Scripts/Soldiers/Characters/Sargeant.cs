@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using AUDIO;
+using UnityEngine;
 
 public class Sargeant : ISoldierState {
     [SerializeField] private float checkOffSet = 1f;
@@ -14,20 +15,24 @@ public class Sargeant : ISoldierState {
     public override void OnUpdate() {
         if (Input.GetKeyDown(KeyCode.E)) {
             RaycastHit[] hits = Physics.SphereCastAll(transform.position + new Vector3(0, checkOffSet, 0), checkRadius, Vector3.up);
-
-            foreach(RaycastHit hit in hits) {
+            
+            foreach (RaycastHit hit in hits) {
                 if (hit.collider.tag == "Zipline") {
                     this.transform.position = hit.collider.transform.position;
                     hit.collider.GetComponent<Zipline>().StartZipLine(this.gameObject);
                     _defaultPose.SetActive(false);
                     _zipLinePose.SetActive(true);
+                    
+                    
                 }
             }
+
         }
     }
     public Transform ResetToOriginal() {
         _zipLinePose.SetActive(false);
         _defaultPose.SetActive(true);
-        return this.gameObject.transform.parent = _soldierManager._originalParent; 
+        return this.gameObject.transform.parent = _soldierManager._originalParent;
+        
     }
 }

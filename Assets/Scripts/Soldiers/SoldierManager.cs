@@ -30,6 +30,7 @@ public class SoldierManager : MonoBehaviour {
     [field: SerializeField] public Transform _originalParent { get; private set; }
 
     private void Start() {
+        MakeAllSoldiersImmobile();
         ChangeState(captain);
         SoldierUnlockEvents.OnSoldierUnlocked += UnlockSoldier;
     }
@@ -93,5 +94,11 @@ public class SoldierManager : MonoBehaviour {
         }
 
         Debug.Log($"{name} desbloqueado!");
+    }
+    private void MakeAllSoldiersImmobile() {
+        captain.GetComponent<SoldierMovement>().SetMovementEnabled(false);
+        sublieutenant.GetComponent<SoldierMovement>().SetMovementEnabled(false);
+        sargeant.GetComponent<SoldierMovement>().SetMovementEnabled(false);
+        cadet.GetComponent<SoldierMovement>().SetMovementEnabled(false);
     }
 }
