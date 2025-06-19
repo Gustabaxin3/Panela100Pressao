@@ -69,12 +69,12 @@ public class Zipline : MonoBehaviour {
         _localZip.transform.localScale = new Vector3(enlargedScale, enlargedScale, enlargedScale);
         _localZip.AddComponent<Rigidbody>().useGravity = false;
         _localZip.GetComponent<Collider>().isTrigger = true;
-        _localZip.GetComponent<BoxCollider>().size = new Vector3(4f, 4f, 4f);
+        _localZip.GetComponent<BoxCollider>().size = new Vector3(1f, 1f, 1f);
 
         // Desabilita a gravidade e o movimento do jogador, e o coloca como filho do objeto zip
         player.GetComponent<Rigidbody>().useGravity = false;
         player.GetComponent<Rigidbody>().isKinematic = true;
-        player.GetComponent<SoldierMovement>().SetMovementEnabled(false);
+        player.GetComponent<SoldierMovement>().SetMovementEnabled(false); 
         player.transform.parent = _localZip.transform;
 
         Vector3 direction = (_targetZipLine._zipTransform.position - _zipTransform.position).normalized;
