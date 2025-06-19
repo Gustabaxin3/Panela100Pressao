@@ -30,6 +30,16 @@ public class Captain : ISoldierState {
 
         if (Input.GetButtonUp("Jump") && _rigidBody.linearVelocity.y > 0f) {
             _rigidBody.linearVelocity = new Vector3(_rigidBody.linearVelocity.x, _rigidBody.linearVelocity.y * 0.5f, _rigidBody.linearVelocity.z);
+            
+            string[] sounds =
+            {
+                "Audio/Pulo/SoldadoPulo01",
+                "Audio/Pulo/SoldadoPulo02",
+                "Audio/Pulo/SoldadoPulo03",
+                "Audio/Pulo/SoldadoPulo04"
+            };
+
+            //Random numSorteado = UnityEngine.Random.Range(0, sounds.Length);
         }
     }
 

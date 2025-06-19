@@ -23,7 +23,7 @@ public class Sublieutenant : ISoldierState {
                     pushable.StartPush(_transform);
                     currentPushable = pushable;
 
-                    SoundManager.PlaySound(SoundType.SOLD_EMPURRA);
+                    
                     break;
                 }
             }
