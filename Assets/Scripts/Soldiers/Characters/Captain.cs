@@ -39,7 +39,8 @@ public class Captain : ISoldierState {
                 "Audio/Pulo/SoldadoPulo04"
             };
 
-            //Random numSorteado = UnityEngine.Random.Range(0, sounds.Length);
+            int numSorteado = UnityEngine.Random.Range(0, sounds.Length);
+            AudioManager.Instance.PlaySoundEffect(sounds[numSorteado]);
         }
     }
 
