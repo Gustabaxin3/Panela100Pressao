@@ -29,6 +29,7 @@ public class SoldierManager : MonoBehaviour {
     private float _startAnimationDuration;
     private float _endAnimationDuration;
 
+    private bool _isTransitioning = false;
 
     [field: SerializeField] public Transform _originalParent { get; private set; }
 
@@ -67,11 +68,13 @@ public class SoldierManager : MonoBehaviour {
         }
     }
     private void ChangeCharacter(bool soldierUnlocked, ISoldierState soldierState) {
-        if (soldierUnlocked && _currentSoldier != soldierState) {
+        if (soldierUnlocked && _currentSoldier != soldierState && !_isTransitioning) {
             StartCoroutine(StartAnimation(soldierState));
         }
     }
+
     private IEnumerator StartAnimation(ISoldierState soldierState) {
+        _isTransitioning = true;
         _currentSoldier.GetComponent<SoldierMovement>().SetMovementEnabled(false);
 
         _startAnimationDuration = _animator.GetCurrentAnimatorStateInfo(0).length;
@@ -90,6 +93,7 @@ public class SoldierManager : MonoBehaviour {
 
         soldierState.GetComponent<SoldierMovement>().SetMovementEnabled(true);
         _animator.SetBool("End", false);
+        _isTransitioning = false;
     }
     private void UnlockSoldier(ISoldierState soldierState) {
         switch (soldierState) {
