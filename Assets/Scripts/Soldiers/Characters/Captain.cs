@@ -28,14 +28,17 @@ public class Captain : ISoldierState {
     public override void OnUpdate() {
         base.OnUpdate();
 
+        if (Input.GetButtonUp("Jump") && _rigidBody.linearVelocity.y > 0f) {
+            _rigidBody.linearVelocity = new Vector3(_rigidBody.linearVelocity.x, _rigidBody.linearVelocity.y * 0.5f, _rigidBody.linearVelocity.z);
+        }
+    }
+
+    public override void LateUpdate() {
+        base.LateUpdate();
         if (Input.GetButtonDown("Jump") && (!_groundCheck || _groundCheck.isGrounded) && _isActive) {
             _rigidBody.AddForce(Vector3.up * _jumpStrength, ForceMode.Impulse);
             _isJumping = true;
             Jumped?.Invoke();
-        }
-
-        if (Input.GetButtonUp("Jump") && _rigidBody.linearVelocity.y > 0f) {
-            _rigidBody.linearVelocity = new Vector3(_rigidBody.linearVelocity.x, _rigidBody.linearVelocity.y * 0.5f, _rigidBody.linearVelocity.z);
         }
     }
 
@@ -45,7 +48,6 @@ public class Captain : ISoldierState {
             _rigidBody.AddForce(Vector3.up * _customGravity, ForceMode.Acceleration);
         }
     }
-
 
     public override void OnExit() {
         base.OnExit();
