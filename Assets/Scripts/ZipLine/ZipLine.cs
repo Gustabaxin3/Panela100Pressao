@@ -86,7 +86,7 @@ public class Zipline : MonoBehaviour {
         }
 
         _isZipLineActive = true;
-        AudioManager.Instance.PlaySoundEffect("Audio/Tirolesa", loop: true);
+        AudioManager.Instance.PlaySoundEffect("Audio/Tirolesa", loop: true); //0 no spatial blend fica melhor
     }
 
     private void ResetZipLine() {
