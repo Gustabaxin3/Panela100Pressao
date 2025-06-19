@@ -4374,7 +4374,7 @@ MonoBehaviour:
   _pointB: {fileID: 5952086572315410015}
   _ropeVisual: {fileID: 2519953418573068807}
   _travelPoint: {fileID: 620477010}
-  _mountPoint: {fileID: 1796935944}
+  _mountPoint: {fileID: 0}
   _speed: 15
   _arrivalThreshold: 0.1
   _riderYOffset: -1.3
@@ -6732,6 +6732,11 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 7.151407e-11
       objectReference: {fileID: 0}
+    - target: {fileID: 7593686428731186806, guid: 2f24e16051fc6dd4b809c57dcf6e1b99,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7724587949701926909, guid: 2f24e16051fc6dd4b809c57dcf6e1b99,
         type: 3}
       propertyPath: m_Layer
@@ -7103,7 +7108,7 @@ Transform:
   m_GameObject: {fileID: 1388351851}
   serializedVersion: 2
   m_LocalRotation: {x: 0.14528103, y: 0.11917329, z: -0.017630462, w: 0.98202866}
-  m_LocalPosition: {x: -2.14, y: 8.70289, z: -5.13}
+  m_LocalPosition: {x: 5.26, y: 7.7028933, z: -17.495039}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

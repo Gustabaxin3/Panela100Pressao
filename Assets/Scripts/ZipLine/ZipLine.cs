@@ -27,7 +27,7 @@ public class Zipline : MonoBehaviour {
         UpdateRopeVisual();
     }
 
-    void Update() {
+    void FixedUpdate() {
         if (!_isRiding) return;
 
         Transform target = _goingForward ? _pointB : _pointA;
@@ -36,9 +36,6 @@ public class Zipline : MonoBehaviour {
             target.position,
             _speed * Time.deltaTime
         );
-
-        // Sincronize o mountPoint com o travelPoint
-        _mountPoint.position = _travelPoint.position;
 
         UpdateRopeVisual();
 
