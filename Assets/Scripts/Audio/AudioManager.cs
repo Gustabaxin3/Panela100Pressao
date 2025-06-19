@@ -68,30 +68,38 @@ namespace AUDIO
             return PlaySoundEffect(clip, mixer, volume, pitch, loop, filePath);
         }
 
-        public AudioSource PlaySoundEffect(AudioClip clip, AudioMixerGroup mixer = null, float volume = 1, float pitch = 1, bool loop = false, string filePath = "") {
+        public AudioSource PlaySoundEffect(
+            AudioClip clip,
+            AudioMixerGroup mixer = null,
+            float volume = 1f,
+            float pitch = 1f,
+            bool loop = false,
+            string filePath = "",
+            Vector3? position = null,
+            float spatialBlend = 1f // 1 = 3D, 0 = 2D
+        ) {
             string fileName = clip.name;
-            if (filePath != string.Empty) fileName = filePath;
+            if (!string.IsNullOrEmpty(filePath)) fileName = filePath;
 
-            AudioSource effectSource = new GameObject(string.Format(SFX_NAME_FORMAT, fileName)).AddComponent<AudioSource>();
-            effectSource.transform.SetParent(sfxRoot);
-            effectSource.transform.position = sfxRoot.position;
+            GameObject soundObj = new GameObject(string.Format(SFX_NAME_FORMAT, fileName));
+            soundObj.transform.SetParent(sfxRoot);
+            soundObj.transform.position = position ?? sfxRoot.position;
 
+            AudioSource effectSource = soundObj.AddComponent<AudioSource>();
             effectSource.clip = clip;
-
-            if (mixer == null) mixer = sfxMixer;
-
-            effectSource.outputAudioMixerGroup = mixer;
+            effectSource.outputAudioMixerGroup = mixer ?? sfxMixer;
             effectSource.volume = volume;
-            effectSource.spatialBlend = 1f;
             effectSource.pitch = pitch;
             effectSource.loop = loop;
+            effectSource.spatialBlend = Mathf.Clamp01(spatialBlend); 
 
             effectSource.Play();
 
-            if (!loop) Destroy(effectSource.gameObject, (clip.length / pitch) + 1);
+            if (!loop) Destroy(soundObj, (clip.length / pitch) + 1f);
 
             return effectSource;
         }
+
 
         public void StopSoundEffect(AudioClip clip) => StopSoundEffect(clip.name);
 
