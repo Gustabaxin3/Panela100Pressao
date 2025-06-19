@@ -26,6 +26,9 @@ public class SoldierManager : MonoBehaviour {
     [SerializeField] private bool _isCadetUnlocked = false;
 
     [SerializeField] private Animator _animator;
+    private float _startAnimationDuration;
+    private float _endAnimationDuration;
+
 
     [field: SerializeField] public Transform _originalParent { get; private set; }
 
@@ -71,8 +74,11 @@ public class SoldierManager : MonoBehaviour {
     private IEnumerator StartAnimation(ISoldierState soldierState) {
         _currentSoldier.GetComponent<SoldierMovement>().SetMovementEnabled(false);
 
+        _startAnimationDuration = _animator.GetCurrentAnimatorStateInfo(0).length;
+        _endAnimationDuration = _animator.GetCurrentAnimatorStateInfo(0).length;
+
         _animator.SetBool("Start", true);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(_startAnimationDuration);
 
         _animator.SetBool("Start", false);
 
@@ -80,7 +86,7 @@ public class SoldierManager : MonoBehaviour {
         yield return null;
 
         _animator.SetBool("End", true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(_endAnimationDuration);
 
         soldierState.GetComponent<SoldierMovement>().SetMovementEnabled(true);
         _animator.SetBool("End", false);
