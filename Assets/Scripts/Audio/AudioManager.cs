@@ -214,24 +214,25 @@ namespace AUDIO
             return null;
         }
 
-        public void SetMasterVolume(float volume, bool muted)
-        {
-            volume = muted ? MUTED_VOLUME_LEVEL : audioFalloffCurve.Evaluate(volume);
-            musicMixer.audioMixer.SetFloat(MASTER_VOLUME_PARAMETER_NAME, volume);
+        public void SetMasterVolume(float volume, bool muted) {
+            float dB = muted ? -80f : Mathf.Log10(Mathf.Clamp(volume, 0.0001f, 1f)) * 20f;
+
+            masterMixer.audioMixer.SetFloat(MASTER_VOLUME_PARAMETER_NAME, dB);
         }
 
         public void SetMusicVolume(float volume, bool muted)
         {
-            volume = muted ? MUTED_VOLUME_LEVEL : audioFalloffCurve.Evaluate(volume);
-            musicMixer.audioMixer.SetFloat(MUSIC_VOLUME_PARAMETER_NAME, volume);
+            float dB = muted ? -80f : Mathf.Log10(Mathf.Clamp(volume, 0.0001f, 1f)) * 20f;
+
+            musicMixer.audioMixer.SetFloat(MUSIC_VOLUME_PARAMETER_NAME, dB);
         }
 
         public void SetSFXVolume(float volume, bool muted)
         {
-            volume = muted ? MUTED_VOLUME_LEVEL : audioFalloffCurve.Evaluate(volume);
-            sfxMixer.audioMixer.SetFloat(SFX_VOLUME_PARAMETER_NAME, volume);
-        }
+            float dB = muted ? -80f : Mathf.Log10(Mathf.Clamp(volume, 0.0001f, 1f)) * 20f;
 
+            sfxMixer.audioMixer.SetFloat(SFX_VOLUME_PARAMETER_NAME, dB);
+        }
         #endregion
     }
 }
