@@ -3,7 +3,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 
 public class SoldierManager : MonoBehaviour {
-    private ISoldierState _currentSoldier;
+    [SerializeField] private ISoldierState _currentSoldier;
 
     [Header("Captain")]
     public Captain captain;
@@ -31,7 +31,7 @@ public class SoldierManager : MonoBehaviour {
 
     private void Start() {
         MakeAllSoldiersImmobile();
-        ChangeState(captain);
+        ChangeState(_currentSoldier);
         SoldierUnlockEvents.OnSoldierUnlocked += UnlockSoldier;
     }
 

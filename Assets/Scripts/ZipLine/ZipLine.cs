@@ -20,6 +20,8 @@ public class Zipline : MonoBehaviour {
     [Header("Player Y Offset")]
     [SerializeField] private float _riderYOffset = -1.5f;
 
+    private Transform _originalLayer;
+
     void Start() {
         _travelPoint.position = _pointA.position;
         UpdateRopeVisual();
@@ -34,6 +36,9 @@ public class Zipline : MonoBehaviour {
             target.position,
             _speed * Time.deltaTime
         );
+
+        // Sincronize o mountPoint com o travelPoint
+        _mountPoint.position = _travelPoint.position;
 
         UpdateRopeVisual();
 
@@ -63,8 +68,11 @@ public class Zipline : MonoBehaviour {
         rb.isKinematic = true;
         _rider.GetComponent<SoldierMovement>().SetMovementEnabled(false);
 
-        _rider.transform.parent = _mountPoint;
+        _originalLayer = _rider.transform.parent;
+
+        _rider.transform.SetParent(_travelPoint, worldPositionStays: false);
         _rider.transform.localPosition = new Vector3(0f, _riderYOffset, 0f);
+
 
         _goingForward = (_travelPoint.position == _pointA.position);
 
@@ -81,14 +89,20 @@ public class Zipline : MonoBehaviour {
         _isRiding = false;
         yield return null;
 
-        var rb = _rider.GetComponent<Rigidbody>();
-        rb.useGravity = true;
-        rb.isKinematic = false;
-        _rider.GetComponent<SoldierMovement>().SetMovementEnabled(true);
+        if (_rider != null) {
+            var rb = _rider.GetComponent<Rigidbody>();
+            if (rb != null) {
+                rb.useGravity = true;
+                rb.isKinematic = false;
+            }
+            var movement = _rider.GetComponent<SoldierMovement>();
+            if (movement != null) {
+                movement.SetMovementEnabled(true);
+            }
 
-        _rider.transform.parent = GetComponent<SoldierManager>()._originalParent;
-
-        _goingForward = !_goingForward;
-        _rider = null;
+            _rider.transform.parent = _originalLayer;
+            _goingForward = !_goingForward;
+            _rider = null;
+        }
     }
 }
