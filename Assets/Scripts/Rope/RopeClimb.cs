@@ -1,3 +1,5 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class RopeClimb : MonoBehaviour {
@@ -6,9 +8,12 @@ public class RopeClimb : MonoBehaviour {
     private Rigidbody rb;
     private bool isClimbing = false;
     private Transform ropeSegment;
+    private SoldierMovement soldierMovement;
+
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
+        soldierMovement = GetComponent<SoldierMovement>();
     }
 
     public void EnterRope(Transform segment) {
@@ -16,12 +21,20 @@ public class RopeClimb : MonoBehaviour {
         isClimbing = true;
         rb.useGravity = false;
         rb.linearVelocity = Vector3.zero;
+
+        soldierMovement.SetMovementEnabled(false);
+
+        InteractionHintUI.Instance.ShowHint("Pressione Espaço para sair da corda");
     }
 
     public void ExitRope() {
         isClimbing = false;
         ropeSegment = null;
         rb.useGravity = true;
+
+        soldierMovement.SetMovementEnabled(true);
+
+        InteractionHintUI.Instance.HideHint();
     }
 
     private void Update() {
@@ -32,8 +45,7 @@ public class RopeClimb : MonoBehaviour {
             return;
         }
 
-        float vertical = Input.GetAxisRaw("Vertical"); // W = 1, S = -1, nada = 0
-
+        float vertical = Input.GetAxisRaw("Vertical");
         Vector3 move = Vector3.up * vertical * climbSpeed;
         rb.linearVelocity = move;
 

@@ -69,13 +69,15 @@ public class Zipline : MonoBehaviour {
         _localZip.transform.localScale = new Vector3(enlargedScale, enlargedScale, enlargedScale);
         _localZip.AddComponent<Rigidbody>().useGravity = false;
         _localZip.GetComponent<Collider>().isTrigger = true;
-        _localZip.GetComponent<BoxCollider>().size = new Vector3(4f, 4f, 4f);
+        _localZip.GetComponent<BoxCollider>().size = new Vector3(1f, 1f, 1f);
 
         // Desabilita a gravidade e o movimento do jogador, e o coloca como filho do objeto zip
         player.GetComponent<Rigidbody>().useGravity = false;
         player.GetComponent<Rigidbody>().isKinematic = true;
-        player.GetComponent<SoldierMovement>().SetMovementEnabled(false);
+        player.GetComponent<SoldierMovement>().SetMovementEnabled(false); 
         player.transform.parent = _localZip.transform;
+
+        InteractionHintUI.Instance.HideHint();
 
         Vector3 direction = (_targetZipLine._zipTransform.position - _zipTransform.position).normalized;
         direction.y = 0f; 
@@ -102,5 +104,16 @@ public class Zipline : MonoBehaviour {
         Destroy(_localZip);
         _localZip = null;
         _isZipLineActive = false;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Sargeant")) {
+            InteractionHintUI.Instance.ShowHint("Pressione E para usar a tirolesa");
+        }
+    }
+    private void OnTriggerExit(Collider other) {
+        if (other.CompareTag("Sargeant")) {
+            InteractionHintUI.Instance.HideHint();
+        }
     }
 }
