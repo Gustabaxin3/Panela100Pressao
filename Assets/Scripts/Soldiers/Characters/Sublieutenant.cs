@@ -1,3 +1,4 @@
+using AUDIO;
 using UnityEngine;
 
 public class Sublieutenant : ISoldierState {
@@ -14,6 +15,7 @@ public class Sublieutenant : ISoldierState {
             if (currentPushable != null && currentPushable.IsBeingPushed) {
                 currentPushable.StopPush();
                 currentPushable = null;
+                AudioManager.Instance.StopSoundEffect("SoldadoEmpurra01");
                 return;
             }
 
@@ -23,7 +25,7 @@ public class Sublieutenant : ISoldierState {
                     pushable.StartPush(_transform);
                     currentPushable = pushable;
 
-                    
+                    AudioManager.Instance.PlaySoundEffect("Audio/Empurra/SoldadoEmpurra01", loop: true, position: transform.position, spatialBlend: 0); ;
                     break;
                 }
             }
@@ -34,6 +36,8 @@ public class Sublieutenant : ISoldierState {
         if (currentPushable != null) {
             currentPushable.StopPush();
             currentPushable = null;
+
+            //AudioManager.Instance.StopSoundEffect("SoldadoEmpurra01");
         }
         base.OnExit();
     }
