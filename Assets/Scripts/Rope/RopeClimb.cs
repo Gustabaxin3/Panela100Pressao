@@ -24,7 +24,7 @@ public class RopeClimb : MonoBehaviour {
 
         soldierMovement.SetMovementEnabled(false);
 
-        InteractionHintUI.Instance.ShowHint("Pressione Espaço para sair da corda");
+        InteractionHintUI.Instance.ShowHint("Pressione Espaço para sair da corda.");
     }
 
     public void ExitRope() {

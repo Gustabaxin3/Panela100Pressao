@@ -108,7 +108,7 @@ public class Zipline : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Sargeant")) {
-            InteractionHintUI.Instance.ShowHint("Pressione E para usar a tirolesa");
+            InteractionHintUI.Instance.ShowHint("Pressione E para usar a tirolesa.");
         }
     }
     private void OnTriggerExit(Collider other) {
