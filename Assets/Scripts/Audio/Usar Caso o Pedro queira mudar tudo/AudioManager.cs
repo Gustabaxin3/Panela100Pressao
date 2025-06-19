@@ -68,8 +68,7 @@ namespace AUDIO
             return PlaySoundEffect(clip, mixer, volume, pitch, loop, filePath);
         }
 
-        public AudioSource PlaySoundEffect(AudioClip clip, AudioMixerGroup mixer = null, float volume = 1, float pitch = 1, bool loop = false, string filePath = "")
-        {
+        public AudioSource PlaySoundEffect(AudioClip clip, AudioMixerGroup mixer = null, float volume = 1, float pitch = 1, bool loop = false, string filePath = "") {
             string fileName = clip.name;
             if (filePath != string.Empty) fileName = filePath;
 
@@ -83,7 +82,7 @@ namespace AUDIO
 
             effectSource.outputAudioMixerGroup = mixer;
             effectSource.volume = volume;
-            effectSource.spatialBlend = 0;
+            effectSource.spatialBlend = 1f;
             effectSource.pitch = pitch;
             effectSource.loop = loop;
 
