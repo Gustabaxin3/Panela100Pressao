@@ -1,121 +1,94 @@
-using AUDIO;
+using System.Collections;
 using UnityEngine;
 
 public class Zipline : MonoBehaviour {
-    [SerializeField] private Zipline _targetZipLine;
-    [SerializeField] private float _zipSpeed = 5f;
-    [SerializeField] private float _zipScale = 0.2f;
-    [SerializeField] private float _arrivalThreshold = 0.4f;
-    [SerializeField] private Transform _zipTransform;
+    [Header("References")]
+    [SerializeField] private Transform _pointA;
+    [SerializeField] private Transform _pointB;
+    [SerializeField] private Transform _ropeVisual;
+    [SerializeField] private Transform _travelPoint;
+    [SerializeField] private Transform _mountPoint;
 
-    private LineRenderer _lineRenderer;
-    [SerializeField] private Material _lineMaterial;
-    [SerializeField] private float _lineYOffset = 1.5f;
+    [Header("Settings")]
+    [SerializeField] private float _speed = 5f;
+    [SerializeField] private float _arrivalThreshold = 0.1f;
 
-    private bool _isZipLineActive = false;
-    private GameObject _localZip;
+    private bool _isRiding = false;
+    private bool _goingForward = true;
+    private GameObject _rider;
 
-    private void Awake() {
-        // Inicializa o LineRenderer
-        _lineRenderer = GetComponent<LineRenderer>();
-        _lineRenderer.positionCount = 2;
-        _lineRenderer.material = _lineMaterial;
-        _lineRenderer.startWidth = 0.1f;
-        _lineRenderer.endWidth = 0.1f;
-        _lineRenderer.useWorldSpace = true;
+    [Header("Player Y Offset")]
+    [SerializeField] private float _riderYOffset = -1.5f;
+
+    void Start() {
+        _travelPoint.position = _pointA.position;
+        UpdateRopeVisual();
     }
 
-    private void Update() {
-        UpdateLineRenderer();
+    void Update() {
+        if (!_isRiding) return;
 
-        // Se o zipline não está ativo ou o objeto local não existe, sai da função
-        if (!_isZipLineActive || _localZip == null) return;
-
-        // Aplica força ao objeto zip para movê-lo em direção ao destino
-        _localZip.GetComponent<Rigidbody>().AddForce(
-            (_targetZipLine._zipTransform.position - _zipTransform.position).normalized *
-            _zipSpeed * Time.deltaTime,
-            ForceMode.Acceleration
+        Transform target = _goingForward ? _pointB : _pointA;
+        _travelPoint.position = Vector3.MoveTowards(
+            _travelPoint.position,
+            target.position,
+            _speed * Time.deltaTime
         );
 
-        // Verifica se o objeto zip chegou próximo o suficiente do destino
-        if (Vector3.Distance(_localZip.transform.position, _targetZipLine._zipTransform.position) <= _arrivalThreshold) {
-            ResetZipLine();
+        UpdateRopeVisual();
+
+        if (Vector3.Distance(_travelPoint.position, target.position) <= _arrivalThreshold) {
+            StartCoroutine(EndRide());
         }
     }
 
-    private void UpdateLineRenderer() {
-        // Atualiza a posição da linha visual do zipline
-        if (_targetZipLine == null || _zipTransform == null) return;
-
-        Vector3 startPos = _zipTransform.position + Vector3.up * _lineYOffset;
-        Vector3 endPos = _targetZipLine._zipTransform.position + Vector3.up * _lineYOffset;
-
-        _lineRenderer.SetPosition(0, startPos);
-        _lineRenderer.SetPosition(1, endPos);
+    private void UpdateRopeVisual() {
+        Vector3 dir = _pointB.position - _pointA.position;
+        float dist = dir.magnitude;
+        _ropeVisual.position = _pointA.position + dir * 0.5f;
+        _ropeVisual.rotation = Quaternion.LookRotation(dir);
+        _ropeVisual.localScale = new Vector3(
+            _ropeVisual.localScale.x,
+            _ropeVisual.localScale.y,
+            dist
+        );
     }
 
-    public void StartZipLine(GameObject player) {
-        // Impede iniciar o zipline se já estiver ativo
-        if (_isZipLineActive) return;
+    public void TryStartRide(GameObject player) {
+        if (_isRiding) return;
 
-        // Cria um objeto invisível que servirá de transporte para o jogador
-        _localZip = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        _localZip.GetComponent<Renderer>().enabled = false;
-        _localZip.transform.position = player.transform.position;
+        _rider = player;
+        var rb = _rider.GetComponent<Rigidbody>();
+        rb.useGravity = false;
+        rb.isKinematic = true;
+        _rider.GetComponent<SoldierMovement>().SetMovementEnabled(false);
 
-        // Aumenta o tamanho do objeto invisível
-        float enlargedScale = _zipScale * 3f;
-        _localZip.transform.localScale = new Vector3(enlargedScale, enlargedScale, enlargedScale);
-        _localZip.AddComponent<Rigidbody>().useGravity = false;
-        _localZip.GetComponent<Collider>().isTrigger = true;
-        _localZip.GetComponent<BoxCollider>().size = new Vector3(1f, 1f, 1f);
+        _rider.transform.parent = _mountPoint;
+        _rider.transform.localPosition = new Vector3(0f, _riderYOffset, 0f);
 
-        // Desabilita a gravidade e o movimento do jogador, e o coloca como filho do objeto zip
-        player.GetComponent<Rigidbody>().useGravity = false;
-        player.GetComponent<Rigidbody>().isKinematic = true;
-        player.GetComponent<SoldierMovement>().SetMovementEnabled(false); 
-        player.transform.parent = _localZip.transform;
+        _goingForward = (_travelPoint.position == _pointA.position);
 
-        InteractionHintUI.Instance.HideHint();
-
-        Vector3 direction = (_targetZipLine._zipTransform.position - _zipTransform.position).normalized;
-        direction.y = 0f; 
-        if (direction != Vector3.zero) {
-            player.transform.rotation = Quaternion.LookRotation(direction);
+        Vector3 zipDir = (_goingForward ? _pointB.position - _pointA.position : _pointA.position - _pointB.position);
+        zipDir.y = 0f;
+        if (zipDir.sqrMagnitude > 0.001f) {
+            _rider.transform.rotation = Quaternion.LookRotation(zipDir.normalized);
         }
 
-        _isZipLineActive = true;
-        AudioManager.Instance.PlaySoundEffect("Audio/Tirolesa", loop: true, volume: 1, spatialBlend: 0); //0 no spatial blend fica melhor
+        _isRiding = true;
     }
 
-    private void ResetZipLine() {
-        // Recupera o jogador que está como filho do objeto zip
-        GameObject player = _localZip.transform.GetChild(0).gameObject;
+    private IEnumerator EndRide() {
+        _isRiding = false;
+        yield return null;
 
-        // Restaura as propriedades físicas e de movimento do jogador
-        player.GetComponent<Rigidbody>().useGravity = true;
-        player.GetComponent<Rigidbody>().isKinematic = false;
-        player.GetComponent<SoldierMovement>().SetMovementEnabled(true);
+        var rb = _rider.GetComponent<Rigidbody>();
+        rb.useGravity = true;
+        rb.isKinematic = false;
+        _rider.GetComponent<SoldierMovement>().SetMovementEnabled(true);
 
-        // Restaura o parent original do jogador
-        player.transform.parent = player.GetComponent<Sargeant>().ResetToOriginal();
+        _rider.transform.parent = GetComponent<SoldierManager>()._originalParent;
 
-        // Destroi o objeto zip e reseta o estado
-        Destroy(_localZip);
-        _localZip = null;
-        _isZipLineActive = false;
-        AudioManager.Instance.StopSoundEffect("Tirolesa");
-    }
-
-    private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Sargeant")) {
-            InteractionHintUI.Instance.ShowHint("Pressione E para usar a tirolesa.");
-        }
-    }
-    private void OnTriggerExit(Collider other) {
-        if (other.CompareTag("Sargeant")) {
-            InteractionHintUI.Instance.HideHint();
-        }
+        _goingForward = !_goingForward;
+        _rider = null;
     }
 }

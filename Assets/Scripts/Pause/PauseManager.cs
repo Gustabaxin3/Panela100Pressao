@@ -40,8 +40,6 @@ public class PauseManager : MonoBehaviour {
     }
 
     private void Start() {
-        AudioManager.Instance.PlayTrack("Audio/test", loop: true);
-
         _masterSlider.value = _lastMasterVolume;
         _musicSlider.value = _lastMusicVolume;
         _sfxSlider.value = _lastSFXVolume;

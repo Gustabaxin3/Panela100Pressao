@@ -10,6 +10,7 @@ TagManager:
   - Sargeant
   - Cadet
   - Rope
+  - ZiplinePoint
   layers:
   - Default
   - TransparentFX
