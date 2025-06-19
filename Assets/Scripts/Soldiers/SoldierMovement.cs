@@ -54,8 +54,8 @@ public class SoldierMovement : MonoBehaviour {
     private void HandleInput() {
         if (!IsActive) return;
 
-        InputMove.x = Input.GetAxis("Horizontal");
-        InputMove.y = Input.GetAxis("Vertical");
+        InputMove.x = Input.GetAxisRaw("Horizontal");
+        InputMove.y = Input.GetAxisRaw("Vertical");
         IsRunning = CanRun && Input.GetKey(RunningKey);
 
         HandleMovement();
