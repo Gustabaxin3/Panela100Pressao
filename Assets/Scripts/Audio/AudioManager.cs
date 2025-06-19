@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UIElements;
 
 namespace AUDIO
 {
@@ -68,22 +69,25 @@ namespace AUDIO
             return PlaySoundEffect(clip, mixer, volume, pitch, loop, filePath);
         }
 
-        public AudioSource PlaySoundEffect(AudioClip clip, AudioMixerGroup mixer = null, float volume = 1, float pitch = 1, bool loop = false, string filePath = "")
+        public AudioSource PlaySoundEffect(AudioClip clip, AudioMixerGroup mixer = null, float volume = 1, float pitch = 1, bool loop = false, string filePath = ""/*, Vector3? position = null, float spatialBlend = 0*/)
         {
             string fileName = clip.name;
             if (filePath != string.Empty) fileName = filePath;
 
             AudioSource effectSource = new GameObject(string.Format(SFX_NAME_FORMAT, fileName)).AddComponent<AudioSource>();
             effectSource.transform.SetParent(sfxRoot);
-            effectSource.transform.position = sfxRoot.position;
 
+            /*usa a posição informada 
+            effectSource.transform.position = position ?? sfxRoot.position;
+            */
+            
             effectSource.clip = clip;
 
             if (mixer == null) mixer = sfxMixer;
 
             effectSource.outputAudioMixerGroup = mixer;
             effectSource.volume = volume;
-            effectSource.spatialBlend = 0;
+            effectSource.spatialBlend = 0; //precisa ser 1
             effectSource.pitch = pitch;
             effectSource.loop = loop;
 

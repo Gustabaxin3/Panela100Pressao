@@ -41,6 +41,15 @@ public class Captain : ISoldierState {
 
             int numSorteado = UnityEngine.Random.Range(0, sounds.Length);
             AudioManager.Instance.PlaySoundEffect(sounds[numSorteado]);
+
+            /*
+            AudioManager.Instance.PlaySoundEffect(
+                sounds[numSorteado],
+                position: _transform.position,
+                spatialBlend: 1
+
+                );
+            */
         }
     }
 
