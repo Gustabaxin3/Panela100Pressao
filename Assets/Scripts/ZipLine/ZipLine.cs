@@ -7,7 +7,6 @@ public class Zipline : MonoBehaviour {
     [SerializeField] private Transform _pointB;
     [SerializeField] private Transform _ropeVisual;
     [SerializeField] private Transform _travelPoint;
-    [SerializeField] private Transform _mountPoint;
 
     [Header("Settings")]
     [SerializeField] private float _speed = 5f;
@@ -18,7 +17,7 @@ public class Zipline : MonoBehaviour {
     private GameObject _rider;
 
     [Header("Player Y Offset")]
-    [SerializeField] private float _riderYOffset = -1.5f;
+    [SerializeField] private float _riderYOffset = -1.4f;
 
     private Transform _originalLayer;
 
@@ -87,18 +86,24 @@ public class Zipline : MonoBehaviour {
         yield return null;
 
         if (_rider != null) {
-            var rb = _rider.GetComponent<Rigidbody>();
-            if (rb != null) {
+            Rigidbody rb = _rider.GetComponent<Rigidbody>();
+            if (rb != null) 
                 rb.useGravity = true;
                 rb.isKinematic = false;
-            }
-            var movement = _rider.GetComponent<SoldierMovement>();
-            if (movement != null) {
+
+            SoldierMovement movement = _rider.GetComponent<SoldierMovement>();
+            if (movement != null) 
                 movement.SetMovementEnabled(true);
-            }
+            
 
             _rider.transform.parent = _originalLayer;
             _goingForward = !_goingForward;
+
+            Sargeant Sargeant = _rider.GetComponent<Sargeant>();
+            if (Sargeant != null) 
+                Sargeant.ChangePose(false);
+            
+
             _rider = null;
         }
     }
