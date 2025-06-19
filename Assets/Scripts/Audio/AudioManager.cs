@@ -55,18 +55,25 @@ namespace AUDIO
         #endregion
 
         #region Sound Effects
-        public AudioSource PlaySoundEffect(string filePath, AudioMixerGroup mixer = null, float volume = 1, float pitch = 1, bool loop = false)
-        {
+        public AudioSource PlaySoundEffect(
+            string filePath,
+            AudioMixerGroup mixer = null,
+            float volume = 1f,
+            float pitch = 1f,
+            bool loop = false,
+            Vector3? position = null,
+            float spatialBlend = 1f
+        ) {
             AudioClip clip = Resources.Load<AudioClip>(filePath);
 
-            if (clip == null)
-            {
-                Debug.LogError($"Não pode carregar o arquivo '{filePath}'. Veja se existe na pasta Resources!");
+            if (clip == null) {
+                Debug.LogError($"Não foi possível carregar o som em '{filePath}' (Resources).");
                 return null;
             }
 
-            return PlaySoundEffect(clip, mixer, volume, pitch, loop, filePath);
+            return PlaySoundEffect(clip, mixer, volume, pitch, loop, filePath, position, spatialBlend);
         }
+
 
         public AudioSource PlaySoundEffect(
             AudioClip clip,
