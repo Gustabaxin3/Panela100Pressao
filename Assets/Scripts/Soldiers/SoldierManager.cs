@@ -107,4 +107,11 @@ public class SoldierManager : MonoBehaviour {
         sargeant.GetComponent<SoldierMovement>().SetMovementEnabled(false);
         cadet.GetComponent<SoldierMovement>().SetMovementEnabled(false);
     }
+    public SoldierType GetCurrentSoldierType() {
+        if (_currentSoldier == captain) return SoldierType.Captain;
+        if (_currentSoldier == sublieutenant) return SoldierType.Sublieutenant;
+        if (_currentSoldier == sargeant) return SoldierType.Sargeant;
+        if (_currentSoldier == cadet) return SoldierType.Cadet;
+        return SoldierType.Captain;
+    }
 }
