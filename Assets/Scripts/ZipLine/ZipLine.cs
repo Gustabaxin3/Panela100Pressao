@@ -22,7 +22,6 @@ public class Zipline : MonoBehaviour {
     private Transform _originalLayer;
 
     void Start() {
-        _travelPoint.position = _pointA.position;
         UpdateRopeVisual();
     }
 
@@ -66,11 +65,15 @@ public class Zipline : MonoBehaviour {
 
         _originalLayer = _rider.transform.parent;
 
+        float distanceToA = Vector3.Distance(player.transform.position, _pointA.position);
+        float distanceToB = Vector3.Distance(player.transform.position, _pointB.position);
+
+        _goingForward = distanceToA < distanceToB;
+
+        _travelPoint.position = _goingForward ? _pointA.position : _pointB.position;
+
         _rider.transform.SetParent(_travelPoint, worldPositionStays: false);
         _rider.transform.localPosition = new Vector3(0f, _riderYOffset, 0f);
-
-
-        _goingForward = (_travelPoint.position == _pointA.position);
 
         Vector3 zipDir = (_goingForward ? _pointB.position - _pointA.position : _pointA.position - _pointB.position);
         zipDir.y = 0f;
@@ -80,6 +83,7 @@ public class Zipline : MonoBehaviour {
 
         _isRiding = true;
     }
+
 
     private IEnumerator EndRide() {
         _isRiding = false;
