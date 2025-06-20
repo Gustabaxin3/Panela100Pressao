@@ -10,8 +10,7 @@ public class Sargeant : ISoldierState {
 
     protected override void Start() {
         base.Start();
-        _defaultPose.SetActive(true);
-        _zipLinePose.SetActive(false);
+        ChangePose(false);
     }
 
     public override void OnUpdate() {
@@ -30,10 +29,13 @@ public class Sargeant : ISoldierState {
                 var zip = hit.collider.GetComponentInParent<Zipline>();
                 zip.TryStartRide(this.gameObject);
                 InteractionHintUI.Instance.HideHint();
-                _defaultPose.SetActive(false);
-                _zipLinePose.SetActive(true);
+                ChangePose(true);
             }
         }
+    }
+    public void ChangePose(bool isZipLine) {
+        _defaultPose.SetActive(!isZipLine);
+        _zipLinePose.SetActive(isZipLine);
     }
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("ZiplinePoint")) {

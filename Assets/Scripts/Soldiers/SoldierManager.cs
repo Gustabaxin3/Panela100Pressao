@@ -26,6 +26,10 @@ public class SoldierManager : MonoBehaviour {
     [SerializeField] private bool _isCadetUnlocked = false;
 
     [SerializeField] private Animator _animator;
+    private float _startAnimationDuration;
+    private float _endAnimationDuration;
+
+    private bool _isTransitioning = false;
 
     [field: SerializeField] public Transform _originalParent { get; private set; }
 
@@ -41,7 +45,6 @@ public class SoldierManager : MonoBehaviour {
 
     private void Update() {
         _currentSoldier?.OnUpdate();
-        ChooseSoldier();
     }
     private void FixedUpdate() {
         _currentSoldier?.FixedUpdate();
@@ -55,24 +58,26 @@ public class SoldierManager : MonoBehaviour {
         _currentSoldier.OnEnter(this);
     }
 
-    private void ChooseSoldier() {
-        switch (true) {
-            case bool _ when Input.GetKeyDown(KeyCode.Alpha1): ChangeCharacter(_isCaptainUnlocked, captain); break;
-            case bool _ when Input.GetKeyDown(KeyCode.Alpha2): ChangeCharacter(_isSublieutenantUnlocked, sublieutenant); break;
-            case bool _ when Input.GetKeyDown(KeyCode.Alpha3): ChangeCharacter(_isSargeantUnlocked, sargeant); break;
-            case bool _ when Input.GetKeyDown(KeyCode.Alpha4): ChangeCharacter(_isCadetUnlocked, cadet); break;
-        }
-    }
-    private void ChangeCharacter(bool soldierUnlocked, ISoldierState soldierState) {
-        if (soldierUnlocked && _currentSoldier != soldierState) {
+    public void SelectCaptain() => ChangeCharacter(_isCaptainUnlocked, captain);
+    public void SelectSublieutenant() => ChangeCharacter(_isSublieutenantUnlocked, sublieutenant);
+    public void SelectSargeant() => ChangeCharacter(_isSargeantUnlocked, sargeant);
+    public void SelectCadet() => ChangeCharacter(_isCadetUnlocked, cadet);
+
+    public void ChangeCharacter(bool soldierUnlocked, ISoldierState soldierState) {
+        if (soldierUnlocked && _currentSoldier != soldierState && !_isTransitioning) {
             StartCoroutine(StartAnimation(soldierState));
         }
     }
+
     private IEnumerator StartAnimation(ISoldierState soldierState) {
+        _isTransitioning = true;
         _currentSoldier.GetComponent<SoldierMovement>().SetMovementEnabled(false);
 
+        _startAnimationDuration = _animator.GetCurrentAnimatorStateInfo(0).length;
+        _endAnimationDuration = _animator.GetCurrentAnimatorStateInfo(0).length;
+
         _animator.SetBool("Start", true);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(_startAnimationDuration);
 
         _animator.SetBool("Start", false);
 
@@ -80,10 +85,11 @@ public class SoldierManager : MonoBehaviour {
         yield return null;
 
         _animator.SetBool("End", true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(_endAnimationDuration);
 
         soldierState.GetComponent<SoldierMovement>().SetMovementEnabled(true);
         _animator.SetBool("End", false);
+        _isTransitioning = false;
     }
     private void UnlockSoldier(ISoldierState soldierState) {
         switch (soldierState) {
@@ -100,5 +106,12 @@ public class SoldierManager : MonoBehaviour {
         sublieutenant.GetComponent<SoldierMovement>().SetMovementEnabled(false);
         sargeant.GetComponent<SoldierMovement>().SetMovementEnabled(false);
         cadet.GetComponent<SoldierMovement>().SetMovementEnabled(false);
+    }
+    public SoldierType GetCurrentSoldierType() {
+        if (_currentSoldier == captain) return SoldierType.Captain;
+        if (_currentSoldier == sublieutenant) return SoldierType.Sublieutenant;
+        if (_currentSoldier == sargeant) return SoldierType.Sargeant;
+        if (_currentSoldier == cadet) return SoldierType.Cadet;
+        return SoldierType.Captain;
     }
 }

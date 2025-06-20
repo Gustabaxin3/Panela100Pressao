@@ -7,7 +7,6 @@ public class Zipline : MonoBehaviour {
     [SerializeField] private Transform _pointB;
     [SerializeField] private Transform _ropeVisual;
     [SerializeField] private Transform _travelPoint;
-    [SerializeField] private Transform _mountPoint;
 
     [Header("Settings")]
     [SerializeField] private float _speed = 5f;
@@ -18,12 +17,11 @@ public class Zipline : MonoBehaviour {
     private GameObject _rider;
 
     [Header("Player Y Offset")]
-    [SerializeField] private float _riderYOffset = -1.5f;
+    [SerializeField] private float _riderYOffset = -1.4f;
 
     private Transform _originalLayer;
 
     void Start() {
-        _travelPoint.position = _pointA.position;
         UpdateRopeVisual();
     }
 
@@ -67,11 +65,15 @@ public class Zipline : MonoBehaviour {
 
         _originalLayer = _rider.transform.parent;
 
+        float distanceToA = Vector3.Distance(player.transform.position, _pointA.position);
+        float distanceToB = Vector3.Distance(player.transform.position, _pointB.position);
+
+        _goingForward = distanceToA < distanceToB;
+
+        _travelPoint.position = _goingForward ? _pointA.position : _pointB.position;
+
         _rider.transform.SetParent(_travelPoint, worldPositionStays: false);
         _rider.transform.localPosition = new Vector3(0f, _riderYOffset, 0f);
-
-
-        _goingForward = (_travelPoint.position == _pointA.position);
 
         Vector3 zipDir = (_goingForward ? _pointB.position - _pointA.position : _pointA.position - _pointB.position);
         zipDir.y = 0f;
@@ -82,23 +84,30 @@ public class Zipline : MonoBehaviour {
         _isRiding = true;
     }
 
+
     private IEnumerator EndRide() {
         _isRiding = false;
         yield return null;
 
         if (_rider != null) {
-            var rb = _rider.GetComponent<Rigidbody>();
-            if (rb != null) {
+            Rigidbody rb = _rider.GetComponent<Rigidbody>();
+            if (rb != null) 
                 rb.useGravity = true;
                 rb.isKinematic = false;
-            }
-            var movement = _rider.GetComponent<SoldierMovement>();
-            if (movement != null) {
+
+            SoldierMovement movement = _rider.GetComponent<SoldierMovement>();
+            if (movement != null) 
                 movement.SetMovementEnabled(true);
-            }
+            
 
             _rider.transform.parent = _originalLayer;
             _goingForward = !_goingForward;
+
+            Sargeant Sargeant = _rider.GetComponent<Sargeant>();
+            if (Sargeant != null) 
+                Sargeant.ChangePose(false);
+            
+
             _rider = null;
         }
     }
