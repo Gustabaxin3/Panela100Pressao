@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
+using AUDIO;
 
 public class SoldierManager : MonoBehaviour {
     [SerializeField] private ISoldierState _currentSoldier;
@@ -71,6 +72,9 @@ public class SoldierManager : MonoBehaviour {
 
     private IEnumerator StartAnimation(ISoldierState soldierState) {
         _isTransitioning = true;
+
+        AudioManager.Instance.PlaySoundEffect("Audio/Troca de Personagem/TrocaPersonagem", volume: 0.5f, position: transform.position, spatialBlend: 0);
+
         _currentSoldier.GetComponent<SoldierMovement>().SetMovementEnabled(false);
 
         _startAnimationDuration = _animator.GetCurrentAnimatorStateInfo(0).length;
