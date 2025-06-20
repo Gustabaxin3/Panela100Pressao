@@ -45,7 +45,6 @@ public class SoldierManager : MonoBehaviour {
 
     private void Update() {
         _currentSoldier?.OnUpdate();
-        ChooseSoldier();
     }
     private void FixedUpdate() {
         _currentSoldier?.FixedUpdate();
@@ -59,15 +58,12 @@ public class SoldierManager : MonoBehaviour {
         _currentSoldier.OnEnter(this);
     }
 
-    private void ChooseSoldier() {
-        switch (true) {
-            case bool _ when Input.GetKeyDown(KeyCode.Alpha1): ChangeCharacter(_isCaptainUnlocked, captain); break;
-            case bool _ when Input.GetKeyDown(KeyCode.Alpha2): ChangeCharacter(_isSublieutenantUnlocked, sublieutenant); break;
-            case bool _ when Input.GetKeyDown(KeyCode.Alpha3): ChangeCharacter(_isSargeantUnlocked, sargeant); break;
-            case bool _ when Input.GetKeyDown(KeyCode.Alpha4): ChangeCharacter(_isCadetUnlocked, cadet); break;
-        }
-    }
-    private void ChangeCharacter(bool soldierUnlocked, ISoldierState soldierState) {
+    public void SelectCaptain() => ChangeCharacter(_isCaptainUnlocked, captain);
+    public void SelectSublieutenant() => ChangeCharacter(_isSublieutenantUnlocked, sublieutenant);
+    public void SelectSargeant() => ChangeCharacter(_isSargeantUnlocked, sargeant);
+    public void SelectCadet() => ChangeCharacter(_isCadetUnlocked, cadet);
+
+    public void ChangeCharacter(bool soldierUnlocked, ISoldierState soldierState) {
         if (soldierUnlocked && _currentSoldier != soldierState && !_isTransitioning) {
             StartCoroutine(StartAnimation(soldierState));
         }
