@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using AUDIO;
 
 public class Zipline : MonoBehaviour {
     [Header("References")]
@@ -57,6 +58,8 @@ public class Zipline : MonoBehaviour {
     public void TryStartRide(GameObject player) {
         if (_isRiding) return;
 
+        AudioManager.Instance.PlaySoundEffect("Audio/Tirolesa", loop: true, spatialBlend: 0);
+
         _rider = player;
         var rb = _rider.GetComponent<Rigidbody>();
         rb.useGravity = false;
@@ -88,6 +91,8 @@ public class Zipline : MonoBehaviour {
     private IEnumerator EndRide() {
         _isRiding = false;
         yield return null;
+
+        AudioManager.Instance.StopSoundEffect("Tirolesa");
 
         if (_rider != null) {
             Rigidbody rb = _rider.GetComponent<Rigidbody>();
