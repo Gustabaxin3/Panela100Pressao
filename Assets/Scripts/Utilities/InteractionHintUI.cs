@@ -26,6 +26,11 @@ public class InteractionHintUI : MonoBehaviour {
         _hintText.text = message;
         FadeTo(1f);
     }
+    public void ShowHint(string message, Color color) {
+        _hintText.text = message;
+        _hintText.color = color;
+        FadeTo(1f);
+    }
 
     public void HideHint() {
         FadeTo(0f);
