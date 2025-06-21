@@ -19,6 +19,8 @@ public class SoldierSelectorUI : MonoBehaviour {
 
     private SoldierType _lastSoldierType;
 
+    [SerializeField] private CanvasGroup _selectorCanvasGroup;
+
     private void Start() {
         _soldierManager = GetComponent<SoldierManager>();
 
@@ -100,6 +102,7 @@ public class SoldierSelectorUI : MonoBehaviour {
 
     private void ResetRouletteUI() {
         Time.timeScale = 1f;
+        _selectorCanvasGroup.alpha = 0f;
         _data.canvasGroupPanel.alpha = 0f;
         if (_growCoroutine != null) StopCoroutine(_growCoroutine);
         _rouletteController.ResetScale();
@@ -120,6 +123,7 @@ public class SoldierSelectorUI : MonoBehaviour {
             );
             _rouletteController.SetPosition(localPoint);
         }
+        _selectorCanvasGroup.alpha = 1f;
     }
 
     private float GetMouseAngle() {
