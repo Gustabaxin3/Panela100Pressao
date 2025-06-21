@@ -8,6 +8,10 @@ public class Sargeant : ISoldierState {
     [SerializeField] private GameObject _defaultPose;
     [SerializeField] private GameObject _zipLinePose;
 
+    protected override void Awake() {
+        base.Awake();
+        soldierType = SoldierType.Sargeant;
+    }
     protected override void Start() {
         base.Start();
         ChangePose(false);
