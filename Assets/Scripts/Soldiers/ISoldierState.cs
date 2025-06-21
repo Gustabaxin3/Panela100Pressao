@@ -9,6 +9,7 @@ public abstract class ISoldierState : MonoBehaviour {
     protected Transform _transform;
     protected CinemachineCamera _cinemachineCamera;
 
+    public SoldierType soldierType { get; protected set; }
 
     protected virtual void Awake() {
         _cinemachineCamera = GetComponentInChildren<CinemachineCamera>();

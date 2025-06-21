@@ -14,6 +14,10 @@ public class Captain : ISoldierState {
 
     private bool _isJumping;
 
+    protected override void Awake() {
+        base.Awake();
+        soldierType = SoldierType.Captain;
+    }
     protected override void Start() {
         base.Start();
         _groundCheck = GetComponentInChildren<GroundCheck>();
