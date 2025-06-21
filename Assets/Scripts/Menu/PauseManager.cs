@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using AUDIO;
 
-public class PauseManager : MonoBehaviour {
+public class PauseManager : MonoBehaviour
+{
     [Header("Canvas Group")]
     [SerializeField] private CanvasGroup _mainCanvasGroup;
     [SerializeField] private CanvasGroup _optionCanvasGroup;
@@ -17,13 +18,17 @@ public class PauseManager : MonoBehaviour {
     [Header("Audio Settings")]
     [SerializeField] private AudioSettingData _audioSettings;
 
-    private void Awake() {
+    private bool pausouNoEsc = false;
+
+    private void Awake()
+    {
         SetCanvasGroupState(_mainCanvasGroup, false);
         SetCanvasGroupState(_optionCanvasGroup, false);
         SetCanvasGroupState(_backgroundCanvasGroup, false);
     }
 
-    private void Start() {
+    private void Start()
+    {
 
         _audioSettings.Initialize();
 
@@ -42,22 +47,35 @@ public class PauseManager : MonoBehaviour {
         _audioSettings.muteSFXButton.onClick.AddListener(ToggleMuteSFX);
     }
 
-    private void Update() {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame) {
+    private void Update()
+    {
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
             if (_mainCanvasGroup.alpha > 0f)
-                Resume();
+            {
+                ResumeEsc();
+            }
+
             else
-                Pause();
+            {
+                PauseEsc();
+            }
+
         }
     }
 
-    private void SetCanvasGroupState(CanvasGroup targetGroup, bool isActive) {
+    private void SetCanvasGroupState(CanvasGroup targetGroup, bool isActive)
+    {
         targetGroup.alpha = isActive ? 1f : 0f;
         targetGroup.interactable = isActive;
         targetGroup.blocksRaycasts = isActive;
     }
 
-    public void Pause() {
+    private void PauseEsc()
+    {
+        pausouNoEsc = true;
+        AudioManager.Instance.PlaySoundEffect("Audio/UI/Pause", spatialBlend: 0);
+
         Cursor.lockState = CursorLockMode.None;
         SetCanvasGroupState(_mainCanvasGroup, true);
         SetCanvasGroupState(_optionCanvasGroup, false);
@@ -65,22 +83,72 @@ public class PauseManager : MonoBehaviour {
         Time.timeScale = 0f;
     }
 
-    public void Resume() {
+    private void ResumeEsc()
+    {
+        ResumeInternal(playDespauseSound: true);
+        
+        /*
+        pausouNoEsc = false;
+        AudioManager.Instance.PlaySoundEffect("Audio/UI/Despause", spatialBlend: 0);
+
         Cursor.lockState = CursorLockMode.Locked;
         SetCanvasGroupState(_mainCanvasGroup, false);
         SetCanvasGroupState(_optionCanvasGroup, false);
         SetCanvasGroupState(_backgroundCanvasGroup, false);
         Time.timeScale = 1f;
+        */
     }
 
-    public void Options() {
+    public void Pause()
+    {
+        pausouNoEsc = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        SetCanvasGroupState(_mainCanvasGroup, true);
+        SetCanvasGroupState(_optionCanvasGroup, false);
+        SetCanvasGroupState(_backgroundCanvasGroup, true);
+        Time.timeScale = 0f;
+    }
+
+    public void Resume()
+    {
+        ResumeInternal(playDespauseSound: true);
+
+        /*
+        pausouNoEsc = false;
+        AudioManager.Instance.PlaySoundEffect("Audio/UI/Despause", spatialBlend: 0);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        SetCanvasGroupState(_mainCanvasGroup, false);
+        SetCanvasGroupState(_optionCanvasGroup, false);
+        SetCanvasGroupState(_backgroundCanvasGroup, false);
+        Time.timeScale = 1f;
+        */
+    }
+
+    private void ResumeInternal(bool playDespauseSound){
+        pausouNoEsc = false;
+        if (playDespauseSound)
+            AudioManager.Instance.PlaySoundEffect("Audio/UI/Despause", spatialBlend: 0);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        SetCanvasGroupState(_mainCanvasGroup, false);
+        SetCanvasGroupState(_optionCanvasGroup, false);
+        SetCanvasGroupState(_backgroundCanvasGroup, false);
+        Time.timeScale = 1f;
+
+    }
+
+    public void Options()
+    {
         SetCanvasGroupState(_mainCanvasGroup, false);
         SetCanvasGroupState(_optionCanvasGroup, true);
         SetCanvasGroupState(_backgroundCanvasGroup, true);
         Time.timeScale = 0f;
     }
 
-    public void Exit() {
+    public void Exit()
+    {
         Application.Quit();
     }
     private void OnMasterVolumeChanged(float value) => _audioSettings.OnMasterVolumeChanged(value);
