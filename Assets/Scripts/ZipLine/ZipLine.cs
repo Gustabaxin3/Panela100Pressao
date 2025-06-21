@@ -58,7 +58,7 @@ public class Zipline : MonoBehaviour {
     public void TryStartRide(GameObject player) {
         if (_isRiding) return;
 
-        AudioManager.Instance.PlaySoundEffect("Audio/Tirolesa", loop: true, spatialBlend: 0);
+        AudioManager.Instance.PlaySoundEffect("Audio/Cenario/Tirolesa", loop: true, spatialBlend: 0);
 
         _rider = player;
         var rb = _rider.GetComponent<Rigidbody>();

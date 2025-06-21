@@ -1,4 +1,5 @@
 using UnityEngine;
+using AUDIO;
 
 public class Fan : MonoBehaviour {
     [SerializeField] private Transform _rotationCenter;
@@ -8,6 +9,13 @@ public class Fan : MonoBehaviour {
 
     private Vector3 _rotationAxis = Vector3.up;
 
-    private void Update() => transform.RotateAround(_rotationCenter.position, _rotationAxis.normalized, _rotationSpeed * Time.deltaTime);
-    
+    private void Start()
+    {
+        //AudioManager.Instance.PlaySoundEffect("Audio/Cenario/Ventilador_TesteGain", loop: true, /*position: transform.position,*/ spatialBlend: 1);
+    }
+    private void Update()
+    {
+        transform.RotateAround(_rotationCenter.position, _rotationAxis.normalized, _rotationSpeed * Time.deltaTime);
+
+    }
 }
