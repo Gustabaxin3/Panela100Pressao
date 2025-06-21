@@ -17,6 +17,8 @@ public class SoldierSelectorUI : MonoBehaviour {
 
     private Vector2 _originalRouletteAnchoredPos;
 
+    private SoldierType _lastSoldierType;
+
     private void Start() {
         _soldierManager = GetComponent<SoldierManager>();
 
@@ -26,11 +28,13 @@ public class SoldierSelectorUI : MonoBehaviour {
         _originalRouletteAnchoredPos = _rouletteController.GetPosition();
 
         HandleAllChoicesInteractivity();
+        AlignRouletteToCurrentSoldier();
+        _lastSoldierType = _soldierManager.GetCurrentSoldierType();
     }
 
-    private void OnEnable()=> SoldierUnlockEvents.OnSoldierUnlocked += OnSoldierUnlocked;
+    private void OnEnable() => SoldierUnlockEvents.OnSoldierUnlocked += OnSoldierUnlocked;
     private void OnDisable() => SoldierUnlockEvents.OnSoldierUnlocked -= OnSoldierUnlocked;
-    
+
 
     private void OnSoldierUnlocked(ISoldierState soldier) {
         HandleAllChoicesInteractivity();
@@ -38,6 +42,7 @@ public class SoldierSelectorUI : MonoBehaviour {
 
     private void Update() {
         HandleInput();
+        CheckSoldierTypeChanged();
     }
 
     private void HandleInput() {
@@ -48,7 +53,7 @@ public class SoldierSelectorUI : MonoBehaviour {
         else if (_isRouletteActive && Input.GetMouseButtonUp(0))
             StopDragging();
 
-        if (_isRouletteActive && _isDragging)  RotateWithMouse();
+        if (_isRouletteActive && _isDragging) RotateWithMouse();
 
         if (Input.GetKeyUp(KeyCode.Tab)) CloseSelector();
     }
@@ -63,9 +68,9 @@ public class SoldierSelectorUI : MonoBehaviour {
         Cursor.lockState = CursorLockMode.None;
         _isRouletteActive = true;
 
-        AlignRouletteToCurrentSoldier();
-
         InteractionHintUI.Instance.ShowHint("Rotacione a roleta com o mouse e selecione um soldado", Color.green);
+
+        AlignRouletteToCurrentSoldier();
     }
 
     private void StartDragging() {
@@ -88,6 +93,7 @@ public class SoldierSelectorUI : MonoBehaviour {
         _isRouletteActive = false;
         SelectCurrentSoldier();
         ResetRouletteUI();
+        AlignRouletteToCurrentSoldier();
         Cursor.lockState = CursorLockMode.Locked;
         InteractionHintUI.Instance.HideHint();
     }
@@ -130,6 +136,7 @@ public class SoldierSelectorUI : MonoBehaviour {
         _data.cadetButton.interactable = _soldierManager.IsCadetUnlocked;
     }
 
+
     private void SelectCurrentSoldier() {
         float minAngle = float.MaxValue;
         int selectedIdx = 0;
@@ -164,9 +171,20 @@ public class SoldierSelectorUI : MonoBehaviour {
 
     private void AlignRouletteToCurrentSoldier() {
         SoldierType current = _soldierManager.GetCurrentSoldierType();
-        int idx = _data.types.IndexOf(current);
-        if (idx < 0) idx = 0;
-        float angle = -_data.buttonAngles[idx];
-        _rouletteController.SetRotation(angle);
+
+        if (_data.soldierAngles.TryGetValue(current, out float angle)) {
+            _rouletteController.SetRotation(angle);
+            return;
+        }
+        Debug.LogWarning($"[SoldierSelectorUI] Sem ângulo definido para o tipo {current}");
+        _rouletteController.SetRotation(0f);
+    }
+
+    private void CheckSoldierTypeChanged() {
+        var currentType = _soldierManager.GetCurrentSoldierType();
+        if (currentType != _lastSoldierType) {
+            AlignRouletteToCurrentSoldier();
+            _lastSoldierType = currentType;
+        }
     }
 }

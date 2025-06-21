@@ -24,6 +24,14 @@ public class SoldierSelectorData {
     // Ângulos fixos para cada botão na roleta
     public readonly float[] buttonAngles = { 0f, 90f, 180f, 270f };
 
+    public readonly Dictionary<SoldierType, float> soldierAngles = new() {
+    { SoldierType.Captain, 0f },
+    { SoldierType.Sublieutenant, 90f },
+    { SoldierType.Sargeant, -90f },
+    { SoldierType.Cadet, 180f }
+};
+
+
     public void Initialize() {
         buttons = new List<Button> { captainButton, sublieutenantButton, sargeantButton, cadetButton };
         types = new List<SoldierType> { SoldierType.Captain, SoldierType.Sublieutenant, SoldierType.Sargeant, SoldierType.Cadet };

@@ -40,10 +40,13 @@ public class SoldierManager : MonoBehaviour {
     private void Start() {
         MakeAllSoldiersImmobile();
         ChangeState(_currentSoldier);
+    }
+
+    private void OnEnable() {
         SoldierUnlockEvents.OnSoldierUnlocked += UnlockSoldier;
     }
 
-    private void OnDestroy() {
+    private void OnDisable() {
         SoldierUnlockEvents.OnSoldierUnlocked -= UnlockSoldier;
     }
 
@@ -107,8 +110,6 @@ public class SoldierManager : MonoBehaviour {
             case Sargeant: IsSargeantUnlocked = true; break;
             case Cadet: IsCadetUnlocked = true; break;
         }
-
-        Debug.Log($"{name} desbloqueado!");
     }
     private void MakeAllSoldiersImmobile() {
         captain.GetComponent<SoldierMovement>().SetMovementEnabled(false);
