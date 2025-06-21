@@ -104,9 +104,6 @@ public class Zipline : MonoBehaviour {
             _goingForward = !_goingForward;
 
             Sargeant Sargeant = _rider.GetComponent<Sargeant>();
-            if (Sargeant != null) 
-                Sargeant.ChangePose(false);
-            
 
             _rider = null;
         }

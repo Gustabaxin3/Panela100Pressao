@@ -5,16 +5,12 @@ public class Sargeant : ISoldierState {
     [SerializeField] private float _checkOffSet = 1f;
     [SerializeField] private float _checkRadius = 2f;
 
-    [SerializeField] private GameObject _defaultPose;
-    [SerializeField] private GameObject _zipLinePose;
-
     protected override void Awake() {
         base.Awake();
         soldierType = SoldierType.Sargeant;
     }
     protected override void Start() {
         base.Start();
-        ChangePose(false);
     }
 
     public override void OnUpdate() {
@@ -33,13 +29,8 @@ public class Sargeant : ISoldierState {
                 var zip = hit.collider.GetComponentInParent<Zipline>();
                 zip.TryStartRide(this.gameObject);
                 InteractionHintUI.Instance.HideHint();
-                ChangePose(true);
             }
         }
-    }
-    public void ChangePose(bool isZipLine) {
-        _defaultPose.SetActive(!isZipLine);
-        _zipLinePose.SetActive(isZipLine);
     }
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("ZiplinePoint")) {
