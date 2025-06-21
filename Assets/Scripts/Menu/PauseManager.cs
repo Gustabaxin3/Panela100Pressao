@@ -45,9 +45,17 @@ public class PauseManager : MonoBehaviour {
     private void Update() {
         if (Keyboard.current.escapeKey.wasPressedThisFrame) {
             if (_mainCanvasGroup.alpha > 0f)
+            {
+                AudioManager.Instance.PlaySoundEffect("Audio/UI/Pause", spatialBlend: 0);
                 Resume();
+            }
+
             else
+            {
+                AudioManager.Instance.PlaySoundEffect("Audio/UI/Despause", spatialBlend: 0);
                 Pause();
+            }
+                
         }
     }
 
