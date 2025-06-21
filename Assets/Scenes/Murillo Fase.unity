@@ -6311,6 +6311,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 69.2
       objectReference: {fileID: 0}
+    - target: {fileID: 2973058211560833043, guid: 2f24e16051fc6dd4b809c57dcf6e1b99,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -93.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 2973058211560833043, guid: 2f24e16051fc6dd4b809c57dcf6e1b99,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -52.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3044913694853007724, guid: 2f24e16051fc6dd4b809c57dcf6e1b99,
         type: 3}
       propertyPath: isGrounded
@@ -15743,12 +15753,13 @@ MonoBehaviour:
   _resumeButton: {fileID: 1763114523}
   _optionButton: {fileID: 1073025114}
   _exitButton: {fileID: 717670400}
-  _masterSlider: {fileID: 60624600}
-  _musicSlider: {fileID: 1733064554}
-  _sfxSlider: {fileID: 150938577}
-  _muteMasterButton: {fileID: 659122154}
-  _muteMusicButton: {fileID: 1523745411}
-  _muteSFXButton: {fileID: 384411565}
+  _audioSettings:
+    masterSlider: {fileID: 60624600}
+    musicSlider: {fileID: 1733064554}
+    sfxSlider: {fileID: 150938577}
+    muteMasterButton: {fileID: 659122154}
+    muteMusicButton: {fileID: 1523745411}
+    muteSFXButton: {fileID: 384411565}
 --- !u!4 &2048381897
 Transform:
   m_ObjectHideFlags: 0
