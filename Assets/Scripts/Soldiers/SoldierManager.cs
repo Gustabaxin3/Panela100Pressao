@@ -1,7 +1,8 @@
+using AUDIO;
+using System;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
-using AUDIO;
 
 public class SoldierManager : MonoBehaviour {
     [SerializeField] private ISoldierState _currentSoldier;
@@ -9,22 +10,22 @@ public class SoldierManager : MonoBehaviour {
     [Header("Captain")]
     public Captain captain;
     [SerializeField] private LayerMask _captainLayerMask;
-    [SerializeField] private bool _isCaptainUnlocked = true;
+    [field: SerializeField] public bool IsCaptainUnlocked {get; private set;} = true;
 
     [Header("Sublieutenant")]
     public Sublieutenant sublieutenant;
     [SerializeField] private LayerMask _sublieutenantLayerMask;
-    [SerializeField] private bool _isSublieutenantUnlocked = false;
+    [field: SerializeField] public bool IsSublieutenantUnlocked {get; private set;} = false;
 
     [Header("Sargeant")]
     public Sargeant sargeant;
     [SerializeField] private LayerMask _sargeantLayerMask;
-    [SerializeField] private bool _isSargeantUnlocked = false;
+    [field: SerializeField] public bool IsSargeantUnlocked {get; private set;} = false;
 
     [Header("Cadet")]
     public Cadet cadet;
     [SerializeField] private LayerMask _cadetLayerMask;
-    [SerializeField] private bool _isCadetUnlocked = false;
+    [field: SerializeField] public bool IsCadetUnlocked { get; private set; } = false;
 
     [SerializeField] private Animator _animator;
     private float _startAnimationDuration;
@@ -33,6 +34,8 @@ public class SoldierManager : MonoBehaviour {
     private bool _isTransitioning = false;
 
     [field: SerializeField] public Transform _originalParent { get; private set; }
+
+    public static event Action<SoldierType> OnSoldierChanged;
 
     private void Start() {
         MakeAllSoldiersImmobile();
@@ -59,10 +62,10 @@ public class SoldierManager : MonoBehaviour {
         _currentSoldier.OnEnter(this);
     }
 
-    public void SelectCaptain() => ChangeCharacter(_isCaptainUnlocked, captain);
-    public void SelectSublieutenant() => ChangeCharacter(_isSublieutenantUnlocked, sublieutenant);
-    public void SelectSargeant() => ChangeCharacter(_isSargeantUnlocked, sargeant);
-    public void SelectCadet() => ChangeCharacter(_isCadetUnlocked, cadet);
+    public void SelectCaptain() => ChangeCharacter(IsCaptainUnlocked, captain);
+    public void SelectSublieutenant() => ChangeCharacter(IsSublieutenantUnlocked, sublieutenant);
+    public void SelectSargeant() => ChangeCharacter(IsSargeantUnlocked, sargeant);
+    public void SelectCadet() => ChangeCharacter(IsCadetUnlocked, cadet);
 
     public void ChangeCharacter(bool soldierUnlocked, ISoldierState soldierState) {
         if (soldierUnlocked && _currentSoldier != soldierState && !_isTransitioning) {
@@ -86,6 +89,8 @@ public class SoldierManager : MonoBehaviour {
         _animator.SetBool("Start", false);
 
         ChangeState(soldierState);
+        OnSoldierChanged?.Invoke(GetCurrentSoldierType());
+
         yield return null;
 
         _animator.SetBool("End", true);
@@ -97,10 +102,10 @@ public class SoldierManager : MonoBehaviour {
     }
     private void UnlockSoldier(ISoldierState soldierState) {
         switch (soldierState) {
-            case Captain: _isCaptainUnlocked = true; break;
-            case Sublieutenant: _isSublieutenantUnlocked = true; break;
-            case Sargeant: _isSargeantUnlocked = true; break;
-            case Cadet: _isCadetUnlocked = true; break;
+            case Captain: IsCaptainUnlocked = true; break;
+            case Sublieutenant: IsSublieutenantUnlocked = true; break;
+            case Sargeant: IsSargeantUnlocked = true; break;
+            case Cadet: IsCadetUnlocked = true; break;
         }
 
         Debug.Log($"{name} desbloqueado!");

@@ -20,6 +20,11 @@ public class Sublieutenant : ISoldierState
     private bool estavaParado = false;
     private AudioSource empurraSource = null;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        soldierType = SoldierType.Sublieutenant;
+    }
     public override void OnEnter(SoldierManager soldierManager)
     {
         base.OnEnter(soldierManager);
