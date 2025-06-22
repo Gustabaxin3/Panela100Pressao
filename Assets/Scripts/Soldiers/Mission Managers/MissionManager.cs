@@ -6,6 +6,15 @@ public class MissionManager : MonoBehaviour {
     private List<Mission> _missions = new List<Mission>();
     private List<IMissionObserver> _observers = new List<IMissionObserver>();
 
+    // Define the mission order here
+    [SerializeField]
+    private List<MissionID> _missionOrder = new List<MissionID> {
+        MissionID.SairDoLabirinto,
+        MissionID.ResgatarSubtenente,
+    };
+
+    private int _currentMissionIndex = 0;
+
     private void Awake() {
         if (Instance != null && Instance != this) {
             Destroy(gameObject);
@@ -15,7 +24,8 @@ public class MissionManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
     private void Start() {
-        AddMission(MissionID.SairDoLabirinto);
+        if (_missionOrder.Count > 0)
+            AddMission(_missionOrder[0]);
     }
     public void AddMission(MissionID id) {
         if (_missions.Exists(m => m.ID == id)) return;
@@ -26,7 +36,14 @@ public class MissionManager : MonoBehaviour {
 
     public void CompleteMission(MissionID id) {
         var mission = _missions.Find(m => m.ID == id);
-        mission?.Complete();
+        if (mission != null && !mission.IsCompleted) {
+            mission.Complete();
+            int index = _missionOrder.IndexOf(id);
+            if (index != -1 && index + 1 < _missionOrder.Count) {
+                AddMission(_missionOrder[index + 1]);
+                _currentMissionIndex = index + 1;
+            }
+        }
     }
 
     public IReadOnlyList<Mission> Missions => _missions;
@@ -34,7 +51,6 @@ public class MissionManager : MonoBehaviour {
     public void RegisterObserver(IMissionObserver observer) {
         if (!_observers.Contains(observer))
             _observers.Add(observer);
-        // envia todas as missões atuais
         foreach (var mission in _missions)
             observer.OnMissionUpdated(mission);
     }

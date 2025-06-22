@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class ColorGridManager : MonoBehaviour {
     public static ColorGridManager Instance { get; private set; }
+    public event System.Action OnGameCompleted;
 
     [Header("Grid Setup")]
     [SerializeField] private Transform _gridParent;
@@ -20,8 +21,12 @@ public class ColorGridManager : MonoBehaviour {
     private ColorCell[] _cells;
 
     public bool _gameStarted = false;
+    public bool _gameCompleted = false;
 
     [SerializeField] private float _fadeDuration = 0.5f;
+
+    [SerializeField] private ColorMiniGameTrigger[] allMiniGames;
+    public ColorMiniGameTrigger currentTrigger;
 
     private void Awake() {
         if (Instance == null) {
@@ -35,9 +40,12 @@ public class ColorGridManager : MonoBehaviour {
             _canvasGroup.interactable = false;
             _canvasGroup.blocksRaycasts = false;
         }
+
+        allMiniGames = FindObjectsOfType<ColorMiniGameTrigger>();
     }
 
-    public void StartGame() {
+    public void StartGame(ColorMiniGameTrigger currentTrigger) {
+        this.currentTrigger = currentTrigger;
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;
         StartCoroutine(HandleStartingGame());
@@ -140,6 +148,8 @@ public class ColorGridManager : MonoBehaviour {
 
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
+
+        CompleteGame();
     }
 
     private IEnumerator FadeCanvas(bool fadeIn, float duration) {
@@ -167,5 +177,28 @@ public class ColorGridManager : MonoBehaviour {
             cell.ResetColor();
         }
         _feedbackText.text = "";
+    }
+
+    public void CompleteGame() {
+        _gameCompleted = true;
+        OnGameCompleted?.Invoke();
+        
+        if (currentTrigger != null)
+            currentTrigger.CompleteMinigame();
+    }
+
+    public void CheckAllMinigamesCompleted() {
+        bool allCompleted = true;
+        foreach (var trigger in allMiniGames) {
+            if (!trigger.IsCompleted) {
+                allCompleted = false;
+                break;
+            }
+        }
+
+        if (allCompleted) {
+            MissionManager.Instance.CompleteMission(MissionID.HackearTodasAsMaquinas);
+            MissionFeedbackUI.ShowFeedback("Missão 'Hackear Todas as Máquinas' foi completada!");
+        }
     }
 }

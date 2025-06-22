@@ -20,6 +20,7 @@ public class Mission {
             MissionID.ResgatarSargento => "Resgatar o Sargento",
             MissionID.ResgatarCadete => "Resgatar o Cadete",
             MissionID.SairDoLabirinto => "Sair do Labirinto",
+            MissionID.HackearTodasAsMaquinas => "Hackear Todas as Máquinas",
             _ => ID.ToString()
         };
     }

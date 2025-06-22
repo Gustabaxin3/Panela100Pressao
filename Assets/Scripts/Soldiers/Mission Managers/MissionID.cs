@@ -4,4 +4,5 @@ public enum MissionID {
     ResgatarSargento,
     ResgatarCadete,
     SairDoLabirinto,
+    HackearTodasAsMaquinas,
 }

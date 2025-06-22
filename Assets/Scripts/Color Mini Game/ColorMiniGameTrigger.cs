@@ -3,9 +3,11 @@ using UnityEngine;
 public class ColorMiniGameTrigger : MonoBehaviour {
     [SerializeField] private int _customRows = 3;
     [SerializeField] private int _customCols = 3;
-    [SerializeField] private GameObject interactionHintUI;
 
     private bool _playerInRange = false;
+
+    [field: SerializeField]public bool IsCompleted { get; private set; } = false;
+
 
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Sargeant")) {
@@ -21,10 +23,22 @@ public class ColorMiniGameTrigger : MonoBehaviour {
         }
     }
 
+    private void Start() {
+        ColorGridManager.Instance.OnGameCompleted += HandleGameCompleted;
+    }
+
+    private void OnDisable() {
+        ColorGridManager.Instance.OnGameCompleted -= HandleGameCompleted;
+    }
+
+    private void HandleGameCompleted() {
+        _playerInRange = false;
+    }
+
     void Update() {
         if (_playerInRange && !ColorGridManager.Instance._gameStarted && Input.GetKeyDown(KeyCode.E)) {
             SetGridSize(_customRows, _customCols);
-            ColorGridManager.Instance.StartGame();
+            ColorGridManager.Instance.StartGame(this);
             ColorGridManager.Instance._gameStarted = true;
         }
     }
@@ -39,5 +53,11 @@ public class ColorMiniGameTrigger : MonoBehaviour {
             rowsField.SetValue(manager, rows);
             colsField.SetValue(manager, cols);
         }
+    }
+
+    public void CompleteMinigame() {
+        if (IsCompleted) return;
+        IsCompleted = true;
+        ColorGridManager.Instance.CheckAllMinigamesCompleted();
     }
 }
