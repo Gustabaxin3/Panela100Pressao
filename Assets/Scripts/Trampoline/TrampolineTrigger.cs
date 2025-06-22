@@ -1,36 +1,52 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class TrampolineTrigger : MonoBehaviour {
-    [SerializeField] private int _ballsNeeded = 5;
-    [SerializeField] private GameObject _closedVisual;
-    [SerializeField] private GameObject _openVisual;
-    [SerializeField] private UnityEvent OnTrampolineActivated;
+    [Header("Configuração")]
+    [SerializeField] private int ballsNeeded = 5;
 
-    private int _ballsDelivered = 0;
-    private bool _isActivated = false;
+    [Header("Aesthetic Balls")]
+    [Tooltip("Arraste aqui os GameObjects das bolinhas que começam desativadas")]
+    [SerializeField] private GameObject[] trampolineBalls;
+
+    private int ballsDelivered = 0;
+    public bool IsActivated { get; private set; } = false;
 
     private void OnTriggerEnter(Collider other) {
-        if (_isActivated) return;
-        if (!other.TryGetComponent(out ISoldierState soldier)) return;
+        Debug.Log($"TrampolineTrigger: {other.name} entrou no gatilho.");
+        if (IsActivated) return;
+        if (other.CompareTag("Cadet") || other.CompareTag("Sublieutenant")) {
 
-        int deliveredNow = BallInventory.Instance.DeliverBalls();
-        _ballsDelivered += deliveredNow;
+            List<GameObject> delivered = BallInventory.Instance.DeliverBalls();
+            int count = delivered.Count;
 
-        Debug.Log($"Entregues: {deliveredNow} (Total: {_ballsDelivered})");
+            for (int i = 0; i < count; i++) {
+                ActivateNextBall();
+                ballsDelivered++;
+                Debug.Log($"Bolinhas entregues (trampolim): {ballsDelivered}/{ballsNeeded}");
+                if (ballsDelivered >= ballsNeeded) {
+                    ActivateTrampoline();
+                    break;
+                }
+            }
+        }
+    }
 
-        if (_ballsDelivered >= _ballsNeeded) {
-            ActivateTrampoline();
+    private void ActivateNextBall() {
+        for (int i = 0; i < trampolineBalls.Length; i++) {
+            if (trampolineBalls[i] != null && !trampolineBalls[i].activeSelf) {
+                trampolineBalls[i].SetActive(true);
+                return;
+            }
         }
     }
 
     private void ActivateTrampoline() {
-        _isActivated = true;
-        OnTrampolineActivated?.Invoke();
-
-        if (_closedVisual != null) _closedVisual.SetActive(false);
-        if (_openVisual != null) _openVisual.SetActive(true);
-
+        IsActivated = true;
         Debug.Log("Trampolim ativado!");
+        MissionFeedbackUI.ShowFeedback("Trampolim foi ativado!");
+        MissionManager.Instance.CompleteMission(MissionID.Trampolim);
+
     }
 }

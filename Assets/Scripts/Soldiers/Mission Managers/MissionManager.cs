@@ -11,6 +11,7 @@ public class MissionManager : MonoBehaviour {
     private List<MissionID> _missionOrder = new List<MissionID> {
         MissionID.SairDoLabirinto,
         MissionID.ResgatarSubtenente,
+        MissionID.Trampolim,
     };
 
     private int _currentMissionIndex = 0;

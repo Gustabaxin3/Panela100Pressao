@@ -17,19 +17,17 @@ public class Mission {
     public string GetTitle() {
         return ID switch {
             MissionID.ResgatarSubtenente => "Resgatar o Subtenente",
-            MissionID.ResgatarSargento => "Resgatar o Sargento",
-            MissionID.ResgatarCadete => "Resgatar o Cadete",
-            MissionID.SairDoLabirinto => "Sair do Labirinto",
+            MissionID.SairDoLabirinto => "Saia do Labirinto",
+            MissionID.Trampolim => "Ative o Trampolim!",
             MissionID.HackearTodasAsMaquinas => "Hackear Todas as Máquinas",
             _ => ID.ToString()
         };
     }
     public string GetDescription() {
         return ID switch {
-            MissionID.ResgatarSubtenente => "Resgatar o Subtenente que está preso no labirinto.",
-            MissionID.ResgatarSargento => "Resgatar o Sargento que está preso no labirinto.",
-            MissionID.ResgatarCadete => "Resgatar o Cadete que está preso no labirinto.",
+            MissionID.ResgatarSubtenente => "Resgatar o Subtenente que está no meio do quarto.",
             MissionID.SairDoLabirinto => "Sair do labirinto e encontrar a saída.",
+            MissionID.Trampolim => "Recupere todas as bolas do trampolim perdidas debaixo dos móveis!",
             MissionID.HackearTodasAsMaquinas => "Hackear todas as máquinas do labirinto.",
             _ => "Missão desconhecida."
         };

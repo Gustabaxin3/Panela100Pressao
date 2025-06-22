@@ -4,14 +4,10 @@ public class BallCollectible : MonoBehaviour {
     public static event System.Action OnBallCollected;
 
     private void OnTriggerEnter(Collider other) {
-        if (other.TryGetComponent(out ISoldierState soldier)) {
-            SoldierType type = soldier.soldierType;
+        if (other.CompareTag("Cadet") || other.CompareTag("Sublieutenant")) {
+            Debug.Log("Soldier collected a ball!");
 
-            if (type == SoldierType.Cadet || type == SoldierType.Sublieutenant) {
-                BallInventory.Instance.AddBall();
-                OnBallCollected?.Invoke();
-                Destroy(gameObject);
-            }
+            BallInventory.Instance.AddBall(this.gameObject);
         }
     }
 }
