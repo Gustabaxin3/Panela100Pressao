@@ -14,8 +14,8 @@ public class LabyrinthExitTrigger : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Cadet"))
         {
-            MissionManager.Instance.CompleteMission(_missionID);
             MissionFeedbackUI.ShowFeedback(_missionTitle);
+            MissionManager.Instance.CompleteMission(_missionID);
 
             gameObject.SetActive(false);
         }

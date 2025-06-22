@@ -38,6 +38,7 @@ public class MissionEntryUI : MonoBehaviour {
         while (elapsed < duration) {
             elapsed += Time.deltaTime;
             _canvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
+
             yield return null;
         }
 

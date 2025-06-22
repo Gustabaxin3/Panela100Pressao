@@ -1,12 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BallInventory : MonoBehaviour {
     public static BallInventory Instance { get; private set; }
 
-    private int _ballCount = 0;
-    public int BallCount => _ballCount;
-
-    [SerializeField] private GameObject[] launcherBalls;
+    [SerializeField]private  List<GameObject> _balls = new List<GameObject>();
 
     private void Awake() {
         if (Instance != null && Instance != this) {
@@ -16,23 +14,14 @@ public class BallInventory : MonoBehaviour {
         Instance = this;
     }
 
-    public void AddBall() {
-        _ballCount++;
-        Debug.Log($"Bolinhas coletadas: {_ballCount}");
-        UpdateLauncherBalls();
+    public void AddBall(GameObject ball) {
+        _balls.Add(ball);
+        ball.SetActive(false);
+        Debug.Log($"Bolinhas coletadas: {_balls.Count}");
     }
-
-    public int DeliverBalls() {
-        int delivered = _ballCount;
-        _ballCount = 0;
-        UpdateLauncherBalls();
+    public List<GameObject> DeliverBalls() {
+        var delivered = new List<GameObject>(_balls);
+        _balls.Clear();
         return delivered;
-    }
-     
-    private void UpdateLauncherBalls() {
-        if (launcherBalls == null) return;
-        for (int i = 0; i < launcherBalls.Length; i++) {
-            launcherBalls[i].SetActive(i < _ballCount);
-        }
     }
 }

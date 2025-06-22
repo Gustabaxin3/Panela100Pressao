@@ -2,22 +2,26 @@ using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 public class TrampolineLauncher : MonoBehaviour {
-    [SerializeField] private float _launchForce = 10f;
-    [SerializeField] private float _standTimeToLaunch = 1f;
+    [SerializeField] private float launchForce = 25f;
+    [SerializeField] private float standTimeToLaunch = 1f;
 
     private Collider _collider;
     private Transform _player;
     private Rigidbody _playerRb;
-    private float _timeInside = 0f;
-    private bool _playerInside = false;
+    private float _timeInside;
+    private bool _playerInside;
+
+    private TrampolineTrigger _trampolimTrigger;
 
     private void Awake() {
         _collider = GetComponent<Collider>();
+        _trampolimTrigger = GetComponent<TrampolineTrigger>();
         _collider.isTrigger = true;
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.TryGetComponent(out ISoldierState soldier)) {
+        if (!_trampolimTrigger.IsActivated) return;
+        if (other.TryGetComponent<ISoldierState>(out var soldier)) {
             _player = soldier.transform;
             _playerRb = soldier.GetComponent<Rigidbody>();
             _timeInside = 0f;
@@ -26,6 +30,7 @@ public class TrampolineLauncher : MonoBehaviour {
     }
 
     private void OnTriggerExit(Collider other) {
+        if (!_trampolimTrigger.IsActivated) return;
         if (_player != null && other.transform == _player) {
             _playerInside = false;
             _player = null;
@@ -35,29 +40,23 @@ public class TrampolineLauncher : MonoBehaviour {
     }
 
     private void Update() {
-        if (_playerInside && _player != null && _playerRb != null) {
-            Vector3 velocity = _playerRb.linearVelocity;
-            Vector3 horizontalVel = new Vector3(velocity.x, 0f, velocity.z);
-            bool isStandingStill = horizontalVel.magnitude < 0.1f;
+        if (!_trampolimTrigger.IsActivated || !_playerInside || _playerRb == null) return;
 
-            if (isStandingStill) {
-                _timeInside += Time.deltaTime;
-
-                if (_timeInside >= _standTimeToLaunch) {
-                    LaunchPlayer();
-                    _timeInside = 0f;
-                }
-            } else {
-                _timeInside = 0f; 
+        Vector3 horizontalVel = new Vector3(_playerRb.linearVelocity.x, 0f, _playerRb.linearVelocity.z);
+        if (horizontalVel.magnitude < 0.1f) {
+            _timeInside += Time.deltaTime;
+            if (_timeInside >= standTimeToLaunch) {
+                LaunchPlayer();
+                _timeInside = 0f;
             }
+        } else {
+            _timeInside = 0f;
         }
     }
 
     private void LaunchPlayer() {
-        if (_playerRb != null) {
-            _playerRb.linearVelocity = new Vector3(_playerRb.linearVelocity.x, 0f, _playerRb.linearVelocity.z); // zera Y antes
-            _playerRb.AddForce(Vector3.up * _launchForce, ForceMode.VelocityChange);
-            Debug.Log("Lan�ado pelo trampolim!");
-        }
+        Vector3 vel = _playerRb.linearVelocity;
+        _playerRb.linearVelocity = new Vector3(vel.x, 0f, vel.z);
+        _playerRb.AddForce(Vector3.up * launchForce, ForceMode.VelocityChange);
     }
 }
