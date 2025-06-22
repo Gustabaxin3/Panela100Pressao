@@ -1170,7 +1170,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.03891924, y: 0.019999998, z: 0.019999994}
   m_Center: {x: 0.00945962, y: 0, z: 0}
@@ -8379,7 +8379,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.03891924, y: 0.02, z: 0.02}
   m_Center: {x: 0.00945962, y: -1.4095933e-10, z: -9.803508e-13}
@@ -9423,6 +9423,7 @@ GameObject:
   - component: {fileID: 843513691}
   - component: {fileID: 843513690}
   - component: {fileID: 843513689}
+  - component: {fileID: 843513692}
   m_Layer: 0
   m_Name: BrinquedoMovel.033 (1)
   m_TagString: Untagged
@@ -9462,7 +9463,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.03891924, y: 0.02, z: 0.02}
   m_Center: {x: 0.00945962, y: -1.4095933e-10, z: -9.803508e-13}
@@ -9518,6 +9519,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843513686}
+  m_Mesh: {fileID: -6947395862425445889, guid: 5231ba3d89cdc2444b4daed8ece853d2, type: 3}
+--- !u!64 &843513692
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843513686}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -6947395862425445889, guid: 5231ba3d89cdc2444b4daed8ece853d2, type: 3}
 --- !u!54 &844130977
 Rigidbody:
@@ -10001,7 +10024,7 @@ PrefabInstance:
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
       propertyPath: <IsCaptainUnlocked>k__BackingField
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
@@ -13506,6 +13529,7 @@ GameObject:
   - component: {fileID: 1230501576}
   - component: {fileID: 1230501575}
   - component: {fileID: 1230501574}
+  - component: {fileID: 1230501577}
   m_Layer: 0
   m_Name: BrinquedoMovel.033 (3)
   m_TagString: Untagged
@@ -13545,7 +13569,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.03891924, y: 0.02, z: 0.02}
   m_Center: {x: 0.00945962, y: -1.4095933e-10, z: -9.803508e-13}
@@ -13601,6 +13625,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1230501571}
+  m_Mesh: {fileID: -6947395862425445889, guid: 5231ba3d89cdc2444b4daed8ece853d2, type: 3}
+--- !u!64 &1230501577
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230501571}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -6947395862425445889, guid: 5231ba3d89cdc2444b4daed8ece853d2, type: 3}
 --- !u!64 &1237009268
 MeshCollider:
@@ -14881,6 +14927,7 @@ GameObject:
   - component: {fileID: 1335574355}
   - component: {fileID: 1335574354}
   - component: {fileID: 1335574353}
+  - component: {fileID: 1335574356}
   m_Layer: 0
   m_Name: BrinquedoMovel.033 (2)
   m_TagString: Untagged
@@ -14920,7 +14967,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.03891924, y: 0.02, z: 0.02}
   m_Center: {x: 0.00945962, y: -1.4095933e-10, z: -9.803508e-13}
@@ -14976,6 +15023,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335574350}
+  m_Mesh: {fileID: -6947395862425445889, guid: 5231ba3d89cdc2444b4daed8ece853d2, type: 3}
+--- !u!64 &1335574356
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335574350}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -6947395862425445889, guid: 5231ba3d89cdc2444b4daed8ece853d2, type: 3}
 --- !u!1 &1339276935
 GameObject:
@@ -17638,7 +17707,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.03891924, y: 0.019999998, z: 0.019999994}
   m_Center: {x: 0.00945962, y: 0, z: 0}
@@ -17734,7 +17803,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.03891924, y: 0.019999998, z: 0.019999996}
   m_Center: {x: 0.00945962, y: 0, z: 0}
@@ -22018,7 +22087,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.038919244, y: 0.020000007, z: 0.020000005}
   m_Center: {x: 0.009459621, y: -2.8191866e-10, z: -1.6932687e-10}
@@ -31459,6 +31528,7 @@ GameObject:
   - component: {fileID: 966006228819382303}
   - component: {fileID: 1876534477}
   - component: {fileID: 1876534478}
+  - component: {fileID: 2443489004939319595}
   m_Layer: 0
   m_Name: BrinquedoMovel.020
   m_TagString: Untagged
@@ -35173,6 +35243,7 @@ GameObject:
   - component: {fileID: 3069870670263194266}
   - component: {fileID: 6231418968462021289}
   - component: {fileID: 687916359}
+  - component: {fileID: 6231418968462021290}
   m_Layer: 0
   m_Name: BrinquedoMovel.033
   m_TagString: Untagged
@@ -37095,6 +37166,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249361199204678702}
+  m_Mesh: {fileID: 3197623660069939616, guid: 5231ba3d89cdc2444b4daed8ece853d2, type: 3}
+--- !u!64 &2443489004939319595
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249361199204678702}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 3197623660069939616, guid: 5231ba3d89cdc2444b4daed8ece853d2, type: 3}
 --- !u!33 &2447018052323198758
 MeshFilter:
@@ -54062,6 +54155,7 @@ GameObject:
   - component: {fileID: 9160351208884322385}
   - component: {fileID: 1533986331}
   - component: {fileID: 1533986332}
+  - component: {fileID: 9181333192704228293}
   m_Layer: 0
   m_Name: BrinquedoMovel.014
   m_TagString: Untagged
@@ -54546,6 +54640,7 @@ GameObject:
   - component: {fileID: 5371878341512597288}
   - component: {fileID: 1541689411}
   - component: {fileID: 1541689412}
+  - component: {fileID: 5704289415523580604}
   m_Layer: 0
   m_Name: BrinquedoMovel.027
   m_TagString: Untagged
@@ -54553,6 +54648,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &5704289415523580604
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5704289415523580603}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -964111084928254, guid: 5231ba3d89cdc2444b4daed8ece853d2, type: 3}
 --- !u!4 &5706928354347812449
 Transform:
   m_ObjectHideFlags: 0
@@ -57212,6 +57329,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6231418968462021290
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078589553143212198}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6947395862425445889, guid: 5231ba3d89cdc2444b4daed8ece853d2, type: 3}
 --- !u!33 &6244355967749587021
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -67898,6 +68037,7 @@ GameObject:
   - component: {fileID: 4762423068364386335}
   - component: {fileID: 93441864}
   - component: {fileID: 371052763}
+  - component: {fileID: 8356453254296618651}
   m_Layer: 0
   m_Name: BrinquedoMovel.010
   m_TagString: Untagged
@@ -67905,6 +68045,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &8356453254296618651
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8356453254296618650}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1783094933693107960, guid: 5231ba3d89cdc2444b4daed8ece853d2, type: 3}
 --- !u!4 &8378002301960237139
 Transform:
   m_ObjectHideFlags: 0
@@ -72374,6 +72536,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5597952910236080478}
+  m_Mesh: {fileID: -1944423251343683257, guid: 5231ba3d89cdc2444b4daed8ece853d2, type: 3}
+--- !u!64 &9181333192704228293
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5597952910236080478}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -1944423251343683257, guid: 5231ba3d89cdc2444b4daed8ece853d2, type: 3}
 --- !u!33 &9182994202991639211
 MeshFilter:
