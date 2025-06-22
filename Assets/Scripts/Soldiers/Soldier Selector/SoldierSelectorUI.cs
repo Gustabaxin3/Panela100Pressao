@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AUDIO;
 
 public class SoldierSelectorUI : MonoBehaviour {
     private SoldierManager _soldierManager;
@@ -49,7 +50,20 @@ public class SoldierSelectorUI : MonoBehaviour {
 
     private void HandleInput() {
         if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            string[] soundsMenuTroca =
+            {
+                "Audio/UI/MenuTrocaPersonagem01",
+                "Audio/UI/MenuTrocaPersonagem02",
+                "Audio/UI/MenuTrocaPersonagem03"
+            };
+
+            int numSorteado = UnityEngine.Random.Range(0, soundsMenuTroca.Length);
+            AudioManager.Instance.PlaySoundEffect(soundsMenuTroca[numSorteado], position: transform.position, spatialBlend: 0);
+
             OpenSelector();
+        }
+        
         else if (_isRouletteActive && Input.GetMouseButtonDown(0))
             StartDragging();
         else if (_isRouletteActive && Input.GetMouseButtonUp(0))
