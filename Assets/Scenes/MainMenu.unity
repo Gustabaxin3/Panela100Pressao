@@ -5050,7 +5050,8 @@ PrefabInstance:
       value: Ventilador
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7311021183333455210, guid: 5f0953aa4ba59094a9992402efcb58ee, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f0953aa4ba59094a9992402efcb58ee, type: 3}
@@ -6697,7 +6698,25 @@ MonoBehaviour:
   sfxMixer: {fileID: -73233131900879311, guid: b74277f4d6cd67446ba492c1337aeb50, type: 2}
   audioFalloffCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 126.54029
+      outSlope: 126.54029
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.008331299
+      value: 1.054245
+      inSlope: 126.54029
+      outSlope: 126.54029
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

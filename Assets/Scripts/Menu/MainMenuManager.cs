@@ -31,7 +31,7 @@ public class MainMenuManager : MonoBehaviour {
     [SerializeField] private AudioSettingData _audioSettings;
 
     private void Start() {
-        AudioManager.Instance.PlayTrack("Audio/Test");
+        AudioManager.Instance.PlayTrack("Audio/bgm/bgm_menu");
 
         Cursor.lockState = CursorLockMode.None;
 
