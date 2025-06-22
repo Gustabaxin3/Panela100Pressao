@@ -73,6 +73,7 @@ public class MainMenuManager : MonoBehaviour {
     }
 
     private void OnPlayClicked() {
+        AudioManager.Instance.StopAllTracks();
         SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 
