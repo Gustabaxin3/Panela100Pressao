@@ -18,16 +18,18 @@ public class ColorCell : MonoBehaviour {
     }
 
     public void OnClick() {
-        currentColorIndex = (currentColorIndex + 1) % colorCycle.Length;
+        int newIndex;
+        do {
+            newIndex = Random.Range(0, colorCycle.Length);
+        } while (newIndex == currentColorIndex && colorCycle.Length > 1);
+        currentColorIndex = newIndex;
         UpdateColor();
         ColorGridManager.Instance.CheckVictory();
     }
 
     private void UpdateColor() => image.color = colorCycle[currentColorIndex];
-    
 
     public int GetColorIndex() => currentColorIndex;
-    
 
     public void ResetColor() {
         currentColorIndex = 0;

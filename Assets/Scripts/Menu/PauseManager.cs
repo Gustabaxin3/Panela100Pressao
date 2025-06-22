@@ -135,7 +135,9 @@ public class PauseManager : MonoBehaviour
         SetCanvasGroupState(_mainCanvasGroup, false);
         SetCanvasGroupState(_optionCanvasGroup, false);
         SetCanvasGroupState(_backgroundCanvasGroup, false);
-        Time.timeScale = 1f;
+        if(!ColorGridManager.Instance._gameStarted) {
+            Time.timeScale = 1f;
+        }
 
     }
 
