@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 222135720059163467}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -76.5, y: -12.5, z: 55.7}
+  m_LocalPosition: {x: -68, y: -12.5, z: 3.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 224925732576581190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 084c01ab381b9da4082c1f84cf70751b, type: 3}
+  m_Script: {fileID: 11500000, guid: 335159e5aca8dba4f8c933af6c583f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   distanceThreshold: 0.15
@@ -1250,7 +1250,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3505762641150536998}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 084c01ab381b9da4082c1f84cf70751b, type: 3}
+  m_Script: {fileID: 11500000, guid: 335159e5aca8dba4f8c933af6c583f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   distanceThreshold: 0.15
@@ -1867,7 +1867,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4844424955343944599}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 084c01ab381b9da4082c1f84cf70751b, type: 3}
+  m_Script: {fileID: 11500000, guid: 335159e5aca8dba4f8c933af6c583f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   distanceThreshold: 0.15
@@ -2534,7 +2534,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9085941363498604384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 084c01ab381b9da4082c1f84cf70751b, type: 3}
+  m_Script: {fileID: 11500000, guid: 335159e5aca8dba4f8c933af6c583f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   distanceThreshold: 0.15
