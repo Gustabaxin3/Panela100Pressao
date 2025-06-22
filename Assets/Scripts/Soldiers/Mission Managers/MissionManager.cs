@@ -64,4 +64,11 @@ public class MissionManager : MonoBehaviour {
         foreach (var obs in _observers)
             obs.OnMissionUpdated(mission);
     }
+    public void TryAddNextMissionAfter(MissionID completedMissionID) {
+        int index = _missionOrder.IndexOf(completedMissionID);
+        if (index != -1 && index + 1 < _missionOrder.Count) {
+            AddMission(_missionOrder[index + 1]);
+            _currentMissionIndex = index + 1;
+        }
+    }
 }
