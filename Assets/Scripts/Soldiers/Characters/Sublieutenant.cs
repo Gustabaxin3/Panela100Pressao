@@ -7,6 +7,14 @@ public class Sublieutenant : ISoldierState
     [SerializeField] private float detectRadius = 1.5f;
     private PushableObject currentPushable;
 
+    //variáveis para sorteio do áudio
+    private string[] soundsEmpurra = {
+
+        "Audio/Empurra/SoldadoEmpurra01",
+        "Audio/Empurra/SoldadoEmpurra02",
+        "Audio/Empurra/SoldadoEmpurra03",
+        "Audio/Empurra/SoldadoEmpurra04"
+    };
     private int numSorteado = -1;
     private int lastNumSorteado = -1;
     private bool estavaParado = false;
@@ -28,6 +36,20 @@ public class Sublieutenant : ISoldierState
             if (currentPushable != null && currentPushable.IsBeingPushed) {
                 currentPushable.StopPush();
                 currentPushable = null;
+
+                // inicio da implementação de áudio - SFX Empurra 
+
+                //para de tocar o SFX Empurra
+                if (empurraSource != null) {
+                    empurraSource.Stop();
+                    GameObject.Destroy(empurraSource.gameObject);
+                    empurraSource = null;
+
+                }
+                numSorteado = -1;
+                lastNumSorteado = -1;
+                estavaParado = false;
+                return;
             }
 
             Collider[] hits = Physics.OverlapSphere(_transform.position, detectRadius);
@@ -35,6 +57,17 @@ public class Sublieutenant : ISoldierState
                 if (hit.TryGetComponent(out PushableObject pushable)) {
                     pushable.StartPush(_transform);
                     currentPushable = pushable;
+
+                    numSorteado = UnityEngine.Random.Range(0, soundsEmpurra.Length);
+                    lastNumSorteado = numSorteado;
+                    empurraSource = AudioManager.Instance.PlaySoundEffect(
+                        soundsEmpurra[numSorteado],
+                        loop: false,
+                        position: transform.position,
+                        spatialBlend: 0
+                        );
+                    estavaParado = false;
+                    break;
                 }
             }
         }
