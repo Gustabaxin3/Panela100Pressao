@@ -73,6 +73,7 @@ public class MainMenuManager : MonoBehaviour {
     }
 
     private void OnPlayClicked() {
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 
     private void OnExitClicked() {

@@ -1,6 +1,7 @@
 // ColorCell.cs
 using UnityEngine;
 using UnityEngine.UI;
+using AUDIO;
 
 public class ColorCell : MonoBehaviour {
     [SerializeField] private Image image;
@@ -18,6 +19,9 @@ public class ColorCell : MonoBehaviour {
     }
 
     public void OnClick() {
+
+        AudioManager.Instance.PlaySoundEffect("Audio/UI/MiniGame-MudaCor", spatialBlend: 0);
+        
         int newIndex;
         do {
             newIndex = Random.Range(0, colorCycle.Length);

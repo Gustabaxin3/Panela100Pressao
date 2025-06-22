@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using AUDIO;
 
 public class MissionManager : MonoBehaviour {
     public static MissionManager Instance { get; private set; }
@@ -37,6 +38,9 @@ public class MissionManager : MonoBehaviour {
     }
 
     public void CompleteMission(MissionID id) {
+
+        AudioManager.Instance.PlaySoundEffect("Audio/UI/MissaoConcluida", spatialBlend: 0);
+        
         var mission = _missions.Find(m => m.ID == id);
         if (mission != null && !mission.IsCompleted) {
             mission.Complete();
