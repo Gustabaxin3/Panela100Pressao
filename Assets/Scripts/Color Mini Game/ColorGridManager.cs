@@ -94,7 +94,6 @@ public class ColorGridManager : MonoBehaviour {
             Destroy(c.gameObject);
         }
 
-        // instancia novas
         _cells = new ColorCell[rows * cols];
         for (int i = 0; i < rows * cols; i++) {
             var go = Instantiate(_cellPrefab, _gridParent);

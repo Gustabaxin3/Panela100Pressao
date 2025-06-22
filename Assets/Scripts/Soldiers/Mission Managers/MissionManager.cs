@@ -6,12 +6,13 @@ public class MissionManager : MonoBehaviour {
     private List<Mission> _missions = new List<Mission>();
     private List<IMissionObserver> _observers = new List<IMissionObserver>();
 
-    // Define the mission order here
     [SerializeField]
     private List<MissionID> _missionOrder = new List<MissionID> {
         MissionID.SairDoLabirinto,
         MissionID.ResgatarSubtenente,
         MissionID.Trampolim,
+        MissionID.ResgatarSargento,
+        MissionID.HackearTodasAsMaquinas,
     };
 
     private int _currentMissionIndex = 0;
