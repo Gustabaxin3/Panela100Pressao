@@ -21,11 +21,10 @@ public class MissionUIList : MonoBehaviour, IMissionObserver {
         if (!_entries.ContainsKey(mission.ID)) {
             var go = Instantiate(_entryPrefab, _contentParent);
             var entry = go.GetComponent<MissionEntryUI>();
-            entry.Initialize(mission);
+            entry.Initialize(mission, () => MissionManager.Instance.TryAddNextMissionAfter(mission.ID));
             _entries.Add(mission.ID, entry);
-        } else {
-            _entries[mission.ID].UpdateEntry(mission);
+            return;
         }
-
+        _entries[mission.ID].UpdateEntry(mission);
     }
 }
