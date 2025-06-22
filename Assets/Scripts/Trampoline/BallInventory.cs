@@ -28,7 +28,7 @@ public class BallInventory : MonoBehaviour {
         UpdateLauncherBalls();
         return delivered;
     }
-
+     
     private void UpdateLauncherBalls() {
         if (launcherBalls == null) return;
         for (int i = 0; i < launcherBalls.Length; i++) {
