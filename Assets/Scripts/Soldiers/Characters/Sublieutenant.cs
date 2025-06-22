@@ -31,20 +31,16 @@ public class Sublieutenant : ISoldierState
         Debug.Log("Sublieutenant state entered.");
     }
 
-    public override void OnUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (currentPushable != null && currentPushable.IsBeingPushed)
-            {
+    public override void OnUpdate() {
+        if (Input.GetKeyDown(KeyCode.E)) {
+            if (currentPushable != null && currentPushable.IsBeingPushed) {
                 currentPushable.StopPush();
                 currentPushable = null;
 
                 // inicio da implementação de áudio - SFX Empurra 
 
                 //para de tocar o SFX Empurra
-                if (empurraSource != null)
-                {
+                if (empurraSource != null) {
                     empurraSource.Stop();
                     GameObject.Destroy(empurraSource.gameObject);
                     empurraSource = null;
@@ -57,10 +53,8 @@ public class Sublieutenant : ISoldierState
             }
 
             Collider[] hits = Physics.OverlapSphere(_transform.position, detectRadius);
-            foreach (var hit in hits)
-            {
-                if (hit.TryGetComponent(out PushableObject pushable))
-                {
+            foreach (var hit in hits) {
+                if (hit.TryGetComponent(out PushableObject pushable)) {
                     pushable.StartPush(_transform);
                     currentPushable = pushable;
 
@@ -79,16 +73,13 @@ public class Sublieutenant : ISoldierState
         }
 
         //para o som quando o player para de se mover
-        if (currentPushable != null && currentPushable.IsBeingPushed)
-        {
+        if (currentPushable != null && currentPushable.IsBeingPushed) {
 
             bool estaParado = _soldierMovement != null && _soldierMovement.MoveDirection.magnitude < 0.01f;
 
 
-            if (estaParado)
-            {
-                if (empurraSource != null)
-                {
+            if (estaParado) {
+                if (empurraSource != null) {
                     empurraSource.Stop();
                     GameObject.Destroy(empurraSource.gameObject);
                     empurraSource = null;
@@ -96,12 +87,8 @@ public class Sublieutenant : ISoldierState
                 numSorteado = -1;
                 lastNumSorteado = -1;
                 estavaParado = true;
-            }
-
-            else
-            {
-                if (estavaParado)
-                {
+            } else {
+                if (estavaParado) {
                     numSorteado = UnityEngine.Random.Range(0, soundsEmpurra.Length);
                     lastNumSorteado = numSorteado;
 
@@ -117,11 +104,9 @@ public class Sublieutenant : ISoldierState
 
             //loop manual e randomização - força o próximo som randomizado a não ser o último tocado
 
-            if (empurraSource != null && !empurraSource.isPlaying && currentPushable != null && currentPushable.IsBeingPushed)
-            {
+            if (empurraSource != null && !empurraSource.isPlaying && currentPushable != null && currentPushable.IsBeingPushed) {
                 int novoSorteio;
-                do
-                {
+                do {
                     novoSorteio = UnityEngine.Random.Range(0, soundsEmpurra.Length);
                 } while (novoSorteio == lastNumSorteado && soundsEmpurra.Length > 1);
 
@@ -138,8 +123,11 @@ public class Sublieutenant : ISoldierState
                 );
             }
         }
+        if (Input.GetKeyUp(KeyCode.E)) {
+            InteractionHintUI.Instance.HideHint();
+        }
 
-       
+
 
     }
 
