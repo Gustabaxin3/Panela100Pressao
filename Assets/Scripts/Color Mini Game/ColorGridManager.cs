@@ -182,9 +182,20 @@ public class ColorGridManager : MonoBehaviour {
     public void CompleteGame() {
         _gameCompleted = true;
         OnGameCompleted?.Invoke();
-        
+
         if (currentTrigger != null)
             currentTrigger.CompleteMinigame();
+
+        int remaining = 0;
+        foreach (var trigger in allMiniGames) {
+            if (!trigger.IsCompleted) remaining++;
+        }
+
+        if (remaining == 1) {
+            return;
+        } else if (remaining > 1) {
+            MissionFeedbackUI.ShowFeedback($"Faltam {remaining} máquinas para completar a missão.");
+        }
     }
 
     public void CheckAllMinigamesCompleted() {
