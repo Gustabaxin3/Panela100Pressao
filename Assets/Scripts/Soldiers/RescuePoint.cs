@@ -1,4 +1,5 @@
 using UnityEngine;
+using AUDIO;
 
 public class RescuePoint : MonoBehaviour {
     [SerializeField] private ISoldierState _targetSoldier;
@@ -13,6 +14,9 @@ public class RescuePoint : MonoBehaviour {
         if (_alreadyUnlocked) return;
 
         if (other.TryGetComponent<ISoldierState>(out ISoldierState soldier)) {
+
+            AudioManager.Instance.PlaySoundEffect("Audio/UI/SoldadoDesbloqueado", spatialBlend: 0);
+            
             _alreadyUnlocked = true;
 
             SoldierUnlockEvents.Unlock(_targetSoldier);
