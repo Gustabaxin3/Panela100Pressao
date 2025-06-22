@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using AUDIO;
 
 public class ColorGridManager : MonoBehaviour {
     public static ColorGridManager Instance { get; private set; }
@@ -132,6 +133,8 @@ public class ColorGridManager : MonoBehaviour {
             if (cell.GetColorIndex() != target)
                 return;
 
+        AudioManager.Instance.PlaySoundEffect("Audio/UI/MiniGame-Ganhou", spatialBlend: 0);
+        
         _feedbackText.text = "Você venceu!";
         _feedbackText.color = Color.green;
         StartCoroutine(HandleVictory());
