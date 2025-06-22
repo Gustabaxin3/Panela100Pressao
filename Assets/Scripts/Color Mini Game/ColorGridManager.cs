@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using AUDIO;
 
 public class ColorGridManager : MonoBehaviour {
     public static ColorGridManager Instance { get; private set; }
@@ -180,6 +181,9 @@ public class ColorGridManager : MonoBehaviour {
     }
 
     public void CompleteGame() {
+        
+        AudioManager.Instance.PlaySoundEffect("Audio/UI/MiniGame-Ganhou", spatialBlend: 0);
+        
         _gameCompleted = true;
         OnGameCompleted?.Invoke();
 
