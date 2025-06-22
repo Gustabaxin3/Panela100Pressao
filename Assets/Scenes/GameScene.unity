@@ -2115,7 +2115,8 @@ PrefabInstance:
       value: Ventilador
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7311021183333455210, guid: 5f0953aa4ba59094a9992402efcb58ee, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f0953aa4ba59094a9992402efcb58ee, type: 3}
