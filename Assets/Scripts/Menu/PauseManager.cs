@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using AUDIO;
+using Unity.Cinemachine;
 
 public class PauseManager : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class PauseManager : MonoBehaviour
 
     [Header("Audio Settings")]
     [SerializeField] private AudioSettingData _audioSettings;
+
+    [Header("Sensibilidade")]
+    [SerializeField] private CinemachineInputAxisController[] _sensibilidadeController;
+    [SerializeField] private int _sensibilidade = 1;
 
     private bool pausouNoEsc = false;
 
@@ -159,4 +164,15 @@ public class PauseManager : MonoBehaviour
     private void ToggleMuteMaster() => _audioSettings.ToggleMuteMaster();
     private void ToggleMuteMusic() => _audioSettings.ToggleMuteMusic();
     private void ToggleMuteSFX() => _audioSettings.ToggleMuteSFX();
+    public void Sensibilidade(float valeu )
+    {
+        PlayerPrefs.SetFloat("Sensibilidade", valeu);
+
+        for (int i = 0; i < _sensibilidadeController.Length; i++)
+        {
+            _sensibilidadeController[i].Controllers[0].Input.Gain = valeu * _sensibilidade;
+            _sensibilidadeController[i].Controllers[1].Input.Gain = valeu * _sensibilidade;
+        }
+        
+    }
 }
