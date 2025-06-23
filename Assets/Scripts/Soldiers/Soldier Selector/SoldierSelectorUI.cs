@@ -39,7 +39,7 @@ public class SoldierSelectorUI : MonoBehaviour {
     private void OnDisable() => SoldierUnlockEvents.OnSoldierUnlocked -= OnSoldierUnlocked;
 
 
-    private void OnSoldierUnlocked(ISoldierState soldier) {
+    public void OnSoldierUnlocked(ISoldierState soldier) {
         HandleAllChoicesInteractivity();
     }
 
@@ -148,10 +148,10 @@ public class SoldierSelectorUI : MonoBehaviour {
     }
 
     private void HandleAllChoicesInteractivity() {
-        _data.captainButton.interactable = _soldierManager.IsCaptainUnlocked && _soldierManager.IsCaptainActive;
-        _data.sublieutenantButton.interactable = _soldierManager.IsSublieutenantUnlocked && _soldierManager.IsSublieutenantActive;
-        _data.sargeantButton.interactable = _soldierManager.IsSargeantUnlocked && _soldierManager.IsSargeantActive;
-        _data.cadetButton.interactable = _soldierManager.IsCadetUnlocked && _soldierManager.IsCadetActive;
+        _data.captainButton.interactable = _soldierManager.IsCaptainUnlocked || _soldierManager.IsCaptainActive;
+        _data.sublieutenantButton.interactable = _soldierManager.IsSublieutenantUnlocked || _soldierManager.IsSublieutenantActive;
+        _data.sargeantButton.interactable = _soldierManager.IsSargeantUnlocked || _soldierManager.IsSargeantActive;
+        _data.cadetButton.interactable = _soldierManager.IsCadetUnlocked || _soldierManager.IsCadetActive;
     }
 
 

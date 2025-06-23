@@ -10,19 +10,19 @@ public class SoldierManager : MonoBehaviour {
     [Header("Captain")]
     public Captain captain;
     [SerializeField] private LayerMask _captainLayerMask;
-    [field: SerializeField] public bool IsCaptainUnlocked {get; private set;} = true;
+    [field: SerializeField] public bool IsCaptainUnlocked { get; private set; } = true;
     [field: SerializeField] public bool IsCaptainActive { get; private set; } = true;
 
     [Header("Sublieutenant")]
     public Sublieutenant sublieutenant;
     [SerializeField] private LayerMask _sublieutenantLayerMask;
-    [field: SerializeField] public bool IsSublieutenantUnlocked {get; private set;} = false;
+    [field: SerializeField] public bool IsSublieutenantUnlocked { get; private set; } = false;
     [field: SerializeField] public bool IsSublieutenantActive { get; private set; } = true;
 
     [Header("Sargeant")]
     public Sargeant sargeant;
     [SerializeField] private LayerMask _sargeantLayerMask;
-    [field: SerializeField] public bool IsSargeantUnlocked {get; private set;} = false;
+    [field: SerializeField] public bool IsSargeantUnlocked { get; private set; } = false;
     [field: SerializeField] public bool IsSargeantActive { get; private set; } = true;
 
     [Header("Cadet")]
@@ -113,10 +113,22 @@ public class SoldierManager : MonoBehaviour {
     }
     private void UnlockSoldier(ISoldierState soldierState) {
         switch (soldierState) {
-            case Captain: IsCaptainUnlocked = true; break;
-            case Sublieutenant: IsSublieutenantUnlocked = true; break;
-            case Sargeant: IsSargeantUnlocked = true; break;
-            case Cadet: IsCadetUnlocked = true; break;
+            case Captain:
+                IsCaptainUnlocked = true;
+                IsCaptainActive = true;
+                break;
+            case Sublieutenant:
+                IsSublieutenantUnlocked = true;
+                IsSublieutenantActive = true;
+                break;
+            case Sargeant:
+                IsSargeantUnlocked = true;
+                IsSargeantActive = true;
+                break;
+            case Cadet:
+                IsCadetUnlocked = true;
+                IsCadetActive = true;
+                break;
         }
     }
 
@@ -160,20 +172,16 @@ public class SoldierManager : MonoBehaviour {
             _ => false
         };
     }
-    public void SetSoldierActive(SoldierType type, bool active)
-    {
-        switch (type)
-        {
+    public void SetSoldierActive(SoldierType type, bool active) {
+        switch (type) {
             case SoldierType.Captain: IsCaptainActive = active; break;
             case SoldierType.Sublieutenant: IsSublieutenantActive = active; break;
             case SoldierType.Sargeant: IsSargeantActive = active; break;
             case SoldierType.Cadet: IsCadetActive = active; break;
         }
     }
-    public bool IsSoldierActive(SoldierType type)
-    {
-        return type switch
-        {
+    public bool IsSoldierActive(SoldierType type) {
+        return type switch {
             SoldierType.Captain => IsCaptainActive,
             SoldierType.Sublieutenant => IsSublieutenantActive,
             SoldierType.Sargeant => IsSargeantActive,

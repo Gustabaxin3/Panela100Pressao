@@ -21,6 +21,13 @@ public class BallInventory : MonoBehaviour {
     }
     public List<GameObject> DeliverBalls() {
         var delivered = new List<GameObject>(_balls);
+
+        foreach(var ball in delivered) {
+            if (ball != null) {
+                Destroy(ball);
+            }
+        }
+
         _balls.Clear();
         return delivered;
     }
