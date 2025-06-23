@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using AUDIO;
 using Unity.Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
@@ -161,7 +162,7 @@ public class PauseManager : MonoBehaviour
     public void Exit()
     {
         AudioManager.Instance.PlaySoundEffect("Audio/UI/Botao", spatialBlend: 0);
-        Application.Quit();
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
     public void OnMasterVolumeChanged(float value) => _audioSettings.OnMasterVolumeChanged(value);
     public void OnMusicVolumeChanged(float value) => _audioSettings.OnMusicVolumeChanged(value);

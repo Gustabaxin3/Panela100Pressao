@@ -11,27 +11,33 @@ public class SoldierManager : MonoBehaviour {
     public Captain captain;
     [SerializeField] private LayerMask _captainLayerMask;
     [field: SerializeField] public bool IsCaptainUnlocked {get; private set;} = true;
+    [field: SerializeField] public bool IsCaptainActive { get; private set; } = true;
 
     [Header("Sublieutenant")]
     public Sublieutenant sublieutenant;
     [SerializeField] private LayerMask _sublieutenantLayerMask;
     [field: SerializeField] public bool IsSublieutenantUnlocked {get; private set;} = false;
+    [field: SerializeField] public bool IsSublieutenantActive { get; private set; } = true;
 
     [Header("Sargeant")]
     public Sargeant sargeant;
     [SerializeField] private LayerMask _sargeantLayerMask;
     [field: SerializeField] public bool IsSargeantUnlocked {get; private set;} = false;
+    [field: SerializeField] public bool IsSargeantActive { get; private set; } = true;
 
     [Header("Cadet")]
     public Cadet cadet;
     [SerializeField] private LayerMask _cadetLayerMask;
     [field: SerializeField] public bool IsCadetUnlocked { get; private set; } = false;
+    [field: SerializeField] public bool IsCadetActive { get; private set; } = true;
 
     [SerializeField] private Animator _animator;
     private float _startAnimationDuration;
     private float _endAnimationDuration;
 
     private bool _isTransitioning = false;
+    public bool IsTransitioning => _isTransitioning;
+
 
     [field: SerializeField] public Transform _originalParent { get; private set; }
 
@@ -137,5 +143,39 @@ public class SoldierManager : MonoBehaviour {
         if (_currentSoldier == sargeant) return SoldierType.Sargeant;
         if (_currentSoldier == cadet) return SoldierType.Cadet;
         return SoldierType.Captain;
+    }
+    public bool IsSoldierSelectable(SoldierType type) {
+        return IsSoldierUnlocked(type) && IsSoldierActive(type);
+    }
+
+    public bool IsSoldierUnlocked(SoldierType type) {
+        return type switch {
+            SoldierType.Captain => IsCaptainUnlocked,
+            SoldierType.Sublieutenant => IsSublieutenantUnlocked,
+            SoldierType.Sargeant => IsSargeantUnlocked,
+            SoldierType.Cadet => IsCadetUnlocked,
+            _ => false
+        };
+    }
+    public void SetSoldierActive(SoldierType type, bool active)
+    {
+        switch (type)
+        {
+            case SoldierType.Captain: IsCaptainActive = active; break;
+            case SoldierType.Sublieutenant: IsSublieutenantActive = active; break;
+            case SoldierType.Sargeant: IsSargeantActive = active; break;
+            case SoldierType.Cadet: IsCadetActive = active; break;
+        }
+    }
+    public bool IsSoldierActive(SoldierType type)
+    {
+        return type switch
+        {
+            SoldierType.Captain => IsCaptainActive,
+            SoldierType.Sublieutenant => IsSublieutenantActive,
+            SoldierType.Sargeant => IsSargeantActive,
+            SoldierType.Cadet => IsCadetActive,
+            _ => false
+        };
     }
 }
