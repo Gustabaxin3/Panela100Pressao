@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +21,8 @@ public class SoldierSelectorData {
     [NonSerialized] public List<Image> buttonPortraits;
     [NonSerialized] public List<Button> buttons;
     [NonSerialized] public List<SoldierType> types;
+
+    [SerializeField] public TextMeshProUGUI _keyboardHintText;
 
     // Ângulos fixos para cada botão na roleta
     public readonly float[] buttonAngles = { 0f, 90f, 180f, 270f };

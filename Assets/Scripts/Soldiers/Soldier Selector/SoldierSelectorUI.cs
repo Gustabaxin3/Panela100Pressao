@@ -77,6 +77,7 @@ public class SoldierSelectorUI : MonoBehaviour {
     private void OpenSelector() {
         Time.timeScale = 0f;
         _data.canvasGroupPanel.alpha = 1f;
+        _data._keyboardHintText.GetComponent<CanvasGroup>().alpha = 0f;
         MoveRouletteToScreenCenter();
         if (_growCoroutine != null) StopCoroutine(_growCoroutine);
         _growCoroutine = StartCoroutine(_rouletteController.Grow(_data.choiceRouletteScale, _data.rouletteGrowDuration));
@@ -107,6 +108,7 @@ public class SoldierSelectorUI : MonoBehaviour {
 
     private void CloseSelector() {
         _isRouletteActive = false;
+        _data._keyboardHintText.GetComponent<CanvasGroup>().alpha = 1f;
         SelectCurrentSoldier();
         ResetRouletteUI();
         AlignRouletteToCurrentSoldier();
