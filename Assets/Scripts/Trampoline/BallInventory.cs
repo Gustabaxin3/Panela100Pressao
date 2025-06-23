@@ -4,7 +4,8 @@ using UnityEngine;
 public class BallInventory : MonoBehaviour {
     public static BallInventory Instance { get; private set; }
 
-    [SerializeField]private  List<GameObject> _balls = new List<GameObject>();
+    [SerializeField] private List<GameObject> _balls = new List<GameObject>();
+    private const int TotalBalls = 5;
 
     private void Awake() {
         if (Instance != null && Instance != this) {
@@ -17,18 +18,25 @@ public class BallInventory : MonoBehaviour {
     public void AddBall(GameObject ball) {
         _balls.Add(ball);
         ball.SetActive(false);
-        Debug.Log($"Bolinhas coletadas: {_balls.Count}");
+        UpdateMissionFeedback();
     }
+
     public List<GameObject> DeliverBalls() {
         var delivered = new List<GameObject>(_balls);
 
-        foreach(var ball in delivered) {
+        foreach (var ball in delivered) {
             if (ball != null) {
                 Destroy(ball);
             }
         }
 
         _balls.Clear();
+        UpdateMissionFeedback();
         return delivered;
+    }
+
+    private void UpdateMissionFeedback() {
+        int remaining = TotalBalls - _balls.Count;
+        MissionFeedbackUI.ShowFeedback($"Bolinhas restantes: {remaining}/{TotalBalls}");
     }
 }
