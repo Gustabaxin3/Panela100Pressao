@@ -34,7 +34,6 @@ public class PauseManager : MonoBehaviour
 
     private void Start()
     {
-
         _audioSettings.Initialize();
 
         _resumeButton.onClick.AddListener(Resume);
@@ -169,7 +168,7 @@ public class PauseManager : MonoBehaviour
         for (int i = 0; i < _sensibilidadeController.Length; i++)
         {
             _sensibilidadeController[i].Controllers[0].Input.Gain = valeu * _sensibilidade;
-            _sensibilidadeController[i].Controllers[1].Input.Gain = valeu * _sensibilidade;
+            _sensibilidadeController[i].Controllers[1].Input.Gain = -valeu * _sensibilidade;
         }
     }
 }
