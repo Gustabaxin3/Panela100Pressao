@@ -51,7 +51,7 @@ public class ColorMiniGameTrigger : MonoBehaviour {
 
         Collider col = GetComponent<Collider>();
         if (col != null) col.enabled = false;
-
+        ColorGridManager.Instance._gameStarted = false;
         InteractionHintUI.Instance.HideHint();
     }
 }
