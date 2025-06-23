@@ -40,6 +40,8 @@ public class ColorGridManager : MonoBehaviour {
     public bool _gameStarted = false;
     private bool _gameCompleted = false;
 
+    private SoldierSelectorUI soldierSelectorUI;
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
