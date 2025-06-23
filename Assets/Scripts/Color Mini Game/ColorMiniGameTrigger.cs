@@ -8,6 +8,7 @@ public class ColorMiniGameTrigger : MonoBehaviour {
     public bool IsCompleted { get; private set; } = false;
     private void Start() {
         ColorGridManager.Instance.OnGameCompleted += HandleGameCompleted;
+        maquinaCount = 0;
     }
 
     private void OnDisable() {
