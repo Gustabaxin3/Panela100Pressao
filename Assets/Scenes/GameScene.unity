@@ -7458,7 +7458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _missionID: 2
-  soldierToUnlock: {fileID: 432113144154967409}
+  soldierToUnlock: {fileID: 2915612348461503376}
 --- !u!65 &668649625
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8795,6 +8795,7 @@ MonoBehaviour:
   - "Voc\xEA desbloqueou\n{0}!"
   _abilityHints:
   - "Use \"Espa\xE7o\"\nPara Pular!"
+  - "Voc\xEA tamb\xE9m\nPode Dar Pulo\nDuplo!"
   _musicVolumeDuringCutscene: 0.2
 --- !u!65 &880888255
 BoxCollider:
@@ -8977,7 +8978,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _currentSoldier
       value: 
-      objectReference: {fileID: 432113144154967409}
+      objectReference: {fileID: 5795439224669263133}
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
       propertyPath: _isCadetUnlocked
@@ -9006,17 +9007,17 @@ PrefabInstance:
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
       propertyPath: <IsCaptainUnlocked>k__BackingField
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
       propertyPath: <IsSargeantUnlocked>k__BackingField
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
       propertyPath: <IsSublieutenantUnlocked>k__BackingField
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7337492082195612537, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
@@ -9533,8 +9534,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 965112873}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.014694716, y: 0.8272872, z: -0.021663256, w: 0.5611691}
-  m_LocalPosition: {x: -19.5, y: 6.4, z: 70.66}
+  m_LocalRotation: {x: -0.018709809, y: -0.96564007, z: 0.07260683, w: -0.24883252}
+  m_LocalPosition: {x: -114.5, y: 113.4, z: 89.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12623,6 +12624,7 @@ MonoBehaviour:
   - {fileID: 1825677023}
   - {fileID: 489884334}
   - {fileID: 413431412}
+  soldierToUnlock: {fileID: 0}
 --- !u!54 &1251073838
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -35355,6 +35357,7 @@ MonoBehaviour:
   _jumpStrength: 30
   _customGravity: -15
   _groundCheck: {fileID: 0}
+  _maxJumps: 2
 --- !u!33 &2915810299431624841
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -35679,7 +35682,7 @@ Transform:
   m_GameObject: {fileID: 222135721150993856}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -51.86, y: -3.67, z: 26.09}
+  m_LocalPosition: {x: -69.8, y: -3.67, z: 28.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -62428,7 +62431,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8521171558738867499}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -62848,6 +62851,7 @@ MonoBehaviour:
   - {fileID: 2161964684456828105}
   - {fileID: 3464910572057617199}
   - {fileID: 8922101765858336990}
+  soldierToUnlock: {fileID: 432113144154967409}
 --- !u!114 &9024008860113154983
 MonoBehaviour:
   m_ObjectHideFlags: 0
