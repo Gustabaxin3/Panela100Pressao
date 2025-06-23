@@ -62,22 +62,27 @@ public class MainMenuManager : MonoBehaviour {
     private void ToggleMuteSFX() => _audioSettings.ToggleMuteSFX();
 
     private void OnOptionsClicked() {
+        AudioManager.Instance.PlaySoundEffect("Audio/UI/Botao", spatialBlend: 0);
         StartCoroutine(ShowMenuWithCameraTransition(_optionCamera, _optionsCanvasGroup));
     }
 
     private void OnCreditsClicked() {
+        AudioManager.Instance.PlaySoundEffect("Audio/UI/Botao", spatialBlend: 0);
         StartCoroutine(ShowMenuWithCameraTransition(_creditsCamera, _creditsCanvasGroup));
     }
     private void OnBackClicked() {
+        AudioManager.Instance.PlaySoundEffect("Audio/UI/Botao", spatialBlend: 0);
         StartCoroutine(ShowMenuWithCameraTransition(_mainMenuCamera, _mainMenuCanvasGroup));
     }
 
     private void OnPlayClicked() {
+        AudioManager.Instance.PlaySoundEffect("Audio/UI/Botao", spatialBlend: 0);
         AudioManager.Instance.StopAllTracks();
         SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 
     private void OnExitClicked() {
+        AudioManager.Instance.PlaySoundEffect("Audio/UI/Botao", spatialBlend: 0);
         Application.Quit();
     }
 
