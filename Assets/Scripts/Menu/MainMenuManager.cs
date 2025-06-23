@@ -82,7 +82,7 @@ public class MainMenuManager : MonoBehaviour {
     private void OnPlayClicked() {
         AudioManager.Instance.PlaySoundEffect("Audio/UI/Botao", spatialBlend: 0);
         AudioManager.Instance.StopAllTracks();
-        SceneManager.LoadScene(1, LoadSceneMode.Single);
+        SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
     }
 
     public void OpenConfirmation()

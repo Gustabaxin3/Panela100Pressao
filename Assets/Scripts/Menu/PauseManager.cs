@@ -162,7 +162,8 @@ public class PauseManager : MonoBehaviour
     public void Exit()
     {
         AudioManager.Instance.PlaySoundEffect("Audio/UI/Botao", spatialBlend: 0);
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        Time.timeScale = 1f;
+        SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Single);
     }
     public void OnMasterVolumeChanged(float value) => _audioSettings.OnMasterVolumeChanged(value);
     public void OnMusicVolumeChanged(float value) => _audioSettings.OnMusicVolumeChanged(value);
