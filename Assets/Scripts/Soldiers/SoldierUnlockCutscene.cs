@@ -4,8 +4,7 @@ using Unity.Cinemachine;
 using TMPro;
 using AUDIO;
 
-public class SoldierUnlockCutscene : MonoBehaviour
-{
+public class SoldierUnlockCutscene : MonoBehaviour {
     [SerializeField] private ISoldierState _soldier;
     [SerializeField] private Animator _soldierAnimator;
     [SerializeField] private CinemachineCamera _cutsceneCamera;
@@ -25,7 +24,8 @@ public class SoldierUnlockCutscene : MonoBehaviour
 
     [Header("Soldier Info")]
     [SerializeField] private string _soldierDisplayName = "Soldado";
-    [SerializeField] private string _abilityHint = "Use E para\nativar a habilidade";
+    [SerializeField][TextArea] private string[] _unlockMessages = { "Você desbloqueou\n{0}!" };
+    [SerializeField][TextArea] private string[] _abilityHints = { "Use E para\nativar a habilidade" };
 
     [Header("Background Music")]
     [Range(0f, 1f)]
@@ -39,29 +39,25 @@ public class SoldierUnlockCutscene : MonoBehaviour
         "Audio/Soldados/SoldadoRespeito04"
     };
 
-    private float _originalMusicVolume = 0.5f; //deixa em 0.5f na real
+    private float _originalMusicVolume = 0.5f;
 
     private int? _firstPlayedIndex = null;
 
-    private void Start()
-    {
+    private void Start() {
         _cutsceneCamera = GetComponentInParent<CinemachineCamera>();
         _cutsceneTextCanvasGroup.alpha = 0f;
         _cutsceneText.text = string.Empty;
     }
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         SoldierUnlockEvents.OnSoldierUnlocked += PlayCutsceneIfMatches;
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         SoldierUnlockEvents.OnSoldierUnlocked -= PlayCutsceneIfMatches;
     }
 
-    private void HandleHud(bool isOnCutscene)
-    {
+    private void HandleHud(bool isOnCutscene) {
         CanvasGroup canvasGroup = _AllHud.GetComponent<CanvasGroup>();
 
         canvasGroup.alpha = isOnCutscene ? 0f : 1f;
@@ -69,12 +65,10 @@ public class SoldierUnlockCutscene : MonoBehaviour
         canvasGroup.blocksRaycasts = !isOnCutscene;
     }
 
-    private IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float from, float to, float duration)
-    {
+    private IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float from, float to, float duration) {
         float elapsed = 0f;
         canvasGroup.alpha = from;
-        while (elapsed < duration)
-        {
+        while (elapsed < duration) {
             elapsed += Time.deltaTime;
             canvasGroup.alpha = Mathf.Lerp(from, to, elapsed / duration);
             yield return null;
@@ -82,34 +76,26 @@ public class SoldierUnlockCutscene : MonoBehaviour
         canvasGroup.alpha = to;
     }
 
-    private IEnumerator ShowCutsceneText(string message)
-    {
-        if (_cutsceneText != null && _cutsceneTextCanvasGroup != null)
-        {
+    private IEnumerator ShowCutsceneText(string message) {
+        if (_cutsceneText != null && _cutsceneTextCanvasGroup != null) {
             _cutsceneText.text = message;
             yield return StartCoroutine(FadeCanvasGroup(_cutsceneTextCanvasGroup, 0f, 1f, _fadeDuration));
         }
     }
 
-    private IEnumerator HideCutsceneText()
-    {
-        if (_cutsceneTextCanvasGroup != null)
-        {
+    private IEnumerator HideCutsceneText() {
+        if (_cutsceneTextCanvasGroup != null) {
             yield return StartCoroutine(FadeCanvasGroup(_cutsceneTextCanvasGroup, 1f, 0f, _fadeDuration));
         }
     }
 
-    private void PlayCutsceneIfMatches(ISoldierState unlockedSoldier)
-    {
-        if (unlockedSoldier == _soldier)
-        {
+    private void PlayCutsceneIfMatches(ISoldierState unlockedSoldier) {
+        if (unlockedSoldier == _soldier) {
             StartCoroutine(PlayCutscene());
         }
     }
 
-    private IEnumerator PlayCutscene()
-    {
-        // Salva o volume atual da música
+    private IEnumerator PlayCutscene() {
         AudioManager.Instance.musicMixer.audioMixer.GetFloat(AudioManager.MUSIC_VOLUME_PARAMETER_NAME, out float currentDb);
         _originalMusicVolume = Mathf.Pow(10f, currentDb / 20f);
 
@@ -122,53 +108,39 @@ public class SoldierUnlockCutscene : MonoBehaviour
         yield return new WaitForSeconds(_endTransitionDuration);
         yield return PlayUnlockAnimation();
 
-
         yield return HideCutsceneText();
 
-        yield return ShowUnlockMessage();
-        yield return ShowAbilityHint();
+        yield return ShowUnlockMessages();
+        yield return ShowAbilityHints();
 
         yield return EndCutsceneTransition();
-
-
     }
 
-    private void StartCutsceneTransition()
-    {
+    private void StartCutsceneTransition() {
         _soldierManager.PlayStartTransition();
         HandleHud(true);
     }
 
-    private void SwitchToCutsceneCamera()
-    {
+    private void SwitchToCutsceneCamera() {
         _soldierManager.PlayEndTransition();
         _cutsceneCamera.Priority = 20;
     }
 
-    private IEnumerator PlayUnlockAnimation()
-    {
+    private IEnumerator PlayUnlockAnimation() {
         _soldierAnimator.SetBool("Unlock", true);
         yield return new WaitForSeconds(_unlockAnimationDuration);
         _soldierAnimator.SetBool("Unlock", false);
         _soldierAnimator.SetBool("Idle", true);
     }
 
-    private IEnumerator ShowUnlockMessage()
-    {
-
-        // sorteia o som, sem repetir o primeiro escolhido
+    private IEnumerator ShowUnlockMessages() {
         int numSorteado;
-        if (_firstPlayedIndex == null)
-        {
+        if (_firstPlayedIndex == null) {
             numSorteado = UnityEngine.Random.Range(0, soundsUnlockSoldier.Length);
             _firstPlayedIndex = numSorteado;
-        }
-        else
-        {
-
+        } else {
             System.Collections.Generic.List<int> indices = new System.Collections.Generic.List<int>();
-            for (int i = 0; i < soundsUnlockSoldier.Length; i++)
-            {
+            for (int i = 0; i < soundsUnlockSoldier.Length; i++) {
                 if (i != _firstPlayedIndex.Value) indices.Add(i);
             }
             numSorteado = indices[UnityEngine.Random.Range(0, indices.Count)];
@@ -176,21 +148,27 @@ public class SoldierUnlockCutscene : MonoBehaviour
 
         AudioManager.Instance.PlaySoundEffect(soundsUnlockSoldier[numSorteado], spatialBlend: 0);
 
-
-        yield return ShowCutsceneText($"Você desbloqueou\n{_soldierDisplayName}!");
-        yield return new WaitForSeconds(1.5f);
-        yield return HideCutsceneText();
+        if (_unlockMessages != null && _unlockMessages.Length > 0) {
+            foreach (var msg in _unlockMessages) {
+                string formattedMsg = string.Format(msg, _soldierDisplayName);
+                yield return ShowCutsceneText(formattedMsg);
+                yield return new WaitForSeconds(1.5f);
+                yield return HideCutsceneText();
+            }
+        }
     }
 
-    private IEnumerator ShowAbilityHint()
-    {
-        yield return ShowCutsceneText(_abilityHint);
-        yield return new WaitForSeconds(1.5f);
-        yield return HideCutsceneText();
+    private IEnumerator ShowAbilityHints() {
+        if (_abilityHints != null && _abilityHints.Length > 0) {
+            foreach (var hint in _abilityHints) {
+                yield return ShowCutsceneText(hint);
+                yield return new WaitForSeconds(1.5f);
+                yield return HideCutsceneText();
+            }
+        }
     }
 
-    private IEnumerator EndCutsceneTransition()
-    {
+    private IEnumerator EndCutsceneTransition() {
         _soldierManager.PlayStartTransition();
         yield return new WaitForSeconds(_startTransitionDuration);
 
