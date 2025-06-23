@@ -16,7 +16,7 @@ public class Mission {
 
     public string GetTitle() {
         return ID switch {
-            MissionID.ResgatarSubtenente => "Resgatar o Subtenente",
+            
             MissionID.SairDoLabirinto => "Saia do Labirinto",
             MissionID.Trampolim => "Ative o Trampolim!",
             MissionID.HackearTodasAsMaquinas => "Hackear Todas as Máquinas",
@@ -25,7 +25,7 @@ public class Mission {
     }
     public string GetDescription() {
         return ID switch {
-            MissionID.ResgatarSubtenente => "Resgatar o Subtenente que está no meio do quarto.",
+            
             MissionID.SairDoLabirinto => "Sair do labirinto e encontrar a saída.",
             MissionID.Trampolim => "Recupere todas as bolas do trampolim perdidas debaixo dos móveis!",
             MissionID.HackearTodasAsMaquinas => "Hackear todas as máquinas do labirinto.",

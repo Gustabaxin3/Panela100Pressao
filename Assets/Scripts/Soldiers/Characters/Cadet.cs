@@ -28,7 +28,7 @@ public class Cadet : ISoldierState {
     }
 
     private void ToggleLight() {
-        AudioManager.Instance.PlaySoundEffect("Audio/CadeteLanterna", volume: 0.35f, position: transform.position, spatialBlend: 0);
+        AudioManager.Instance.PlaySoundEffect("Audio/Soldados/CadeteLanterna", volume: 0.35f, position: transform.position, spatialBlend: 0);
         _isLightOn = !_isLightOn;
         if (_spotLight != null)
             _spotLight.enabled = _isLightOn;

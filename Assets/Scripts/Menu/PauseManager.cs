@@ -119,6 +119,7 @@ public class PauseManager : MonoBehaviour
     public void Resume()
     {
         ResumeInternal(playDespauseSound: true);
+        AudioManager.Instance.PlaySoundEffect("Audio/UI/Botao", spatialBlend: 0);
 
         /*
         pausouNoEsc = false;
@@ -149,6 +150,8 @@ public class PauseManager : MonoBehaviour
 
     public void Options()
     {
+        AudioManager.Instance.PlaySoundEffect("Audio/UI/Botao", spatialBlend: 0);
+
         SetCanvasGroupState(_mainCanvasGroup, false);
         SetCanvasGroupState(_optionCanvasGroup, true);
         SetCanvasGroupState(_backgroundCanvasGroup, true);
@@ -157,6 +160,7 @@ public class PauseManager : MonoBehaviour
 
     public void Exit()
     {
+        AudioManager.Instance.PlaySoundEffect("Audio/UI/Botao", spatialBlend: 0);
         Application.Quit();
     }
     public void OnMasterVolumeChanged(float value) => _audioSettings.OnMasterVolumeChanged(value);
@@ -178,6 +182,10 @@ public class PauseManager : MonoBehaviour
 
     private void AtualizaSlider()
     {
+        if(_sensibilidadeSlider == null)
+        {
+            return;
+        }
         _sensibilidadeSlider.value = PlayerPrefs.GetFloat("Sensibilidade", 0.5f);
     }
 }
