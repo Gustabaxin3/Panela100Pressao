@@ -10,6 +10,9 @@ public class TrampolineTrigger : MonoBehaviour {
     [Tooltip("Arraste aqui os GameObjects das bolinhas que começam desativadas")]
     [SerializeField] private GameObject[] trampolineBalls;
 
+    [Header("Soldado a desbloquear ao ativar o trampolim")]
+    [SerializeField] private ISoldierState soldierToUnlock;
+
     private int ballsDelivered = 0;
     public bool IsActivated { get; private set; } = false;
 
@@ -48,5 +51,6 @@ public class TrampolineTrigger : MonoBehaviour {
         MissionFeedbackUI.ShowFeedback("Trampolim foi ativado!");
         MissionManager.Instance.CompleteMission(MissionID.Trampolim);
 
+        SoldierUnlockEvents.Unlock(soldierToUnlock);
     }
 }
