@@ -195,7 +195,13 @@ public class ColorGridManager : MonoBehaviour {
         if (remaining > 1) {
             MissionFeedbackUI.ShowFeedback($"Faltam {remaining} máquinas para completar a missão.");
         }
+
+        if (remaining == 0 && currentTrigger != null) {
+            currentTrigger.DisableInteraction();
+        }
     }
+
+
 
     public void CheckAllMinigamesCompleted() {
         bool all = true;

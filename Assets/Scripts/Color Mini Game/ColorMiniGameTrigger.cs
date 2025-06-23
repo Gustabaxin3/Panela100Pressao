@@ -44,4 +44,12 @@ public class ColorMiniGameTrigger : MonoBehaviour {
         _playerInRange = false;
         InteractionHintUI.Instance.HideHint();
     }
+    public void DisableInteraction() {
+        _playerInRange = false;
+
+        Collider col = GetComponent<Collider>();
+        if (col != null) col.enabled = false;
+
+        InteractionHintUI.Instance.HideHint();
+    }
 }
