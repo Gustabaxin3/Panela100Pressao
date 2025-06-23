@@ -82,9 +82,21 @@ public class MainMenuManager : MonoBehaviour {
 
     private void OnPlayClicked() {
         AudioManager.Instance.PlaySoundEffect("Audio/UI/Botao", spatialBlend: 0);
+        StartCoroutine(PlayTransitionAndLoadGame());
+    }
+
+    private IEnumerator PlayTransitionAndLoadGame() {
+        SetCameraPriority(_mainMenuCamera, 10);
+        SetCameraPriority(_playMenuCamera, 20);
+
+        SetCanvasGroup(_mainMenuCanvasGroup, false);
+
+        yield return new WaitForSeconds(_cameraTransitionWait);
+
         AudioManager.Instance.StopAllTracks();
         SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
     }
+
 
     public void OpenConfirmation()
     {
