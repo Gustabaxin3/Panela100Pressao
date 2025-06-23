@@ -22,6 +22,8 @@ public class Zipline : MonoBehaviour {
 
     private Transform _originalLayer;
 
+
+
     void Start() {
         UpdateRopeVisual();
     }
@@ -109,7 +111,7 @@ public class Zipline : MonoBehaviour {
             _goingForward = !_goingForward;
 
             Sargeant Sargeant = _rider.GetComponent<Sargeant>();
-
+            Sargeant._animator.SetBool("Zipline", false);
             _rider = null;
         }
     }

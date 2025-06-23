@@ -4,6 +4,7 @@ public class Sargeant : ISoldierState {
     [Header("Zipline Raycast Settings")]
     [SerializeField] private float _checkOffSet = 1f;
     [SerializeField] private float _checkRadius = 2f;
+    [SerializeField] public Animator _animator;
 
     protected override void Awake() {
         base.Awake();
@@ -28,6 +29,7 @@ public class Sargeant : ISoldierState {
             if (hit.collider.tag == "ZiplinePoint") {
                 var zip = hit.collider.GetComponentInParent<Zipline>();
                 zip.TryStartRide(this.gameObject);
+                _animator.SetBool("Zipline", true);
                 InteractionHintUI.Instance.HideHint();
             }
         }

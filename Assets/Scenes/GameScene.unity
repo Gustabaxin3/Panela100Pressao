@@ -8977,7 +8977,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _currentSoldier
       value: 
-      objectReference: {fileID: 5795439224669263133}
+      objectReference: {fileID: 432113144154967409}
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
       propertyPath: _isCadetUnlocked
@@ -8996,7 +8996,7 @@ PrefabInstance:
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
       propertyPath: <IsCadetUnlocked>k__BackingField
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
@@ -9006,17 +9006,17 @@ PrefabInstance:
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
       propertyPath: <IsCaptainUnlocked>k__BackingField
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
       propertyPath: <IsSargeantUnlocked>k__BackingField
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
       propertyPath: <IsSublieutenantUnlocked>k__BackingField
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7337492082195612537, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
@@ -24689,6 +24689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _checkOffSet: 1
   _checkRadius: 0.5
+  _animator: {fileID: 404408301}
 --- !u!1 &434677276716099842
 GameObject:
   m_ObjectHideFlags: 0
