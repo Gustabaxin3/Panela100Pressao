@@ -188,8 +188,11 @@ public class ColorGridManager : MonoBehaviour {
         _gameCompleted = true;
         OnGameCompleted?.Invoke();
 
-        if (currentTrigger != null)
+        if (currentTrigger != null) {
             currentTrigger.CompleteMinigame();
+            currentTrigger.DisableInteraction();
+        }
+
 
         _currentLevelIndex++;
 
@@ -198,14 +201,11 @@ public class ColorGridManager : MonoBehaviour {
             if (!trig.IsCompleted) remaining++;
 
         if (remaining > 1) {
-            _gameStarted = false;
             MissionFeedbackUI.ShowFeedback($"Faltam {remaining} máquinas para completar a missão.");
         }
 
-        if (remaining == 0 && currentTrigger != null) {
-            currentTrigger.DisableInteraction();
-        }
     }
+
 
 
 
