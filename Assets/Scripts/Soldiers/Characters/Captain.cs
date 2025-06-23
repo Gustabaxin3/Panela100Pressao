@@ -12,7 +12,11 @@ public class Captain : ISoldierState {
 
     [SerializeField] private GroundCheck _groundCheck;
 
+    [Header("Double Jump Settings")]
+    [SerializeField] private int _maxJumps = 2;
+
     private bool _isJumping;
+    private int _jumpCount = 0;
 
     protected override void Awake() {
         base.Awake();
@@ -27,6 +31,7 @@ public class Captain : ISoldierState {
         base.OnEnter(soldierManager);
         Debug.Log("Captain state entered.");
         _isActive = true;
+        _jumpCount = 0;
     }
 
     public override void OnUpdate() {
@@ -34,8 +39,7 @@ public class Captain : ISoldierState {
 
         if (Input.GetButtonUp("Jump") && _rigidBody.linearVelocity.y > 0f) {
             _rigidBody.linearVelocity = new Vector3(_rigidBody.linearVelocity.x, _rigidBody.linearVelocity.y * 0.5f, _rigidBody.linearVelocity.z);
-            
-            // implementação de áudio
+
             string[] soundsPulo =
             {
                 "Audio/Pulo/SoldadoPulo01",
@@ -51,10 +55,29 @@ public class Captain : ISoldierState {
 
     public override void LateUpdate() {
         base.LateUpdate();
-        if (Input.GetButtonDown("Jump") && (!_groundCheck || _groundCheck.isGrounded) && _isActive) {
-            _rigidBody.AddForce(Vector3.up * _jumpStrength, ForceMode.Impulse);
-            _isJumping = true;
-            Jumped?.Invoke();
+
+        if (_groundCheck && _groundCheck.isGrounded) {
+            _jumpCount = 0;
+            _isJumping = false;
+        }
+
+        if (Input.GetButtonDown("Jump") && _isActive) {
+            if ((_groundCheck && _groundCheck.isGrounded) || _jumpCount < _maxJumps) {
+                _rigidBody.AddForce(Vector3.up * _jumpStrength, ForceMode.Impulse);
+                _isJumping = true;
+                _jumpCount++;
+                Jumped?.Invoke();
+
+                string[] soundsPulo =
+                {
+                    "Audio/Pulo/SoldadoPulo01",
+                    "Audio/Pulo/SoldadoPulo02",
+                    "Audio/Pulo/SoldadoPulo03",
+                    "Audio/Pulo/SoldadoPulo04"
+                };
+                int numSorteado = UnityEngine.Random.Range(0, soundsPulo.Length);
+                AudioManager.Instance.PlaySoundEffect(soundsPulo[numSorteado], position: transform.position, spatialBlend: 0);
+            }
         }
     }
 
