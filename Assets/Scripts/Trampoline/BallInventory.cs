@@ -24,7 +24,6 @@ public class BallInventory : MonoBehaviour {
 
     public List<GameObject> DeliverBalls() {
         var delivered = new List<GameObject>(_balls);
-        contagem++;
 
         foreach (var ball in delivered) {
             if (ball != null) {
@@ -33,11 +32,13 @@ public class BallInventory : MonoBehaviour {
         }
 
         _balls.Clear();
+
         UpdateMissionFeedback();
         return delivered;
     }
 
     private void UpdateMissionFeedback() {
+        contagem = contagem + 1;
         MissionFeedbackUI.ShowFeedback($"Bolinhas restantes: {contagem}/{TotalBalls}");
     }
 }
