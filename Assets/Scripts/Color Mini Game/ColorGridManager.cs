@@ -137,10 +137,18 @@ public class ColorGridManager : MonoBehaviour {
             if (cell.GetColorIndex() != target)
                 return;
 
+        foreach (var cell in _cells) {
+            var btn = cell.GetComponent<Button>();
+            if (btn != null) btn.interactable = false;
+        }
+
         AudioManager.Instance.PlaySoundEffect("Audio/UI/MiniGame-Ganhou", spatialBlend: 0);
-        
+
+        Cursor.lockState = CursorLockMode.Locked;
+
         _feedbackText.text = "Você venceu!";
         _feedbackText.color = Color.green;
+
         StartCoroutine(HandleVictory());
     }
 
@@ -159,7 +167,6 @@ public class ColorGridManager : MonoBehaviour {
 
         yield return StartCoroutine(FadeCanvas(false, _fadeDuration));
         Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Locked;
 
         CompleteGame();
     }
@@ -191,7 +198,6 @@ public class ColorGridManager : MonoBehaviour {
             currentTrigger.CompleteMinigame();
             currentTrigger.DisableInteraction();
         }
-
 
         _currentLevelIndex++;
 
