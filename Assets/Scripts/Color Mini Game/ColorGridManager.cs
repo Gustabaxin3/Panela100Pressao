@@ -22,6 +22,9 @@ public class ColorGridManager : MonoBehaviour {
     [SerializeField] private ColorMiniGameTrigger[] allMiniGames;
     public ColorMiniGameTrigger currentTrigger { get; private set; }
 
+    [Header("Desbloqueio")]
+    [SerializeField] private ISoldierState soldierToUnlock;
+
     private readonly Vector2Int[] _levels = new Vector2Int[] {
         new Vector2Int(1, 4),  // 1ª máquina
         new Vector2Int(2, 4),  // 2ª máquina
@@ -214,6 +217,8 @@ public class ColorGridManager : MonoBehaviour {
         if (all) {
             MissionManager.Instance.CompleteMission(MissionID.HackearTodasAsMaquinas);
             MissionFeedbackUI.ShowFeedback("Missão 'Hackear Todas as Máquinas' foi completada!");
+
+            SoldierUnlockEvents.Unlock(soldierToUnlock);
         }
     }
 }

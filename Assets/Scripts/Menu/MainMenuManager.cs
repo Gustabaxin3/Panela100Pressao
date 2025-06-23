@@ -23,6 +23,7 @@ public class MainMenuManager : MonoBehaviour {
 
     [Header("Cameras")]
     [SerializeField] private CinemachineCamera _mainMenuCamera;
+    [SerializeField] private CinemachineCamera _playMenuCamera;
     [SerializeField] private CinemachineCamera _optionCamera;
     [SerializeField] private CinemachineCamera _creditsCamera;
     [SerializeField] private CinemachineCamera _confirmationCamera;
