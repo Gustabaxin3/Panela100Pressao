@@ -34,10 +34,6 @@ public class FinalBoxCutscene : MonoBehaviour {
         boxRigidbody.isKinematic = true;
     }
 
-    private void Update() {
-        PlayCutscene();
-    }
-
     public void PlayCutscene() {
         StartCoroutine(PlayFinalCutscene());
     }

@@ -20,6 +20,7 @@ public class Mission {
             MissionID.Trampolim => "Ative o Trampolim!",
             MissionID.HackearTodasAsMaquinas => "Hackear Todas as Máquinas",
             MissionID.IrAteArmarioMarrom => "Vá até o Armário Marrom",
+            MissionID.IrAteCaixa => "Vá até a caixa",
             _ => ID.ToString()
         };
     }
@@ -29,6 +30,7 @@ public class Mission {
             MissionID.Trampolim => "Recupere todas as bolas do trampolim perdidas debaixo dos móveis!",
             MissionID.HackearTodasAsMaquinas => "Hackear todas as máquinas do labirinto.",
             MissionID.IrAteArmarioMarrom => "Vá pelas prateleiras e encontre o botão em cima do armário.",
+            MissionID.IrAteCaixa => "Leve todos os soldados até a caixa.",
             _ => "Missão desconhecida."
         };
     }

@@ -49,25 +49,23 @@ public class SoldierSelectorUI : MonoBehaviour {
     }
 
     private void HandleInput() {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            string[] soundsMenuTroca =
-            {
-                "Audio/UI/MenuTrocaPersonagem01",
-                "Audio/UI/MenuTrocaPersonagem02",
-                "Audio/UI/MenuTrocaPersonagem03"
-            };
+        if (Input.GetKeyDown(KeyCode.Tab)) {
+            if (_soldierManager.IsTransitioning) return; 
+
+            string[] soundsMenuTroca = {
+            "Audio/UI/MenuTrocaPersonagem01",
+            "Audio/UI/MenuTrocaPersonagem02",
+            "Audio/UI/MenuTrocaPersonagem03"
+        };
 
             int numSorteado = UnityEngine.Random.Range(0, soundsMenuTroca.Length);
             AudioManager.Instance.PlaySoundEffect(soundsMenuTroca[numSorteado], position: transform.position, spatialBlend: 0);
 
             OpenSelector();
         }
-        
-        else if (_isRouletteActive && Input.GetMouseButtonDown(0))
-            StartDragging();
-        else if (_isRouletteActive && Input.GetMouseButtonUp(0))
-            StopDragging();
+
+        if (_isRouletteActive && Input.GetMouseButtonDown(0)) StartDragging();
+        else if (_isRouletteActive && Input.GetMouseButtonUp(0)) StopDragging();
 
         if (_isRouletteActive && _isDragging) RotateWithMouse();
 
@@ -150,10 +148,10 @@ public class SoldierSelectorUI : MonoBehaviour {
     }
 
     private void HandleAllChoicesInteractivity() {
-        _data.captainButton.interactable = _soldierManager.IsCaptainUnlocked;
-        _data.sublieutenantButton.interactable = _soldierManager.IsSublieutenantUnlocked;
-        _data.sargeantButton.interactable = _soldierManager.IsSargeantUnlocked;
-        _data.cadetButton.interactable = _soldierManager.IsCadetUnlocked;
+        _data.captainButton.interactable = _soldierManager.IsCaptainUnlocked && _soldierManager.IsCaptainActive;
+        _data.sublieutenantButton.interactable = _soldierManager.IsSublieutenantUnlocked && _soldierManager.IsSublieutenantActive;
+        _data.sargeantButton.interactable = _soldierManager.IsSargeantUnlocked && _soldierManager.IsSargeantActive;
+        _data.cadetButton.interactable = _soldierManager.IsCadetUnlocked && _soldierManager.IsCadetActive;
     }
 
 
@@ -161,6 +159,11 @@ public class SoldierSelectorUI : MonoBehaviour {
         float minAngle = float.MaxValue;
         int selectedIdx = 0;
         for (int i = 0; i < _data.buttons.Count; i++) {
+            SoldierType type = _data.types[i];
+
+            if (!_soldierManager.IsSoldierUnlocked(type) || !_soldierManager.IsSoldierActive(type))
+                continue;
+
             Vector3 btnWorldPos = _data.buttons[i].transform.position;
             Vector2 btnDir = (btnWorldPos - _data.choiceRoulette.position).normalized;
             float angle = Vector2.Angle(Vector2.up, btnDir);
