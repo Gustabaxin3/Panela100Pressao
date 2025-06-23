@@ -6,6 +6,7 @@ public class BallInventory : MonoBehaviour {
 
     [SerializeField] private List<GameObject> _balls = new List<GameObject>();
     private const int TotalBalls = 5;
+    private int contagem = 0;
 
     private void Awake() {
         if (Instance != null && Instance != this) {
@@ -23,6 +24,7 @@ public class BallInventory : MonoBehaviour {
 
     public List<GameObject> DeliverBalls() {
         var delivered = new List<GameObject>(_balls);
+        contagem++;
 
         foreach (var ball in delivered) {
             if (ball != null) {
@@ -36,7 +38,6 @@ public class BallInventory : MonoBehaviour {
     }
 
     private void UpdateMissionFeedback() {
-        int remaining = TotalBalls - _balls.Count;
-        MissionFeedbackUI.ShowFeedback($"Bolinhas restantes: {remaining}/{TotalBalls}");
+        MissionFeedbackUI.ShowFeedback($"Bolinhas restantes: {contagem}/{TotalBalls}");
     }
 }
