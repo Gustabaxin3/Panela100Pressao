@@ -10,9 +10,7 @@ public class MissionManager : MonoBehaviour {
     [SerializeField]
     private List<MissionID> _missionOrder = new List<MissionID> {
         MissionID.SairDoLabirinto,
-        MissionID.ResgatarSubtenente,
         MissionID.Trampolim,
-        MissionID.ResgatarSargento,
         MissionID.HackearTodasAsMaquinas,
     };
 
