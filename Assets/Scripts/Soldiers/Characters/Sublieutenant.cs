@@ -23,31 +23,32 @@ public class Sublieutenant : ISoldierState
     public override void OnUpdate() {
         if (Input.GetKeyDown(KeyCode.E)) {
             if (currentPushable != null && currentPushable.IsBeingPushed) {
-                _animator.SetBool("Push", currentPushable.IsBeingPushed);
+                
+                _animator.SetBool("Push", false);
                 currentPushable.StopPush();
                 _isPushing = false;
                 _soldierMovement.SpeedOverrides.Remove(PushSpeedOverride);
                 _soldierMovement.IsPushing = _isPushing;
                 currentPushable = null;
-            }
-
-            Collider[] hits = Physics.OverlapSphere(_transform.position, detectRadius);
-            foreach (var hit in hits) {
-                if (hit.TryGetComponent(out PushableObject pushable)) {
-                    pushable.StartPush(_transform);
-                    currentPushable = pushable;
-                    _isPushing = true;
-                    // Add override
-                    _soldierMovement.SpeedOverrides.Add(PushSpeedOverride);
-                    _soldierMovement.IsPushing = _isPushing;
-                    break;
+            } else {
+                // Try to find a pushable object to start pushing
+                Collider[] hits = Physics.OverlapSphere(_transform.position, detectRadius);
+                foreach (var hit in hits) {
+                    if (hit.TryGetComponent(out PushableObject pushable) && !pushable.IsBeingPushed) {
+                        pushable.StartPush(_transform);
+                        currentPushable = pushable;
+                        _isPushing = true;
+                        _animator.SetBool("Push", true);
+                        _soldierMovement.SpeedOverrides.Add(PushSpeedOverride);
+                        _soldierMovement.IsPushing = _isPushing;
+                        break;
+                    }
                 }
             }
         }
 
         if (Input.GetKeyUp(KeyCode.E)) {
             InteractionHintUI.Instance.HideHint();
-            _animator.SetBool("Push", currentPushable != null && currentPushable.IsBeingPushed);
         }
     }
 
