@@ -44,11 +44,6 @@ public class MissionManager : MonoBehaviour {
         var mission = _missions.Find(m => m.ID == id);
         if (mission != null && !mission.IsCompleted) {
             mission.Complete();
-            int index = _missionOrder.IndexOf(id);
-            if (index != -1 && index + 1 < _missionOrder.Count) {
-                AddMission(_missionOrder[index + 1]);
-                _currentMissionIndex = index + 1;
-            }
         }
     }
 
@@ -70,8 +65,8 @@ public class MissionManager : MonoBehaviour {
         foreach (var obs in _observers)
             obs.OnMissionUpdated(mission);
     }
-    public void TryAddNextMissionAfter(MissionID completedMissionID) {
-        int index = _missionOrder.IndexOf(completedMissionID);
+    public void TryAddNextMissionAfter(MissionID id) {
+        int index = _missionOrder.IndexOf(id);
         if (index != -1 && index + 1 < _missionOrder.Count) {
             AddMission(_missionOrder[index + 1]);
             _currentMissionIndex = index + 1;

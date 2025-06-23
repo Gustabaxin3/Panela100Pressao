@@ -182,6 +182,10 @@ public class PauseManager : MonoBehaviour
 
     private void AtualizaSlider()
     {
+        if(_sensibilidadeSlider == null)
+        {
+            return;
+        }
         _sensibilidadeSlider.value = PlayerPrefs.GetFloat("Sensibilidade", 0.5f);
     }
 }
