@@ -111,6 +111,20 @@ public class SoldierManager : MonoBehaviour {
             case Cadet: IsCadetUnlocked = true; break;
         }
     }
+    public void PlayStartTransition() {
+        _animator.SetBool("Start", true);
+        StartCoroutine(DisableAfterTime(_animator.GetCurrentAnimatorStateInfo(0).length, "Start"));
+    }
+
+    public void PlayEndTransition() {
+        _animator.SetBool("End", true);
+        StartCoroutine(DisableAfterTime(_animator.GetCurrentAnimatorStateInfo(0).length, "End"));
+    }
+
+    private IEnumerator DisableAfterTime(float time, string param) {
+        yield return new WaitForSeconds(time);
+        _animator.SetBool(param, false);
+    }
     private void MakeAllSoldiersImmobile() {
         captain.GetComponent<SoldierMovement>().SetMovementEnabled(false);
         sublieutenant.GetComponent<SoldierMovement>().SetMovementEnabled(false);
