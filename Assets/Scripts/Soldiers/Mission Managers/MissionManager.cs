@@ -12,6 +12,8 @@ public class MissionManager : MonoBehaviour {
         MissionID.SairDoLabirinto,
         MissionID.Trampolim,
         MissionID.HackearTodasAsMaquinas,
+        MissionID.IrAteArmarioMarrom,
+        MissionID.IrAteCaixa
     };
 
     private int _currentMissionIndex = 0;
