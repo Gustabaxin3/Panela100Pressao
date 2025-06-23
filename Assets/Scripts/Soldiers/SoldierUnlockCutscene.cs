@@ -120,10 +120,10 @@ public class SoldierUnlockCutscene : MonoBehaviour
 
         SwitchToCutsceneCamera();
         yield return new WaitForSeconds(_endTransitionDuration);
+        yield return PlayUnlockAnimation();
+
 
         yield return HideCutsceneText();
-
-        yield return PlayUnlockAnimation();
 
         yield return ShowUnlockMessage();
         yield return ShowAbilityHint();

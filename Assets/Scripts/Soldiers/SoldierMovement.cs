@@ -55,7 +55,7 @@ public class SoldierMovement : MonoBehaviour {
     private void HandleAnimation() {
         if (_animator == null) return;
         bool isWalking = InputMove.magnitude > 0.1f && !IsRunning && IsActive;
-        _animator.SetBool("Walk", isWalking);
+        _animator.SetBool("Walk", isWalking || IsRunning);
     }
     private void HandleInput() {
         if (!IsActive) return;
@@ -64,8 +64,13 @@ public class SoldierMovement : MonoBehaviour {
         InputMove.y = Input.GetAxisRaw("Vertical");
         IsRunning = CanRun && Input.GetKey(RunningKey);
 
+        HandlePushing();
+
         HandleMovement();
-        HandleRotation();
+
+        if (!IsPushing) {
+            HandleRotation();
+        }
     }
 
     private void HandleMovement() {
@@ -108,4 +113,15 @@ public class SoldierMovement : MonoBehaviour {
     }
 
     public void SetMovementEnabled(bool enabled) => IsActive = enabled;
+
+    public bool IsPushing { get; set; }
+
+    private void HandlePushing() {
+        if (IsPushing) {
+            if (Mathf.Abs(InputMove.x) > Mathf.Abs(InputMove.y))
+                InputMove.y = 0;
+            else
+                InputMove.x = 0;
+        }
+    }
 }
