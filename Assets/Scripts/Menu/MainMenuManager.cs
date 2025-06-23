@@ -33,7 +33,9 @@ public class MainMenuManager : MonoBehaviour {
 
     [Header("Audio Settings")]
     [SerializeField] private AudioSettingData _audioSettings;
+    [SerializeField] private IntroSoldierTextSequence _introSequence;
 
+    [SerializeField] private Animator _transitionAnimator;
     private void Start() {
         AudioManager.Instance.PlayTrack("Audio/bgm/bgm_menu");
 
@@ -59,6 +61,8 @@ public class MainMenuManager : MonoBehaviour {
 
         ShowMainMenuWithoutTransition();
     }
+
+
     private void OnMasterVolumeChanged(float value) => _audioSettings.OnMasterVolumeChanged(value);
     private void OnMusicVolumeChanged(float value) => _audioSettings.OnMusicVolumeChanged(value);
     private void OnSFXVolumeChanged(float value) => _audioSettings.OnSFXVolumeChanged(value);
@@ -91,10 +95,13 @@ public class MainMenuManager : MonoBehaviour {
 
         SetCanvasGroup(_mainMenuCanvasGroup, false);
 
-        yield return new WaitForSeconds(_cameraTransitionWait);
+        yield return new WaitForSeconds(_cameraTransitionWait + 1.5f);
 
         AudioManager.Instance.StopAllTracks();
-        SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
+
+        _introSequence.gameObject.SetActive(true);
+
+        _introSequence.PlayIntroSequenceExternally();
     }
 
 
@@ -147,5 +154,10 @@ public class MainMenuManager : MonoBehaviour {
     private void SetCameraPriority(CinemachineCamera cam, int priority) {
         if (cam != null)
             cam.Priority = priority;
+    }
+    private void Awake() {
+        if (_transitionAnimator != null) {  
+            _transitionAnimator.SetBool("End", true);
+        }
     }
 }

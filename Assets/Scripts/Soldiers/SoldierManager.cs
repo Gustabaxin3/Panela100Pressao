@@ -46,6 +46,8 @@ public class SoldierManager : MonoBehaviour {
     private void Start() {
         MakeAllSoldiersImmobile();
         ChangeState(_currentSoldier);
+        _animator.SetBool("End", true);
+        StartCoroutine(DisableAfterTime(_animator.GetCurrentAnimatorStateInfo(0).length, "End"));
     }
 
     private void OnEnable() {
@@ -117,6 +119,7 @@ public class SoldierManager : MonoBehaviour {
             case Cadet: IsCadetUnlocked = true; break;
         }
     }
+
     public void PlayStartTransition() {
         _animator.SetBool("Start", true);
         StartCoroutine(DisableAfterTime(_animator.GetCurrentAnimatorStateInfo(0).length, "Start"));
@@ -177,5 +180,8 @@ public class SoldierManager : MonoBehaviour {
             SoldierType.Cadet => IsCadetActive,
             _ => false
         };
+    }
+    public void PlayStartTransitionWithoutDisable() {
+        _animator.SetBool("Start", true);
     }
 }

@@ -1,11 +1,24 @@
+using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BoxMissionTrigger : MonoBehaviour
 {
     [SerializeField] private SoldierManager soldierManager;
     [SerializeField] private MissionManager missionManager;
     [SerializeField] private MissionID missionID = MissionID.IrAteCaixa;
+    [SerializeField] private CinemachineCamera missionCamera;
+    [SerializeField] private CanvasGroup HudChoice;
+    [SerializeField] private CanvasGroup HudHint;
+    [SerializeField] private CanvasGroup HudMission;
 
+
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.F)) {
+            StartCoroutine(ShowMissionCompleteFeedbackAndTransition());
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         ISoldierState soldier = other.GetComponent<ISoldierState>();
@@ -20,7 +33,9 @@ public class BoxMissionTrigger : MonoBehaviour
         if (!soldierManager.IsCaptainActive && !soldierManager.IsSublieutenantActive &&
             !soldierManager.IsSargeantActive && !soldierManager.IsCadetActive)
         {
+            missionCamera.Priority = 50;
             missionManager.CompleteMission(missionID);
+            MissionFeedbackUI.ShowFeedback("Todos os soldados Foram Salvos. Missão concluída.");
             return;
         }
 
@@ -41,5 +56,17 @@ public class BoxMissionTrigger : MonoBehaviour
                 case SoldierType.Cadet: soldierManager.SelectCadet(); break;
             }
         }
+    }
+    private IEnumerator ShowMissionCompleteFeedbackAndTransition() {
+        missionCamera.Priority = 50;
+        missionManager.CompleteMission(missionID);
+        HudChoice.alpha = 0;
+        HudHint.alpha = 0;
+        HudMission.alpha = 0;
+        MissionFeedbackUI.ShowFeedback("Todos os soldados Foram Salvos. Missão concluída.");
+        yield return new WaitForSeconds(3f);
+        soldierManager.PlayStartTransitionWithoutDisable();
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Single);
     }
 }
