@@ -22,6 +22,7 @@ public class PauseManager : MonoBehaviour
     [Header("Sensibilidade")]
     [SerializeField] private CinemachineInputAxisController[] _sensibilidadeController;
     [SerializeField] private int _sensibilidade = 1;
+    [SerializeField] private Slider _sensibilidadeSlider;
 
     private bool pausouNoEsc = false;
 
@@ -49,6 +50,7 @@ public class PauseManager : MonoBehaviour
         _audioSettings.muteMasterButton.onClick.AddListener(ToggleMuteMaster);
         _audioSettings.muteMusicButton.onClick.AddListener(ToggleMuteMusic);
         _audioSettings.muteSFXButton.onClick.AddListener(ToggleMuteSFX);
+        AtualizaSlider();
     }
 
     private void Update()
@@ -165,10 +167,17 @@ public class PauseManager : MonoBehaviour
     private void ToggleMuteSFX() => _audioSettings.ToggleMuteSFX();
     public void Sensibilidade(float valeu )
     {
+        PlayerPrefs.SetFloat("Sensibilidade", valeu);
+
         for (int i = 0; i < _sensibilidadeController.Length; i++)
         {
             _sensibilidadeController[i].Controllers[0].Input.Gain = valeu * _sensibilidade;
             _sensibilidadeController[i].Controllers[1].Input.Gain = -valeu * _sensibilidade;
         }
+    }
+
+    private void AtualizaSlider()
+    {
+        _sensibilidadeSlider.value = PlayerPrefs.GetFloat("Sensibilidade", 0.5f);
     }
 }
