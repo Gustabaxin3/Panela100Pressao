@@ -78,41 +78,59 @@ public class SoldierUnlockCutscene : MonoBehaviour {
     }
 
     private IEnumerator PlayCutscene() {
-
-        _soldierManager.PlayStartTransition();
-        HandleHud(true);
-
+        StartCutsceneTransition();
         yield return new WaitForSeconds(_startTransitionDuration);
 
-        _soldierManager.PlayEndTransition();
-        _cutsceneCamera.Priority = 20;
-
+        SwitchToCutsceneCamera();
         yield return new WaitForSeconds(_endTransitionDuration);
 
         yield return HideCutsceneText();
 
-        _soldierAnimator.SetBool("Unlock", true);
+        yield return PlayUnlockAnimation();
 
+        yield return ShowUnlockMessage();
+        yield return ShowAbilityHint();
+
+        yield return EndCutsceneTransition();
+    }
+
+    private void StartCutsceneTransition() {
+        _soldierManager.PlayStartTransition();
+        HandleHud(true);
+    }
+
+    private void SwitchToCutsceneCamera() {
+        _soldierManager.PlayEndTransition();
+        _cutsceneCamera.Priority = 20;
+    }
+
+    private IEnumerator PlayUnlockAnimation() {
+        _soldierAnimator.SetBool("Unlock", true);
         yield return new WaitForSeconds(_unlockAnimationDuration);
         _soldierAnimator.SetBool("Unlock", false);
         _soldierAnimator.SetBool("Idle", true);
+    }
 
+    private IEnumerator ShowUnlockMessage() {
         yield return ShowCutsceneText($"Você desbloqueou\n{_soldierDisplayName}!");
         yield return new WaitForSeconds(1.5f);
         yield return HideCutsceneText();
+    }
 
+    private IEnumerator ShowAbilityHint() {
         yield return ShowCutsceneText(_abilityHint);
         yield return new WaitForSeconds(1.5f);
         yield return HideCutsceneText();
+    }
 
+    private IEnumerator EndCutsceneTransition() {
         _soldierManager.PlayStartTransition();
-
         yield return new WaitForSeconds(_startTransitionDuration);
+
         _cutsceneCamera.Priority = 0;
         HandleHud(false);
 
         _soldierManager.PlayEndTransition();
-
         yield return new WaitForSeconds(_endTransitionDuration);
     }
 }
