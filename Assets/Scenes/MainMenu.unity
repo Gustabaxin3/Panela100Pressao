@@ -974,6 +974,7 @@ MonoBehaviour:
   - {fileID: 481811197}
   - {fileID: 404640313}
   soldierToUnlock: {fileID: 0}
+  soldierSelectorUI: {fileID: 0}
 --- !u!1 &58561465
 GameObject:
   m_ObjectHideFlags: 0
@@ -13788,6 +13789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _missionID: 4
   soldierToUnlock: {fileID: 0}
+  soldierSelectorUI: {fileID: 0}
 --- !u!65 &501978841
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34343,6 +34345,9 @@ MonoBehaviour:
     ativar sua
 
     lanterna!'
+  - 'Use Shift
+
+    para correr!'
   _fadeDuration: 1
   _textDisplayTime: 1.5
   _introCamera: {fileID: 1340030875}
@@ -41225,6 +41230,7 @@ MonoBehaviour:
   - {fileID: 1595832013}
   - {fileID: 1963064484}
   soldierToUnlock: {fileID: 0}
+  soldierSelectorUI: {fileID: 0}
 --- !u!65 &1463883989
 BoxCollider:
   m_ObjectHideFlags: 0

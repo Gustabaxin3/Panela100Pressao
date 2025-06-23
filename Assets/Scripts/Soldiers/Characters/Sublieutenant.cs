@@ -31,7 +31,6 @@ public class Sublieutenant : ISoldierState
                 _soldierMovement.IsPushing = _isPushing;
                 currentPushable = null;
             } else {
-                // Try to find a pushable object to start pushing
                 Collider[] hits = Physics.OverlapSphere(_transform.position, detectRadius);
                 foreach (var hit in hits) {
                     if (hit.TryGetComponent(out PushableObject pushable) && !pushable.IsBeingPushed) {

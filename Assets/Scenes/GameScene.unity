@@ -24756,7 +24756,7 @@ MonoBehaviour:
   WantsToJump: 0
   CanRun: 1
   WalkSpeed: 5
-  RunSpeed: 9
+  RunSpeed: 15
   RunningKey: 304
   RotateWithCamera: 0
   RotationSpeed: 10
@@ -36121,7 +36121,7 @@ MonoBehaviour:
   WantsToJump: 0
   CanRun: 1
   WalkSpeed: 5
-  RunSpeed: 9
+  RunSpeed: 15
   RunningKey: 304
   RotateWithCamera: 0
   RotationSpeed: 10
@@ -36528,7 +36528,7 @@ MonoBehaviour:
   WantsToJump: 0
   CanRun: 1
   WalkSpeed: 5
-  RunSpeed: 9
+  RunSpeed: 15
   RunningKey: 304
   RotateWithCamera: 0
   RotationSpeed: 10
@@ -50167,7 +50167,7 @@ MonoBehaviour:
   WantsToJump: 0
   CanRun: 1
   WalkSpeed: 5
-  RunSpeed: 9
+  RunSpeed: 15
   RunningKey: 304
   RotateWithCamera: 0
   RotationSpeed: 10
