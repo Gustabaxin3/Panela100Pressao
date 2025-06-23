@@ -22,6 +22,7 @@ public class PauseManager : MonoBehaviour
     [Header("Sensibilidade")]
     [SerializeField] private CinemachineInputAxisController[] _sensibilidadeController;
     [SerializeField] private int _sensibilidade = 1;
+    [SerializeField] private Slider _sensibilidadeSlider;
 
     private bool pausouNoEsc = false;
 
@@ -34,7 +35,6 @@ public class PauseManager : MonoBehaviour
 
     private void Start()
     {
-
         _audioSettings.Initialize();
 
         _resumeButton.onClick.AddListener(Resume);
@@ -50,6 +50,7 @@ public class PauseManager : MonoBehaviour
         _audioSettings.muteMasterButton.onClick.AddListener(ToggleMuteMaster);
         _audioSettings.muteMusicButton.onClick.AddListener(ToggleMuteMusic);
         _audioSettings.muteSFXButton.onClick.AddListener(ToggleMuteSFX);
+        AtualizaSlider();
     }
 
     private void Update()
@@ -131,7 +132,7 @@ public class PauseManager : MonoBehaviour
         */
     }
 
-    private void ResumeInternal(bool playDespauseSound){
+    public void ResumeInternal(bool playDespauseSound){
         pausouNoEsc = false;
         if (playDespauseSound)
             AudioManager.Instance.PlaySoundEffect("Audio/UI/Despause", spatialBlend: 0);
@@ -158,18 +159,25 @@ public class PauseManager : MonoBehaviour
     {
         Application.Quit();
     }
-    private void OnMasterVolumeChanged(float value) => _audioSettings.OnMasterVolumeChanged(value);
-    private void OnMusicVolumeChanged(float value) => _audioSettings.OnMusicVolumeChanged(value);
-    private void OnSFXVolumeChanged(float value) => _audioSettings.OnSFXVolumeChanged(value);
-    private void ToggleMuteMaster() => _audioSettings.ToggleMuteMaster();
-    private void ToggleMuteMusic() => _audioSettings.ToggleMuteMusic();
-    private void ToggleMuteSFX() => _audioSettings.ToggleMuteSFX();
+    public void OnMasterVolumeChanged(float value) => _audioSettings.OnMasterVolumeChanged(value);
+    public void OnMusicVolumeChanged(float value) => _audioSettings.OnMusicVolumeChanged(value);
+    public void OnSFXVolumeChanged(float value) => _audioSettings.OnSFXVolumeChanged(value);
+    public void ToggleMuteMaster() => _audioSettings.ToggleMuteMaster();
+    public void ToggleMuteMusic() => _audioSettings.ToggleMuteMusic();
+    public void ToggleMuteSFX() => _audioSettings.ToggleMuteSFX();
     public void Sensibilidade(float valeu )
     {
+        PlayerPrefs.SetFloat("Sensibilidade", valeu);
+
         for (int i = 0; i < _sensibilidadeController.Length; i++)
         {
             _sensibilidadeController[i].Controllers[0].Input.Gain = valeu * _sensibilidade;
-            _sensibilidadeController[i].Controllers[1].Input.Gain = valeu * _sensibilidade;
+            _sensibilidadeController[i].Controllers[1].Input.Gain = -valeu * _sensibilidade;
         }
+    }
+
+    private void AtualizaSlider()
+    {
+        _sensibilidadeSlider.value = PlayerPrefs.GetFloat("Sensibilidade", 0.5f);
     }
 }
