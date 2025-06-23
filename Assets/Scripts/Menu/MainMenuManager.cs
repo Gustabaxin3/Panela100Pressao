@@ -13,16 +13,19 @@ public class MainMenuManager : MonoBehaviour {
     [SerializeField] private Button _exitButton;
     [SerializeField] private Button _backCreditsButton;
     [SerializeField] private Button _backOptionsButton;
+    [SerializeField] private Button _backConfirmationButton;
 
     [Header("Canvas Groups")]
     [SerializeField] private CanvasGroup _mainMenuCanvasGroup;
     [SerializeField] private CanvasGroup _optionsCanvasGroup;
     [SerializeField] private CanvasGroup _creditsCanvasGroup;
+    [SerializeField] private CanvasGroup _confirmationExit;
 
     [Header("Cameras")]
     [SerializeField] private CinemachineCamera _mainMenuCamera;
     [SerializeField] private CinemachineCamera _optionCamera;
     [SerializeField] private CinemachineCamera _creditsCamera;
+    [SerializeField] private CinemachineCamera _confirmationCamera;
 
     [Header("Camera Transition")]
     [SerializeField] private float _cameraTransitionWait = 2f;
@@ -38,9 +41,10 @@ public class MainMenuManager : MonoBehaviour {
         _optionsButton.onClick.AddListener(OnOptionsClicked);
         _creditsButton.onClick.AddListener(OnCreditsClicked);
         _playButton.onClick.AddListener(OnPlayClicked);
-        _exitButton.onClick.AddListener(OnExitClicked);
+        //_exitButton.onClick.AddListener(OnExitClicked);
         _backCreditsButton.onClick.AddListener(OnBackClicked);
         _backOptionsButton.onClick.AddListener(OnBackClicked);
+        _backConfirmationButton.onClick.AddListener(OnBackClicked);
 
         _audioSettings.Initialize();
 
@@ -81,8 +85,15 @@ public class MainMenuManager : MonoBehaviour {
         SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 
-    private void OnExitClicked() {
+    public void OpenConfirmation()
+    {
+        SetCanvasGroup(_confirmationExit, true);
+        StartCoroutine(ShowMenuWithCameraTransition(_confirmationCamera, _confirmationExit));
+    }
+
+    public void OnExitClicked() {
         AudioManager.Instance.PlaySoundEffect("Audio/UI/Botao", spatialBlend: 0);
+        Debug.Log("Exit button clicked. Closing application.");
         Application.Quit();
     }
 
@@ -102,10 +113,12 @@ public class MainMenuManager : MonoBehaviour {
         SetCanvasGroup(_mainMenuCanvasGroup, false);
         SetCanvasGroup(_optionsCanvasGroup, false);
         SetCanvasGroup(_creditsCanvasGroup, false);
+        SetCanvasGroup(_confirmationExit, false);
 
         SetCameraPriority(_mainMenuCamera, targetCamera == _mainMenuCamera ? 20 : 10);
         SetCameraPriority(_optionCamera, targetCamera == _optionCamera ? 20 : 10);
         SetCameraPriority(_creditsCamera, targetCamera == _creditsCamera ? 20 : 10);
+        SetCameraPriority(_confirmationCamera, targetCamera == _confirmationCamera ? 20 : 10);
 
         yield return new WaitForSeconds(_cameraTransitionWait);
 
