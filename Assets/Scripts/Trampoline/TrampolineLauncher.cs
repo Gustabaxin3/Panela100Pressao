@@ -1,4 +1,5 @@
 using UnityEngine;
+using AUDIO;
 
 [RequireComponent(typeof(Collider))]
 public class TrampolineLauncher : MonoBehaviour {
@@ -55,6 +56,17 @@ public class TrampolineLauncher : MonoBehaviour {
     }
 
     private void LaunchPlayer() {
+
+        string[] soundsTrampolim =
+            {
+                "Audio/Cenario/Trampolim01",
+                "Audio/Cenario/Trampolim02",
+            };
+
+        int numSorteado = UnityEngine.Random.Range(0, soundsTrampolim.Length);
+
+        AudioManager.Instance.PlaySoundEffect(soundsTrampolim[numSorteado], spatialBlend: 0, position: transform.position);
+        
         Vector3 vel = _playerRb.linearVelocity;
         _playerRb.linearVelocity = new Vector3(vel.x, 0f, vel.z);
         _playerRb.AddForce(Vector3.up * launchForce, ForceMode.VelocityChange);
