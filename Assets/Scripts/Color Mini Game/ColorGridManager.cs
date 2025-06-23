@@ -28,6 +28,7 @@ public class ColorGridManager : MonoBehaviour {
         new Vector2Int(3, 3),  // 3ª máquina
         new Vector2Int(4, 4),  // 4ª máquina
         new Vector2Int(5, 5),  // 5ª máquina
+        new Vector2Int(6, 5),  // 6ª máquina
     };
     private int _currentLevelIndex = 0;
 
@@ -53,13 +54,13 @@ public class ColorGridManager : MonoBehaviour {
         allMiniGames = FindObjectsOfType<ColorMiniGameTrigger>();
     }
 
-    public void StartGame(ColorMiniGameTrigger trigger) {
+    public void StartGame(int trigger) {
         if (_currentLevelIndex >= _levels.Length) {
             Debug.LogWarning("Todas as máquinas já foram jogadas!");
             return;
         }
 
-        currentTrigger = trigger;
+        int currentTrigger = trigger;
         _gameStarted = true;
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;
