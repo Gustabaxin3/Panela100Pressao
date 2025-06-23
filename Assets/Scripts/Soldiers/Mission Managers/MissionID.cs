@@ -1,6 +1,8 @@
 public enum MissionID {
     None = 0,
-    Trampolim,
     SairDoLabirinto,
+    Trampolim,
     HackearTodasAsMaquinas,
+    IrAteArmarioMarrom,
+    IrAteCaixa,
 }
