@@ -9007,7 +9007,7 @@ PrefabInstance:
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
       propertyPath: <IsCaptainUnlocked>k__BackingField
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
@@ -9534,8 +9534,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 965112873}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.018709809, y: -0.96564007, z: 0.07260683, w: -0.24883252}
-  m_LocalPosition: {x: -114.5, y: 113.4, z: 89.8}
+  m_LocalRotation: {x: 0.14528105, y: 0.1191733, z: -0.017630465, w: 0.98202866}
+  m_LocalPosition: {x: -111.5, y: 113.76, z: 83.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -35354,7 +35354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActive: 0
-  _jumpStrength: 50
+  _jumpStrength: 100
   _jumpForwardForce: 500
   _customGravity: -15
   _groundCheck: {fileID: 0}
