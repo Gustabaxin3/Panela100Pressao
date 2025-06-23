@@ -61041,11 +61041,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballsNeeded: 5
   trampolineBalls:
-  - {fileID: 1280213157}
-  - {fileID: 1476215527}
-  - {fileID: 1825677023}
-  - {fileID: 489884334}
-  - {fileID: 413431412}
+  - {fileID: 6754715430388686497}
+  - {fileID: 9214002782121119933}
+  - {fileID: 2161964684456828105}
+  - {fileID: 3464910572057617199}
+  - {fileID: 8922101765858336990}
   soldierToUnlock: {fileID: 432113144154967409}
 --- !u!1 &9027372061875436560
 GameObject:

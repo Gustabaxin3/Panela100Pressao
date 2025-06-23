@@ -156,8 +156,11 @@ public class MainMenuManager : MonoBehaviour {
             cam.Priority = priority;
     }
     private void Awake() {
-        if (_transitionAnimator != null) {  
-            _transitionAnimator.SetBool("End", true);
-        }
+        StartCoroutine(handleBeginAnimation());
+    }
+    private IEnumerator handleBeginAnimation() {
+        _transitionAnimator.SetBool("End", true);
+        yield return new WaitForSeconds(_transitionAnimator.GetCurrentAnimatorStateInfo(0).length);
+        _transitionAnimator.SetBool("End", false);
     }
 }
