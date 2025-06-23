@@ -36,9 +36,10 @@ public class SoldierMovement : MonoBehaviour {
 
     [SerializeField] private bool IsActive = false;
 
+    [SerializeField] private Animator _animator;
+
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
-
         _rigidbody.freezeRotation = true;
     }
 
@@ -49,8 +50,13 @@ public class SoldierMovement : MonoBehaviour {
 
     private void FixedUpdate() {
         HandleInput();
+        HandleAnimation();
     }
-
+    private void HandleAnimation() {
+        if (_animator == null) return;
+        bool isWalking = InputMove.magnitude > 0.1f && !IsRunning && IsActive;
+        _animator.SetBool("Walk", isWalking);
+    }
     private void HandleInput() {
         if (!IsActive) return;
 
