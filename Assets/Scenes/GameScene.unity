@@ -9007,7 +9007,7 @@ PrefabInstance:
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
       propertyPath: <IsCaptainUnlocked>k__BackingField
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1592480003857789073, guid: 478c17929d86ab1419e6f9c5c517b632,
         type: 3}
@@ -35354,7 +35354,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActive: 0
-  _jumpStrength: 30
+  _jumpStrength: 50
+  _jumpForwardForce: 500
   _customGravity: -15
   _groundCheck: {fileID: 0}
   _maxJumps: 2

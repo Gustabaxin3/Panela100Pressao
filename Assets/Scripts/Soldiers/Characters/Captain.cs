@@ -7,6 +7,7 @@ public class Captain : ISoldierState {
 
     [Header("Jump Settings")]
     [SerializeField] private float _jumpStrength = 30f;
+    [SerializeField] private float _jumpForwardForce = 30f;
     [SerializeField] private float _customGravity = -15f;
     [SerializeField] private event System.Action Jumped;
 
@@ -63,7 +64,14 @@ public class Captain : ISoldierState {
 
         if (Input.GetButtonDown("Jump") && _isActive) {
             if ((_groundCheck && _groundCheck.isGrounded) || _jumpCount < _maxJumps) {
-                _rigidBody.AddForce(Vector3.up * _jumpStrength, ForceMode.Impulse);
+
+                float velY = _rigidBody.linearVelocity.y;
+                float compensacao = velY < 0 ? -velY : 0f;
+                _rigidBody.linearVelocity = new Vector3(_rigidBody.linearVelocity.x, 0f, _rigidBody.linearVelocity.z);
+                Vector3 jumpForce = (_transform.forward * _jumpForwardForce) + (Vector3.up * (_jumpStrength + compensacao));
+                _rigidBody.AddForce(jumpForce, ForceMode.Impulse);
+
+
                 _isJumping = true;
                 _jumpCount++;
                 Jumped?.Invoke();
