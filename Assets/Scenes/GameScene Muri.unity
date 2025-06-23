@@ -4161,7 +4161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b071267a1b2ebe4c970abff366492d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _missionOrder: 0500000001000000030000000200000006000000
+  _missionOrder: 0100000002000000030000000400000005000000
 --- !u!1001 &333247451
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13823,6 +13823,7 @@ MonoBehaviour:
   - {fileID: 1825677023}
   - {fileID: 489884334}
   - {fileID: 413431412}
+  soldierToUnlock: {fileID: 0}
 --- !u!54 &1251073838
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -23235,7 +23236,13 @@ MonoBehaviour:
   _cutsceneTextCanvasGroup: {fileID: 1931603080}
   _fadeDuration: 0.5
   _soldierDisplayName: Subtenente
-  _abilityHint: Use E para\ndeslocar objetos!
+  _unlockMessages:
+  - "Voc\xEA desbloqueou\n{0}!"
+  _abilityHints:
+  - 'Use E para
+
+    ativar a habilidade'
+  _musicVolumeDuringCutscene: 0.2
 --- !u!54 &1982819927
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -26587,6 +26594,7 @@ MonoBehaviour:
   InputMove: {x: 0, y: 0}
   HeldJump: 0
   IsActive: 0
+  _animator: {fileID: 0}
 --- !u!4 &315872940289326981
 Transform:
   m_ObjectHideFlags: 0
@@ -27325,6 +27333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _checkOffSet: 1
   _checkRadius: 2
+  _animator: {fileID: 0}
 --- !u!1 &434677276716099842
 GameObject:
   m_ObjectHideFlags: 0
@@ -40026,9 +40035,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActive: 0
-  _jumpStrength: 30
-  _customGravity: -15
+  _jumpStrength: 100
+  _customGravity: 500
   _groundCheck: {fileID: 0}
+  _maxJumps: 2
 --- !u!33 &2915810299431624841
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -40993,6 +41003,7 @@ MonoBehaviour:
   InputMove: {x: 0, y: 0}
   HeldJump: 0
   IsActive: 0
+  _animator: {fileID: 0}
 --- !u!1 &3081013040579670690
 GameObject:
   m_ObjectHideFlags: 0
@@ -41475,6 +41486,7 @@ MonoBehaviour:
   InputMove: {x: 0, y: 0}
   HeldJump: 0
   IsActive: 0
+  _animator: {fileID: 0}
 --- !u!33 &3192830518588357298
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51932,6 +51944,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectRadius: 1.5
+  _animator: {fileID: 0}
 --- !u!33 &5079329819491623968
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -58801,6 +58814,7 @@ MonoBehaviour:
   InputMove: {x: 0, y: 0}
   HeldJump: 0
   IsActive: 0
+  _animator: {fileID: 0}
 --- !u!1 &6452392097937146957
 GameObject:
   m_ObjectHideFlags: 0
@@ -72033,6 +72047,7 @@ MonoBehaviour:
   - {fileID: 2161964684456828105}
   - {fileID: 3464910572057617199}
   - {fileID: 8922101765858336990}
+  soldierToUnlock: {fileID: 0}
 --- !u!114 &9024008860113154983
 MonoBehaviour:
   m_ObjectHideFlags: 0

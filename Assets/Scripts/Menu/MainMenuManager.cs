@@ -23,6 +23,7 @@ public class MainMenuManager : MonoBehaviour {
 
     [Header("Cameras")]
     [SerializeField] private CinemachineCamera _mainMenuCamera;
+    [SerializeField] private CinemachineCamera _playMenuCamera;
     [SerializeField] private CinemachineCamera _optionCamera;
     [SerializeField] private CinemachineCamera _creditsCamera;
     [SerializeField] private CinemachineCamera _confirmationCamera;
@@ -82,7 +83,7 @@ public class MainMenuManager : MonoBehaviour {
     private void OnPlayClicked() {
         AudioManager.Instance.PlaySoundEffect("Audio/UI/Botao", spatialBlend: 0);
         AudioManager.Instance.StopAllTracks();
-        SceneManager.LoadScene(1, LoadSceneMode.Single);
+        SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
     }
 
     public void OpenConfirmation()
