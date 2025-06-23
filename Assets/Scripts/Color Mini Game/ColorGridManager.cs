@@ -54,18 +54,19 @@ public class ColorGridManager : MonoBehaviour {
         allMiniGames = FindObjectsOfType<ColorMiniGameTrigger>();
     }
 
-    public void StartGame(int trigger) {
+    public void StartGame(int num, ColorMiniGameTrigger trigger) {
         if (_currentLevelIndex >= _levels.Length) {
             Debug.LogWarning("Todas as máquinas já foram jogadas!");
             return;
         }
 
-        int currentTrigger = trigger;
+        currentTrigger = trigger;
+        int Cont = num;
         _gameStarted = true;
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;
 
-        var size = _levels[_currentLevelIndex];
+        var size = _levels[Cont];
         int rows = size.x;
         int cols = size.y;
 

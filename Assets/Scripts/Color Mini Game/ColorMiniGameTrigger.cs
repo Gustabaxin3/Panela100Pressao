@@ -16,7 +16,7 @@ public class ColorMiniGameTrigger : MonoBehaviour {
     }
     private void Update() {
         if (_playerInRange && !IsCompleted && !ColorGridManager.Instance._gameStarted && Input.GetKeyDown(KeyCode.E)) {
-            ColorGridManager.Instance.StartGame(maquinaCount);
+            ColorGridManager.Instance.StartGame(maquinaCount, this);
             maquinaCount++;
         }
     }
@@ -47,9 +47,9 @@ public class ColorMiniGameTrigger : MonoBehaviour {
         InteractionHintUI.Instance.HideHint();
     }
     public void DisableInteraction() {
-        _playerInRange = false;
-
         IsCompleted = true;
+
+        _playerInRange = false;
 
         Collider col = GetComponent<Collider>();
         if (col != null) col.enabled = false;
