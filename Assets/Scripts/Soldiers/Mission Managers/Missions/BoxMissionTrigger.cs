@@ -14,6 +14,7 @@ public class BoxMissionTrigger : MonoBehaviour
     [SerializeField] private CanvasGroup HudMission;
 
 
+
     private void Update() {
         if(Input.GetKeyDown(KeyCode.F)) {
             StartCoroutine(ShowMissionCompleteFeedbackAndTransition());

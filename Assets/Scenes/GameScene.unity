@@ -7818,6 +7818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _missionID: 1
   soldierToUnlock: {fileID: 5075302979922366603}
+  soldierSelectorUI: {fileID: 1562173561}
 --- !u!65 &668649625
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9921,8 +9922,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 965112873}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.014694716, y: 0.8272872, z: -0.021663256, w: 0.5611691}
-  m_LocalPosition: {x: -19.5, y: 6.4, z: 70.66}
+  m_LocalRotation: {x: 0.14528105, y: 0.1191733, z: -0.017630465, w: 0.98202866}
+  m_LocalPosition: {x: -110.5, y: 114.090004, z: 82.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21404,6 +21405,7 @@ MonoBehaviour:
   - {fileID: 489884334}
   - {fileID: 413431412}
   soldierToUnlock: {fileID: 0}
+  soldierSelectorUI: {fileID: 0}
 --- !u!54 &1982819927
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -61057,6 +61059,7 @@ MonoBehaviour:
   - {fileID: 3464910572057617199}
   - {fileID: 8922101765858336990}
   soldierToUnlock: {fileID: 432113144154967409}
+  soldierSelectorUI: {fileID: 0}
 --- !u!1 &9027372061875436560
 GameObject:
   m_ObjectHideFlags: 0

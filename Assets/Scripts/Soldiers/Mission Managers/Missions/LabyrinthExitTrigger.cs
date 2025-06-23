@@ -9,9 +9,12 @@ public class LabyrinthExitTrigger : MonoBehaviour {
 
     [Header("Soldado a desbloquear após o labirinto")]
     [SerializeField] private ISoldierState soldierToUnlock;
+    [SerializeField] private SoldierSelectorUI soldierSelectorUI;
 
     private void Awake() {
         var col = GetComponent<Collider>();
+        soldierSelectorUI = FindObjectOfType<SoldierSelectorUI>();
+
         col.isTrigger = true;
     }
 
@@ -28,7 +31,7 @@ public class LabyrinthExitTrigger : MonoBehaviour {
         yield return new WaitForSeconds(2f);
 
         SoldierUnlockEvents.Unlock(soldierToUnlock);
-
+        soldierSelectorUI.HandleAllChoicesInteractivity();
         gameObject.SetActive(false);
     }
 }

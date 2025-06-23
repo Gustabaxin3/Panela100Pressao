@@ -12,9 +12,15 @@ public class TrampolineTrigger : MonoBehaviour {
 
     [Header("Soldado a desbloquear ao ativar o trampolim")]
     [SerializeField] private ISoldierState soldierToUnlock;
+    [SerializeField] private SoldierSelectorUI soldierSelectorUI;
+
 
     private int ballsDelivered = 0;
     public bool IsActivated { get; private set; } = false;
+
+    private void Awake() {
+        soldierSelectorUI = FindObjectOfType<SoldierSelectorUI>();
+    }
 
     private void OnTriggerEnter(Collider other) {
         Debug.Log($"TrampolineTrigger: {other.name} entrou no gatilho.");
@@ -52,5 +58,6 @@ public class TrampolineTrigger : MonoBehaviour {
         MissionManager.Instance.CompleteMission(MissionID.Trampolim);
 
         SoldierUnlockEvents.Unlock(soldierToUnlock);
+        soldierSelectorUI.HandleAllChoicesInteractivity();
     }
 }

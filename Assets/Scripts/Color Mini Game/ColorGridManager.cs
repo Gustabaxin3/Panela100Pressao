@@ -55,6 +55,8 @@ public class ColorGridManager : MonoBehaviour {
         }
 
         allMiniGames = FindObjectsOfType<ColorMiniGameTrigger>();
+        soldierSelectorUI = FindObjectOfType<SoldierSelectorUI>();
+
     }
 
     public void StartGame(ColorMiniGameTrigger trigger) {
@@ -222,6 +224,8 @@ public class ColorGridManager : MonoBehaviour {
             MissionFeedbackUI.ShowFeedback("Missão 'Hackear Todas as Máquinas' foi completada!");
 
             SoldierUnlockEvents.Unlock(soldierToUnlock);
+            soldierSelectorUI.HandleAllChoicesInteractivity();
+
         }
     }
 }
