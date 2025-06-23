@@ -2,13 +2,11 @@ using UnityEngine;
 
 public class ColorMiniGameTrigger : MonoBehaviour {
     private bool _playerInRange = false;
-    private static int maquinaCount = 0;
 
     [field: SerializeField]
     public bool IsCompleted { get; private set; } = false;
     private void Start() {
         ColorGridManager.Instance.OnGameCompleted += HandleGameCompleted;
-        maquinaCount = 0;
     }
 
     private void OnDisable() {
@@ -17,8 +15,7 @@ public class ColorMiniGameTrigger : MonoBehaviour {
     }
     private void Update() {
         if (_playerInRange && !IsCompleted && !ColorGridManager.Instance._gameStarted && Input.GetKeyDown(KeyCode.E)) {
-            ColorGridManager.Instance.StartGame(maquinaCount, this);
-            maquinaCount++;
+            ColorGridManager.Instance.StartGame(this);
         }
     }
     private void OnTriggerEnter(Collider other) {
