@@ -132,7 +132,7 @@ public class PauseManager : MonoBehaviour
         */
     }
 
-    private void ResumeInternal(bool playDespauseSound){
+    public void ResumeInternal(bool playDespauseSound){
         pausouNoEsc = false;
         if (playDespauseSound)
             AudioManager.Instance.PlaySoundEffect("Audio/UI/Despause", spatialBlend: 0);
@@ -159,12 +159,12 @@ public class PauseManager : MonoBehaviour
     {
         Application.Quit();
     }
-    private void OnMasterVolumeChanged(float value) => _audioSettings.OnMasterVolumeChanged(value);
-    private void OnMusicVolumeChanged(float value) => _audioSettings.OnMusicVolumeChanged(value);
-    private void OnSFXVolumeChanged(float value) => _audioSettings.OnSFXVolumeChanged(value);
-    private void ToggleMuteMaster() => _audioSettings.ToggleMuteMaster();
-    private void ToggleMuteMusic() => _audioSettings.ToggleMuteMusic();
-    private void ToggleMuteSFX() => _audioSettings.ToggleMuteSFX();
+    public void OnMasterVolumeChanged(float value) => _audioSettings.OnMasterVolumeChanged(value);
+    public void OnMusicVolumeChanged(float value) => _audioSettings.OnMusicVolumeChanged(value);
+    public void OnSFXVolumeChanged(float value) => _audioSettings.OnSFXVolumeChanged(value);
+    public void ToggleMuteMaster() => _audioSettings.ToggleMuteMaster();
+    public void ToggleMuteMusic() => _audioSettings.ToggleMuteMusic();
+    public void ToggleMuteSFX() => _audioSettings.ToggleMuteSFX();
     public void Sensibilidade(float valeu )
     {
         PlayerPrefs.SetFloat("Sensibilidade", valeu);
