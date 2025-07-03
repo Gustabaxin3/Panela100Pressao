@@ -14,7 +14,8 @@ public class SoldierMovement : MonoBehaviour {
 
     [Range(0f, 15f)]
     public float RunSpeed = 9f;
-
+    [Range(0f, 50f)]
+    public float JumpVelocity = 10f;
     public bool IsRunning { get; private set; }
 
     public KeyCode RunningKey = KeyCode.LeftShift;
@@ -37,6 +38,8 @@ public class SoldierMovement : MonoBehaviour {
     [SerializeField] private bool IsActive = false;
 
     [SerializeField] private Animator _animator;
+
+    public bool _jumping;
 
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
@@ -74,7 +77,9 @@ public class SoldierMovement : MonoBehaviour {
     }
 
     private void HandleMovement() {
+        float jumpVelocity = _jumping ? 1.55f : 1;
         float targetSpeed = IsRunning ? RunSpeed : WalkSpeed;
+        
 
         if (SpeedOverrides.Count > 0) {
             targetSpeed = SpeedOverrides[^1](); 
@@ -89,7 +94,7 @@ public class SoldierMovement : MonoBehaviour {
         cameraRight.Normalize();
 
         MoveDirection = (cameraRight * InputMove.x + cameraForward * InputMove.y).normalized;
-        Vector3 targetVelocity = MoveDirection * targetSpeed;
+        Vector3 targetVelocity = (MoveDirection * targetSpeed) * jumpVelocity;
 
         _rigidbody.linearVelocity = new Vector3(targetVelocity.x, _rigidbody.linearVelocity.y, targetVelocity.z);
     }
@@ -123,5 +128,10 @@ public class SoldierMovement : MonoBehaviour {
             else
                 InputMove.x = 0;
         }
+    }
+
+    public void CheckJump(bool jumped)
+    {
+        _jumping = jumped;
     }
 }

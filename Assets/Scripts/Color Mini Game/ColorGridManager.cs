@@ -57,7 +57,7 @@ public class ColorGridManager : MonoBehaviour {
         }
 
         allMiniGames = FindObjectsOfType<ColorMiniGameTrigger>();
-        soldierSelectorUI = FindObjectOfType<SoldierSelectorUI>();
+        soldierSelectorUI = FindFirstObjectByType<SoldierSelectorUI>();
 
     }
 

@@ -7,16 +7,18 @@ public class Captain : ISoldierState {
 
     [Header("Jump Settings")]
     [SerializeField] private float _jumpStrength = 30f;
-    [SerializeField] private float _jumpForwardForce = 30f;
     [SerializeField] private float _customGravity = -15f;
     [SerializeField] private event System.Action Jumped;
 
     [SerializeField] private GroundCheck _groundCheck;
 
+    [Header("Script")]
+    [SerializeField] private SoldierMovement soldierMovement;
+
     [Header("Double Jump Settings")]
     [SerializeField] private int _maxJumps = 2;
 
-    private bool _isJumping;
+    public bool _isJumping;
     private int _jumpCount = 0;
 
     protected override void Awake() {
@@ -26,6 +28,7 @@ public class Captain : ISoldierState {
     protected override void Start() {
         base.Start();
         _groundCheck = GetComponentInChildren<GroundCheck>();
+        soldierMovement = GetComponent<SoldierMovement>();
     }
 
     public override void OnEnter(SoldierManager soldierManager) {
@@ -39,6 +42,7 @@ public class Captain : ISoldierState {
         base.OnUpdate();
 
         if (Input.GetButtonUp("Jump") && _rigidBody.linearVelocity.y > 0f) {
+            soldierMovement.CheckJump(true);
             _rigidBody.linearVelocity = new Vector3(_rigidBody.linearVelocity.x, _rigidBody.linearVelocity.y * 0.5f, _rigidBody.linearVelocity.z);
 
             string[] soundsPulo =
@@ -57,25 +61,29 @@ public class Captain : ISoldierState {
     public override void LateUpdate() {
         base.LateUpdate();
 
-        if (_groundCheck && _groundCheck.isGrounded) {
+        if (_groundCheck && _groundCheck.isGrounded)
+        {
             _jumpCount = 0;
             _isJumping = false;
+            soldierMovement.CheckJump(false);
         }
 
         if (Input.GetButtonDown("Jump") && _isActive) {
+            
+           
             if ((_groundCheck && _groundCheck.isGrounded) || _jumpCount < _maxJumps) {
-
+                
                 float velY = _rigidBody.linearVelocity.y;
                 float compensacao = velY < 0 ? -velY : 0f;
                 _rigidBody.linearVelocity = new Vector3(_rigidBody.linearVelocity.x, 0f, _rigidBody.linearVelocity.z);
-                Vector3 jumpForce = (_transform.forward * _jumpForwardForce) + (Vector3.up * (_jumpStrength + compensacao));
+                Vector3 jumpForce = Vector3.up * (_jumpStrength + compensacao);
                 _rigidBody.AddForce(jumpForce, ForceMode.Impulse);
 
 
                 _isJumping = true;
                 _jumpCount++;
                 Jumped?.Invoke();
-
+                soldierMovement.CheckJump(true);
                 string[] soundsPulo =
                 {
                     "Audio/Pulo/SoldadoPulo01",
